@@ -20,7 +20,10 @@ namespace SolarTally.Domain.ValueObjects
 
         public bool Enabled { get; private set; }
 
-        private LoadItem() {}
+        private LoadItem()
+        {
+            // required by EF
+        }
         
         public LoadItem(string name, string description, int quantity,
                         decimal powerRating, int numHours, bool enabled)
