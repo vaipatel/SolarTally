@@ -14,5 +14,7 @@ namespace SolarTally.Domain.Entities
         //public byte[] Image { get; set; }
 
         public decimal DefaultPowerConsumption { get; set; }
+
+        public int ApplianceUsageId { get; private set; }
     }
 }
