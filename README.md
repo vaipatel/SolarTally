@@ -1,4 +1,5 @@
 # SolarTally (WIP Under Development!)
+[![Build Status](https://dev.azure.com/vaipatel/SolarTallyProject/_apis/build/status/vaipatel.SolarTally_AspDotNetCore?branchName=master)](https://dev.azure.com/vaipatel/SolarTallyProject/_build/latest?definitionId=2&branchName=master)
 
 An open-source app to tally electricity needs and solar equipment costs for 
 off-grid solar setups.
