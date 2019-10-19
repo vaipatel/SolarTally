@@ -1,4 +1,4 @@
-# SolarTally
+# SolarTally (WIP Under Development!)
 
 An open-source app to tally electricity needs and solar equipment costs for 
 off-grid solar setups.
