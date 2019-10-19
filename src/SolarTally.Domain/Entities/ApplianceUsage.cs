@@ -1,10 +1,11 @@
 using SolarTally.Domain.Common;
 using SolarTally.Domain.ValueObjects;
+using Ardalis.GuardClauses;
 
 namespace SolarTally.Domain.Entities
 {
     /// <summary>
-    /// Encapsulates the particular Usage of an Appliance for a given Consumer.
+    /// Encapsulates the particular usage of an Appliance for a given Consumer.
     /// </summary>
     /// <remark> 
     /// I can't decide if ApplianceUsage has an identity in the domain outside 
@@ -22,10 +23,12 @@ namespace SolarTally.Domain.Entities
     /// </remark>
     public class ApplianceUsage : BaseEntity<int>
     {
+        public int ApplianceId { get; private set; }
         public Appliance Appliance { get; private set; }
 
-        public Usage Usage { get; private set; }
+        public UsageParams Usage { get; private set; }
 
         public bool Enabled { get; private set; }
+
     }
 }

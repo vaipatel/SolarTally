@@ -7,7 +7,7 @@ namespace SolarTally.Domain.ValueObjects
     /// <summary>
     /// Represents the parameters of usage of any appliance by any consumer.
     /// </summary>
-    public class Usage : ValueObject
+    public class UsageParams : ValueObject
     {
         /// <summary>The number of appliances owned.</summary>
         public int Quantity { get; private set; }
@@ -33,12 +33,12 @@ namespace SolarTally.Domain.ValueObjects
         /// </remark>
         public int NumHoursWithoutSolar { get; private set; }
 
-        private Usage()
+        private UsageParams()
         {
             // Apparently required for EF
         }
 
-        public Usage(int quantity, decimal powerConsumption,
+        public UsageParams(int quantity, decimal powerConsumption,
             int numHoursWithSolar, int numHoursWithoutSolar)
         {
             Guard.Against.LessThan(quantity, nameof(quantity), 0);
