@@ -1,6 +1,7 @@
 using SolarTally.Domain.Common;
 using SolarTally.Domain.ValueObjects;
 using SolarTally.Domain.Interfaces;
+using Ardalis.GuardClauses;
 
 namespace SolarTally.Domain.Entities
 {
@@ -20,6 +21,8 @@ namespace SolarTally.Domain.Entities
 
         public Site(string name)
         {
+            Guard.Against.NullOrEmpty(name, nameof(name));
+            
             Name = name;
             Consumption = new Consumption(this);
             ConsumptionId = Consumption.Id;
