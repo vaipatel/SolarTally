@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolarTally.Domain", "src\So
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolarTally.Infrastructure", "src\SolarTally.Infrastructure\SolarTally.Infrastructure.csproj", "{F0882A12-65B0-49BA-ACA0-3FCFB4C066BC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{C6A75E56-E8F3-4FEA-868A-2CD0AC77745A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SolarTally.UnitTests", "tests\SolarTally.UnitTests\SolarTally.UnitTests.csproj", "{1F0F848F-680C-409E-8B8C-FB0D3AA388D8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,9 +50,22 @@ Global
 		{F0882A12-65B0-49BA-ACA0-3FCFB4C066BC}.Release|x64.Build.0 = Release|Any CPU
 		{F0882A12-65B0-49BA-ACA0-3FCFB4C066BC}.Release|x86.ActiveCfg = Release|Any CPU
 		{F0882A12-65B0-49BA-ACA0-3FCFB4C066BC}.Release|x86.Build.0 = Release|Any CPU
+		{1F0F848F-680C-409E-8B8C-FB0D3AA388D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1F0F848F-680C-409E-8B8C-FB0D3AA388D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1F0F848F-680C-409E-8B8C-FB0D3AA388D8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1F0F848F-680C-409E-8B8C-FB0D3AA388D8}.Debug|x64.Build.0 = Debug|Any CPU
+		{1F0F848F-680C-409E-8B8C-FB0D3AA388D8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1F0F848F-680C-409E-8B8C-FB0D3AA388D8}.Debug|x86.Build.0 = Debug|Any CPU
+		{1F0F848F-680C-409E-8B8C-FB0D3AA388D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1F0F848F-680C-409E-8B8C-FB0D3AA388D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1F0F848F-680C-409E-8B8C-FB0D3AA388D8}.Release|x64.ActiveCfg = Release|Any CPU
+		{1F0F848F-680C-409E-8B8C-FB0D3AA388D8}.Release|x64.Build.0 = Release|Any CPU
+		{1F0F848F-680C-409E-8B8C-FB0D3AA388D8}.Release|x86.ActiveCfg = Release|Any CPU
+		{1F0F848F-680C-409E-8B8C-FB0D3AA388D8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{37583059-2931-42E4-BF6E-3D71C9CF53EE} = {83F8CD2B-DA86-44E4-B8B9-7615EB593F38}
 		{F0882A12-65B0-49BA-ACA0-3FCFB4C066BC} = {83F8CD2B-DA86-44E4-B8B9-7615EB593F38}
+		{1F0F848F-680C-409E-8B8C-FB0D3AA388D8} = {C6A75E56-E8F3-4FEA-868A-2CD0AC77745A}
 	EndGlobalSection
 EndGlobal
