@@ -46,5 +46,12 @@ namespace SolarTally.Domain.Entities
             Usage = usage;
             Enabled = enabled;
         }
+
+        public void SetAppliance(Appliance appliance)
+        {
+            Guard.Against.Null(appliance, nameof(appliance));
+            ApplianceId = appliance.Id;
+            Appliance = appliance;
+        }
     }
 }
