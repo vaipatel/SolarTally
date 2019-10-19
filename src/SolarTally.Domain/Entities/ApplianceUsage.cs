@@ -30,5 +30,21 @@ namespace SolarTally.Domain.Entities
 
         public bool Enabled { get; private set; }
 
+        private ApplianceUsage()
+        {
+            // Apparently required by EF Core
+        }
+
+        public ApplianceUsage(Appliance appliance, UsageParams usage, 
+            bool enabled)
+        {
+            Guard.Against.Null(appliance, nameof(appliance));
+            Guard.Against.Null(usage, nameof(usage));
+
+            ApplianceId = appliance.Id;
+            Appliance = appliance;
+            Usage = usage;
+            Enabled = enabled;
+        }
     }
 }
