@@ -16,22 +16,18 @@ namespace SolarTally.Domain.ValueObjects
         public decimal PowerConsumption { get; private set; }
 
         /// <summary>
-        /// Hrs to run the appliance when solar is available.
+        /// Hrs to run the appliance.
         /// </summary>
         /// <remark>
         /// TODO: Calculate this from Noda LocalTime or similar to make it
         /// easier for the user to input this info.
         /// </remark>
-        public int NumHoursWithSolar { get; private set; }
+        public int NumHours { get; private set; }
 
         /// <summary>
-        /// Hrs to run the appliance when solar is unavailable.
+        /// Percent of hrs to run the appliance when solar is available.
         /// </summary>
-        /// <remark>
-        /// TODO: Calculate this from Noda LocalTime or similar to make it
-        /// easier for the user to input this info.
-        /// </remark>
-        public int NumHoursWithoutSolar { get; private set; }
+        public decimal PercentHrsOnSolar { get; private set; }
 
         private UsageParams()
         {
@@ -39,28 +35,28 @@ namespace SolarTally.Domain.ValueObjects
         }
 
         public UsageParams(int quantity, decimal powerConsumption,
-            int numHoursWithSolar, int numHoursWithoutSolar)
+            int numHours, int percentHrsOnSolar)
         {
             Guard.Against.LessThan(quantity, nameof(quantity), 0);
             Guard.Against.LessThan(powerConsumption,
                 nameof(powerConsumption), 0);
-            Guard.Against.LessThan(numHoursWithSolar, 
-                nameof(numHoursWithSolar), 0);
-            Guard.Against.LessThan(numHoursWithoutSolar,
-                nameof(numHoursWithoutSolar), 0);
+            Guard.Against.OutOfRange(numHours, 
+                nameof(numHours), 0, 24);
+            Guard.Against.OutOfRange(percentHrsOnSolar,
+                nameof(percentHrsOnSolar), 0, 1);
 
             Quantity = quantity;
             PowerConsumption = powerConsumption;
-            NumHoursWithSolar = numHoursWithSolar;
-            NumHoursWithoutSolar = NumHoursWithoutSolar;
+            NumHours = numHours;
+            PercentHrsOnSolar = percentHrsOnSolar;
         }
 
         protected override IEnumerable<object> GetAtomicValues()
         {
             yield return Quantity;
             yield return PowerConsumption;
-            yield return NumHoursWithSolar;
-            yield return NumHoursWithoutSolar;
+            yield return NumHours;
+            yield return PercentHrsOnSolar;
         }
     }
 }
