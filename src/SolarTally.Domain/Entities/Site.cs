@@ -14,8 +14,15 @@ namespace SolarTally.Domain.Entities
         public Address MainAddress { get; set; }
 
         // Consumption Foreign Key
-        public int ConsumptionId { get; set; }
+        public int ConsumptionId { get; private set; }
         // Consumption Nav prop
-        public Consumption Consumption { get; set; }
+        public Consumption Consumption { get; private set; }
+
+        public Site(string name)
+        {
+            Name = name;
+            Consumption = new Consumption(this);
+            ConsumptionId = Consumption.Id;
+        }
     }
 }
