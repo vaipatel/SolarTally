@@ -12,7 +12,7 @@ namespace SolarTally.Domain.Entities
         public int SiteId { get; set; }
         // Site Nav prop
         public Site Site { get; set; }
-        
+
         private readonly List<ApplianceUsage> _applianceUsages;
         public IReadOnlyCollection<ApplianceUsage> ApplianceUsages =>
             _applianceUsages;
@@ -26,7 +26,7 @@ namespace SolarTally.Domain.Entities
         {
             var applianceUsage = _applianceUsages
                 .Where(au => au.Id == applianceUsageId)
-                .First();
+                .Single();
             Guard.Against.Null(applianceUsage, nameof(applianceUsage));
             if (applianceUsage.ApplianceId != appliance.Id)
             {
