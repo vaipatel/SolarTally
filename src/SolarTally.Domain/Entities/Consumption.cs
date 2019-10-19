@@ -16,5 +16,17 @@ namespace SolarTally.Domain.Entities
         {
             _applianceUsages = new List<ApplianceUsage>();
         }
+
+        public void ModifyAppliance(int applianceUsageId, Appliance appliance)
+        {
+            var applianceUsage = _applianceUsages
+                .Where(au => au.Id == applianceUsageId)
+                .First();
+            Guard.Against.Null(applianceUsage, nameof(applianceUsage));
+            if (applianceUsage.ApplianceId != appliance.Id)
+            {
+                applianceUsage.SetAppliance(appliance);
+            }
+        }
     }
 }
