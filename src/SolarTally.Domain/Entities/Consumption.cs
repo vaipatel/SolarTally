@@ -9,17 +9,19 @@ namespace SolarTally.Domain.Entities
     public class Consumption : BaseEntity<int>, IAggregateRoot
     {
         // Site Foreign Key
-        public int SiteId { get; set; }
+        public int SiteId { get; private set; }
         // Site Nav prop
-        public Site Site { get; set; }
+        public Site Site { get; private set; }
 
         private readonly List<ApplianceUsage> _applianceUsages;
         public IReadOnlyCollection<ApplianceUsage> ApplianceUsages =>
             _applianceUsages;
 
-        public Consumption()
+        public Consumption(Site site)
         {
             _applianceUsages = new List<ApplianceUsage>();
+            SiteId = site.Id;
+            Site = site;
         }
 
         public void ModifyAppliance(int applianceUsageId, Appliance appliance)
