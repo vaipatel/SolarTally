@@ -14,6 +14,7 @@ namespace SolarTally.Domain.Entities
 
         //public byte[] Image { get; set; }
 
+        /// <summary>The amount of power consumed in Watts.</summary>
         public decimal DefaultPowerConsumption { get; set; }
 
         public int ApplianceUsageId { get; private set; }

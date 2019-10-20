@@ -31,7 +31,7 @@ namespace SolarTally.Domain.Entities
         /// <summary>The number of appliances owned.</summary>
         public int Quantity { get; private set; }
 
-        /// <summary>The amount of power consumed in kW.</summary>
+        /// <summary>The amount of power consumed in Watts.</summary>
         public decimal PowerConsumption { get; private set; }
 
         /// <summary>
@@ -75,6 +75,11 @@ namespace SolarTally.Domain.Entities
             NumHours = numHours;
             PercentHrsOnSolar = percentHrsOnSolar;
             Enabled = enabled;
+        }
+
+        public void SetPowerConsumptionToDefault()
+        {
+            PowerConsumption = Appliance.DefaultPowerConsumption;
         }
 
         public void SetAppliance(Appliance appliance)
