@@ -54,7 +54,7 @@ namespace SolarTally.Domain.Entities
         }
 
         public ApplianceUsage(Appliance appliance, int quantity,
-            decimal powerConsumption, int numHours, int percentHrsOnSolar,
+            decimal powerConsumption, int numHours, decimal percentHrsOnSolar,
             bool enabled)
         {
             Guard.Against.Null(appliance, nameof(appliance));
@@ -63,7 +63,7 @@ namespace SolarTally.Domain.Entities
                 nameof(powerConsumption), 0);
             Guard.Against.OutOfRange(numHours, 
                 nameof(numHours), 0, 24);
-            Guard.Against.OutOfRange(percentHrsOnSolar,
+            Guard.Against.CustomOutOfRange(percentHrsOnSolar,
                 nameof(percentHrsOnSolar), 0, 1);
 
             ApplianceId = appliance.Id;
