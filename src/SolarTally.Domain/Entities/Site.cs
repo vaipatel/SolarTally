@@ -14,16 +14,20 @@ namespace SolarTally.Domain.Entities
 
         public Address MainAddress { get; set; }
 
+        public int NumSolarHours { get; private set; }
+
         // Consumption Foreign Key
         public int ConsumptionId { get; private set; }
         // Consumption Nav prop
         public Consumption Consumption { get; private set; }
 
-        public Site(string name)
+        public Site(string name, int numSolarHours)
         {
-            Guard.Against.NullOrEmpty(name, nameof(name));
+            Guard.Against.OutOfRange(numSolarHours, nameof(numSolarHours), 0,
+                24);
             
             Name = name;
+            NumSolarHours = numSolarHours;
             Consumption = new Consumption(this);
             ConsumptionId = Consumption.Id;
         }

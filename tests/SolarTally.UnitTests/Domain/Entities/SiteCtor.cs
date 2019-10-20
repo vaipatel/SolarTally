@@ -7,33 +7,34 @@ namespace SolarTally.UnitTests.Domain.Entities
     public class SiteCtor
     {
         private string _siteName = "A_SITE_NAME";
+        private int _siteNumSolarHours = 8;
 
         [Fact]
-        public void ThrowsIfSiteNameEmpty()
+        public void ThrowsIfNegativeNumSolarHours()
         {
-            Assert.Throws<ArgumentException>(() => { 
-                var site = new Site("");
+            Assert.Throws<ArgumentOutOfRangeException>(() => { 
+                var site = new Site(_siteName, -1);
             });
         }
 
         [Fact]
         public void SetsSiteName()
         {
-            var site = new Site(_siteName);
+            var site = new Site(_siteName, _siteNumSolarHours);
             Assert.Equal(_siteName, site.Name);
         }
         
         [Fact]
         public void CreatesAConsumption()
         {
-            var site = new Site(_siteName);
+            var site = new Site(_siteName, _siteNumSolarHours);
             Assert.NotNull(site.Consumption);
         }
 
         [Fact]
         public void CreatesConsumptionWithThisSite()
         {
-            var site = new Site(_siteName);
+            var site = new Site(_siteName, _siteNumSolarHours);
             Assert.Equal(site.Name, site.Consumption.Site.Name);
         }
     }
