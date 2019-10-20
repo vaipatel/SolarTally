@@ -33,9 +33,8 @@ namespace SolarTally.Domain.Entities
         public void AddApplianceUsage(Appliance appliance)
         {
             Guard.Against.Null(appliance, nameof(appliance));
-            var usage = new UsageParams(1, appliance.DefaultPowerConsumption,
-                2,1);
-            var applianceUsage = new ApplianceUsage(appliance, usage, true);
+            var applianceUsage = new ApplianceUsage(appliance, 1,
+                appliance.DefaultPowerConsumption, 2,1, true);
             _applianceUsages.Add(applianceUsage);
         }
 

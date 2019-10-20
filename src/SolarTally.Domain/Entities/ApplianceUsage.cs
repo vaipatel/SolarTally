@@ -28,7 +28,25 @@ namespace SolarTally.Domain.Entities
 
         public int ConsumptionId { get; private set; }
 
-        public UsageParams Usage { get; private set; }
+        /// <summary>The number of appliances owned.</summary>
+        public int Quantity { get; private set; }
+
+        /// <summary>The amount of power consumed in kW.</summary>
+        public decimal PowerConsumption { get; private set; }
+
+        /// <summary>
+        /// Hrs to run the appliance.
+        /// </summary>
+        /// <remark>
+        /// TODO: Calculate this from Noda LocalTime or similar to make it
+        /// easier for the user to input this info.
+        /// </remark>
+        public int NumHours { get; private set; }
+
+        /// <summary>
+        /// Percent of hrs to run the appliance when solar is available.
+        /// </summary>
+        public decimal PercentHrsOnSolar { get; private set; }
 
         public bool Enabled { get; private set; }
 
@@ -37,15 +55,25 @@ namespace SolarTally.Domain.Entities
             // Apparently required by EF Core
         }
 
-        public ApplianceUsage(Appliance appliance, UsageParams usage, 
+        public ApplianceUsage(Appliance appliance, int quantity,
+            decimal powerConsumption, int numHours, int percentHrsOnSolar,
             bool enabled)
         {
             Guard.Against.Null(appliance, nameof(appliance));
-            Guard.Against.Null(usage, nameof(usage));
+            Guard.Against.LessThan(quantity, nameof(quantity), 0);
+            Guard.Against.LessThan(powerConsumption,
+                nameof(powerConsumption), 0);
+            Guard.Against.OutOfRange(numHours, 
+                nameof(numHours), 0, 24);
+            Guard.Against.OutOfRange(percentHrsOnSolar,
+                nameof(percentHrsOnSolar), 0, 1);
 
             ApplianceId = appliance.Id;
             Appliance = appliance;
-            Usage = usage;
+            Quantity = quantity;
+            PowerConsumption = powerConsumption;
+            NumHours = numHours;
+            PercentHrsOnSolar = percentHrsOnSolar;
             Enabled = enabled;
         }
 
