@@ -26,8 +26,6 @@ namespace SolarTally.Domain.Entities
         public int ApplianceId { get; private set; }
         public Appliance Appliance { get; private set; }
 
-        public int ConsumptionId { get; private set; }
-
         /// <summary>The number of appliances owned.</summary>
         public int Quantity { get; private set; }
 
