@@ -8,12 +8,9 @@ namespace SolarTally.UnitTests.Domain.Entities
 {
     public class ConsumptionAddApplianceUsage
     {
-        private string _siteName = "A_SITE_NAME";
-        private int _siteNumSolarHours = 8;
-
         Consumption CreateConsumption()
         {
-            return new Consumption(new Site(_siteName, _siteNumSolarHours));
+            return new Consumption(new SiteBuilder().Build());
         }
 
         [Fact]
