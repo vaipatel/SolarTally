@@ -18,6 +18,11 @@ namespace SolarTally.Domain.Entities
         public IReadOnlyCollection<ApplianceUsage> ApplianceUsages =>
             _applianceUsages;
 
+        private Consumption()
+        {
+            // Apparently required for EF
+        }
+
         public Consumption(Site site)
         {
             _applianceUsages = new List<ApplianceUsage>();
