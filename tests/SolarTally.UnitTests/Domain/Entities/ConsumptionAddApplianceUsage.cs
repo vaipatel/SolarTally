@@ -37,9 +37,9 @@ namespace SolarTally.UnitTests.Domain.Entities
             consumption.AddApplianceUsage(appliance);
             var foundAppliance = consumption.ApplianceUsages.First().Appliance;
             
-            Assert.Equal(_applianceName, foundAppliance.Name);
-            Assert.Equal(_applianceDesc, foundAppliance.Description);
-            Assert.Equal(_applianceDefaultPowerConsumption,
+            Assert.Equal(appliance.Name, foundAppliance.Name);
+            Assert.Equal(appliance.Description, foundAppliance.Description);
+            Assert.Equal(appliance.DefaultPowerConsumption,
                 foundAppliance.DefaultPowerConsumption);
         }
 
