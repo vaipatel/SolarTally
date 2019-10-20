@@ -7,6 +7,9 @@ using Ardalis.GuardClauses;
 
 namespace SolarTally.Domain.Entities
 {
+    /// <summary>
+    /// Encapsulates details of total usage across all appliances
+    /// </summary>
     public class Consumption : BaseEntity<int>, IAggregateRoot
     {
         // Site Foreign Key
