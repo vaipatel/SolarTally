@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using SolarTally.Domain.Common;
+using SolarTally.Domain.ValueObjects;
 using SolarTally.Domain.Interfaces;
 using Ardalis.GuardClauses;
 
@@ -22,6 +23,15 @@ namespace SolarTally.Domain.Entities
             _applianceUsages = new List<ApplianceUsage>();
             SiteId = site.Id;
             Site = site;
+        }
+
+        public void AddApplianceUsage(Appliance appliance)
+        {
+            Guard.Against.Null(appliance, nameof(appliance));
+            var usage = new UsageParams(1, appliance.DefaultPowerConsumption,
+                2,1);
+            var applianceUsage = new ApplianceUsage(appliance, usage, true);
+            _applianceUsages.Add(applianceUsage);
         }
 
         public void ModifyAppliance(int applianceUsageId, Appliance appliance)
