@@ -49,7 +49,8 @@ namespace SolarTally.UnitTests.Domain.Entities
             Assert.Equal(1, foundApplianceUsage.Quantity);
             Assert.Equal(appliance.DefaultPowerConsumption,
                 foundApplianceUsage.PowerConsumption);
-            Assert.Equal(2, foundApplianceUsage.NumHours);
+            Assert.Equal(consumption.Site.NumSolarHours,
+                foundApplianceUsage.NumHours);
             Assert.Equal(1, foundApplianceUsage.PercentHrsOnSolar);
         }
     }
