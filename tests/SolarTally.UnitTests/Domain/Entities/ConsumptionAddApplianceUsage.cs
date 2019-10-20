@@ -1,6 +1,7 @@
 using System.Linq;
 using Xunit;
 using SolarTally.Domain.Entities;
+using SolarTally.UnitTests.Builders;
 
 namespace SolarTally.UnitTests.Domain.Entities
 {
@@ -25,7 +26,8 @@ namespace SolarTally.UnitTests.Domain.Entities
         void AddsAnApplianceUsage()
         {
             var consumption = CreateConsumption();
-            consumption.AddApplianceUsage(CreateAppliance());
+            var appliance = new ApplianceBuilder().Build();
+            consumption.AddApplianceUsage(appliance);
             Assert.Equal(1, consumption.ApplianceUsages.Count);
         }
 
@@ -33,7 +35,7 @@ namespace SolarTally.UnitTests.Domain.Entities
         void AddsAnApplianceUsageWithTheCorrectAppliance()
         {
             var consumption = CreateConsumption();
-            var appliance = CreateAppliance();
+            var appliance = new ApplianceBuilder().Build();
             consumption.AddApplianceUsage(appliance);
             var foundAppliance = consumption.ApplianceUsages.First().Appliance;
             
@@ -47,7 +49,7 @@ namespace SolarTally.UnitTests.Domain.Entities
         void AddsAnApplianceUsageWithCorrectUsage()
         {
             var consumption = CreateConsumption();
-            var appliance = CreateAppliance();
+            var appliance = new ApplianceBuilder().Build();
             consumption.AddApplianceUsage(appliance);
             var foundApplianceUsage = consumption.ApplianceUsages.First();
 
