@@ -8,18 +8,10 @@ namespace SolarTally.UnitTests.Domain.Entities
     public class ConsumptionAddApplianceUsage
     {
         private string _siteName = "A_SITE_NAME";
-        private string _applianceName = "AN_APPLIANCE";
-        private string _applianceDesc = "AN_APPLIANCE_DESC";
-        private decimal _applianceDefaultPowerConsumption = 20.5m;
 
         Consumption CreateConsumption()
         {
             return new Consumption(new Site(_siteName));
-        }
-        Appliance CreateAppliance()
-        {
-            return new Appliance(_applianceName, _applianceDesc,
-                _applianceDefaultPowerConsumption);
         }
 
         [Fact]
