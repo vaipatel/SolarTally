@@ -75,6 +75,13 @@ namespace SolarTally.Domain.Entities
             Enabled = enabled;
         }
 
+        public void SetNumHours(int newNumHours)
+        {
+            Guard.Against.OutOfRange(newNumHours, 
+                nameof(newNumHours), 0, 24);
+            NumHours = newNumHours;
+        }
+
         public void SetPowerConsumptionToDefault()
         {
             PowerConsumption = Appliance.DefaultPowerConsumption;
