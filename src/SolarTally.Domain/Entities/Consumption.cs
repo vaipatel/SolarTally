@@ -43,14 +43,6 @@ namespace SolarTally.Domain.Entities
             _applianceUsages.Add(applianceUsage);
         }
 
-        // public void AddApplianceUsageWithId(int id, Appliance appliance)
-        // {
-        //     Guard.Against.AlreadyHasOne(_applianceUsages,
-        //         nameof(_applianceUsages), au => au.Id == id);
-        //     AddApplianceUsage(appliance);
-        //     _applianceUsages.Last().Id = id;
-        // }
-
         public void UpdateApplianceUsageHours(int applianceUsageId,
             int newNumHours)
         {

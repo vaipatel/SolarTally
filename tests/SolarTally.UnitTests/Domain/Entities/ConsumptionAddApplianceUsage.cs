@@ -53,29 +53,5 @@ namespace SolarTally.UnitTests.Domain.Entities
             Assert.Equal(ApplianceUsage.DefaultPercentHrsOnSolar,
                 foundApplianceUsage.PercentHrsOnSolar);
         }
-
-        // [Fact]
-        // void AddsAnApplianceUsageWithCorrectId()
-        // {
-        //     var consumption = CreateConsumption();
-        //     var appliance = new ApplianceBuilder().Build();
-        //     int id = 24;
-        //     consumption.AddApplianceUsageWithId(id, appliance);
-        //     var foundApplianceUsage = consumption.ApplianceUsages.Last();
-
-        //     Assert.Equal(id, foundApplianceUsage.Id);
-        // }
-
-        // [Fact]
-        // void ThrowsIfAddingApplianceUsageWithRepeatId()
-        // {
-        //     var consumption = CreateConsumption();
-        //     var appliance1 = new ApplianceBuilder().Build();
-        //     var appliance2 = new ApplianceBuilder().Build();
-        //     int id = 24;
-        //     consumption.AddApplianceUsageWithId(id, appliance1);
-        //     Assert.Throws<ArgumentException>(() =>
-        //         consumption.AddApplianceUsageWithId(id, appliance2));
-        // }
     }
 }
