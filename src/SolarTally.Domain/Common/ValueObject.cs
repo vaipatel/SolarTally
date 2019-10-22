@@ -9,11 +9,11 @@ namespace SolarTally.Domain.Common
     /// 2. is immutable
     /// 3. is used as by itself or in a collection as a property of an entity
     /// </summary>
-    /// <remark>
+    /// <remarks>
     /// In point 3 above, immutable means you don't directly change just an 
     /// attribute of a given value object - you must make a whole new value 
     /// object.
-    /// </remark>
+    /// </remarks>
     public abstract class ValueObject
     {
         protected static bool EqualOperator(ValueObject left, ValueObject right)
