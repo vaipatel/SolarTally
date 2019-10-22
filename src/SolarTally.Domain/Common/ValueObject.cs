@@ -13,6 +13,7 @@ namespace SolarTally.Domain.Common
     /// In point 3 above, immutable means you don't directly change just an 
     /// attribute of a given value object - you must make a whole new value 
     /// object.
+    /// </remark>
     public abstract class ValueObject
     {
         protected static bool EqualOperator(ValueObject left, ValueObject right)

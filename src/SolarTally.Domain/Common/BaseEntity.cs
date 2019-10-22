@@ -16,7 +16,7 @@ namespace SolarTally.Domain.Common
     /// of the Ordering.Domain project in eShopOnContainers.</see>
     /// The key difference is that I've genericized the class to accept int or
     /// Guid.
-    /// TODO: Perhaps I can constrain T to be IComparable, IComparable<T> etc.
+    /// TODO: Perhaps I can constrain T to be IComparable, IComparable{T} etc.
     /// </remark>
     public abstract class BaseEntity<T>
     {
