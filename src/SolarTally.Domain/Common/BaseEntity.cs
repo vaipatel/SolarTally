@@ -10,14 +10,15 @@ namespace SolarTally.Domain.Common
     /// Most of the domain entities will be derived from here. T can be int or
     /// Guid.
     /// </summary>
-    /// <remark>
+    /// <remarks>
     /// I've stolen most of the below from the
     /// <see href="https://bit.ly/33Qe0l9">Entity class in the SeedWork folder
     /// of the Ordering.Domain project in eShopOnContainers.</see>
     /// The key difference is that I've genericized the class to accept int or
     /// Guid.
-    /// TODO: Perhaps I can constrain T to be IComparable, IComparable{T} etc.
-    /// </remark>
+    ///
+    /// TODO: Perhaps I can constrain T to be IComparable, IComparable<T> etc.
+    /// </remarks>
     public abstract class BaseEntity<T>
     {
         int? _requestedHashCode;
