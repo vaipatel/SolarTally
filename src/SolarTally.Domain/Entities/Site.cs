@@ -1,6 +1,7 @@
 using SolarTally.Domain.Common;
 using SolarTally.Domain.ValueObjects;
 using SolarTally.Domain.Interfaces;
+using SolarTally.Domain.Events;
 using Ardalis.GuardClauses;
 
 namespace SolarTally.Domain.Entities
@@ -30,6 +31,15 @@ namespace SolarTally.Domain.Entities
             NumSolarHours = numSolarHours;
             Consumption = new Consumption(this);
             ConsumptionId = Consumption.Id;
+        }
+
+        public void UpdateNumSolarHours(int newNumSolarHours)
+        {
+            Guard.Against.OutOfRange(newNumSolarHours, nameof(newNumSolarHours),
+                0, 24);
+            NumSolarHours = newNumSolarHours;
+            this.AddDomainEvent(
+                new SiteNumSolarHoursUpdatedDomainEvent(this));
         }
     }
 }
