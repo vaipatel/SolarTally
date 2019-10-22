@@ -23,6 +23,10 @@ namespace SolarTally.Domain.Entities
     /// </remark>
     public class ApplianceUsage : BaseEntity<int>
     {
+        // Some constants to reduce magic numbers
+        public const int DefaultQuantity = 1;
+        public const int DefaultPercentHrsOnSolar = 1;
+
         public int ApplianceId { get; private set; }
         public Appliance Appliance { get; private set; }
 
