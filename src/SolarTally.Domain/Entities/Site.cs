@@ -38,8 +38,15 @@ namespace SolarTally.Domain.Entities
             Guard.Against.OutOfRange(numSolarHours, nameof(numSolarHours),
                 0, 24);
             NumSolarHours = numSolarHours;
-            this.AddDomainEvent(
-                new SiteNumSolarHoursUpdatedDomainEvent(this));
+
+            // Cap appliance usage hours if needed
+            foreach(var applianceUsage in Consumption.ApplianceUsages)
+            {
+                if (applianceUsage.NumHours > numSolarHours)
+                {
+                    applianceUsage.SetNumHours(numSolarHours);
+                }
+            }
         }
     }
 }
