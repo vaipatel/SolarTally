@@ -33,11 +33,11 @@ namespace SolarTally.Domain.Entities
             ConsumptionId = Consumption.Id;
         }
 
-        public void UpdateNumSolarHours(int newNumSolarHours)
+        public void SetNumSolarHours(int numSolarHours)
         {
-            Guard.Against.OutOfRange(newNumSolarHours, nameof(newNumSolarHours),
+            Guard.Against.OutOfRange(numSolarHours, nameof(numSolarHours),
                 0, 24);
-            NumSolarHours = newNumSolarHours;
+            NumSolarHours = numSolarHours;
             this.AddDomainEvent(
                 new SiteNumSolarHoursUpdatedDomainEvent(this));
         }
