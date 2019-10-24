@@ -61,22 +61,37 @@ namespace SolarTally.Domain.Entities
             decimal powerConsumption, int numHours, decimal percentHrsOnSolar,
             bool enabled)
         {
-            Guard.Against.Null(appliance, nameof(appliance));
-            Guard.Against.LessThan(quantity, nameof(quantity), 0);
-            Guard.Against.LessThan(powerConsumption,
-                nameof(powerConsumption), 0);
-            Guard.Against.OutOfRange(numHours, 
-                nameof(numHours), 0, 24);
-            Guard.Against.CustomOutOfRange(percentHrsOnSolar,
-                nameof(percentHrsOnSolar), 0, 1);
+            this.SetAppliance(appliance);
+            this.SetQuantity(quantity);
+            this.SetPowerConsumption(powerConsumption);
+            this.SetNumHours(numHours);
+            this.SetPercentHrsOnSolar(percentHrsOnSolar);
+            this.SetEnabled(enabled);
+        }
 
+        public void SetAppliance(Appliance appliance)
+        {
+            Guard.Against.Null(appliance, nameof(appliance));
             ApplianceId = appliance.Id;
             Appliance = appliance;
+        }
+
+        public void SetQuantity(int quantity)
+        {
+            Guard.Against.LessThan(quantity, nameof(quantity), 0);
             Quantity = quantity;
-            PowerConsumption = powerConsumption;
-            NumHours = numHours;
-            PercentHrsOnSolar = percentHrsOnSolar;
-            Enabled = enabled;
+        }
+
+        public void SetPowerConsumption(decimal powerConsumption)
+        {
+            Guard.Against.LessThan(powerConsumption,
+                nameof(powerConsumption), 0);
+            PowerConsumption = Appliance.DefaultPowerConsumption;
+        }
+
+        public void SetPowerConsumptionToDefault()
+        {
+            this.SetPowerConsumption(Appliance.DefaultPowerConsumption);
         }
 
         public void SetNumHours(int numHours)
@@ -85,18 +100,17 @@ namespace SolarTally.Domain.Entities
                 nameof(numHours), 0, 24);
             NumHours = numHours;
         }
+
+        public void SetPercentHrsOnSolar(decimal percentHrsOnSolar)
+        {
+            Guard.Against.CustomOutOfRange(percentHrsOnSolar,
+                nameof(percentHrsOnSolar), 0, 1);
+            PercentHrsOnSolar = percentHrsOnSolar;
         }
 
-        public void SetPowerConsumptionToDefault()
+        public void SetEnabled(bool enabled)
         {
-            PowerConsumption = Appliance.DefaultPowerConsumption;
-        }
-
-        public void SetAppliance(Appliance appliance)
-        {
-            Guard.Against.Null(appliance, nameof(appliance));
-            ApplianceId = appliance.Id;
-            Appliance = appliance;
+            Enabled = enabled;
         }
     }
 }
