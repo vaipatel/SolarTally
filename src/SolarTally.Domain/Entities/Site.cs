@@ -23,14 +23,12 @@ namespace SolarTally.Domain.Entities
         public Consumption Consumption { get; private set; }
 
         public Site(string name, int numSolarHours)
-        {
-            Guard.Against.OutOfRange(numSolarHours, nameof(numSolarHours), 0,
-                24);
-            
+        {   
             Name = name;
-            NumSolarHours = numSolarHours;
             Consumption = new Consumption(this);
             ConsumptionId = Consumption.Id;
+            
+            this.SetNumSolarHours(numSolarHours);
         }
 
         public void SetNumSolarHours(int numSolarHours)
