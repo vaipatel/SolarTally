@@ -15,7 +15,7 @@ namespace SolarTally.Domain.Entities
         //public byte[] Image { get; set; }
 
         /// <summary>The amount of power consumed in Watts.</summary>
-        public decimal DefaultPowerConsumption { get; set; }
+        public decimal DefaultPowerConsumption { get; private set; }
 
         public int ApplianceUsageId { get; private set; }
 
@@ -27,10 +27,15 @@ namespace SolarTally.Domain.Entities
         public Appliance(string name, string description,
             decimal defaultPowerConsumption)
         {
-            Guard.Against.LessThan(defaultPowerConsumption,
-                nameof(defaultPowerConsumption), 0);
             Name = name;
             Description = description;
+            this.SetDefaultPowerConsumption(defaultPowerConsumption);
+        }
+
+        public void SetDefaultPowerConsumption(decimal defaultPowerConsumption)
+        {
+            Guard.Against.LessThan(defaultPowerConsumption,
+                nameof(defaultPowerConsumption), 0);   
             DefaultPowerConsumption = defaultPowerConsumption;
         }
     }
