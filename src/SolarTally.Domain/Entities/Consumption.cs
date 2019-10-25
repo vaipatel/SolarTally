@@ -43,15 +43,14 @@ namespace SolarTally.Domain.Entities
             _applianceUsages.Add(applianceUsage);
         }
 
-        public void UpdateApplianceUsageHours(int applianceUsageId,
-            int newNumHours)
+        public void SetApplianceUsageHours(int applianceUsageId, int numHours)
         {
             var applianceUsage = this.FindApplianceUsageById(applianceUsageId);
             Guard.Against.Null(applianceUsage, nameof(applianceUsage));
-            Guard.Against.InvalidApplianceUsageHours(newNumHours,
+            Guard.Against.InvalidApplianceUsageHours(numHours,
                 applianceUsage.PercentHrsOnSolar, Site.NumSolarHours);
             // Below should be fine bcoz I think applianceUsage is a ref ..
-            applianceUsage.SetNumHours(newNumHours);
+            applianceUsage.SetNumHours(numHours);
         }
 
         private ApplianceUsage FindApplianceUsageById(int applianceUsageId)
