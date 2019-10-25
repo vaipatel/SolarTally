@@ -55,17 +55,5 @@ namespace SolarTally.Domain.Entities
             // Below should be fine bcoz I think applianceUsage is a ref ..
             applianceUsage.SetNumHours(newNumHours);
         }
-
-        public void ModifyAppliance(int applianceUsageId, Appliance appliance)
-        {
-            var applianceUsage = _applianceUsages
-                .Where(au => au.Id == applianceUsageId)
-                .Single();
-            Guard.Against.Null(applianceUsage, nameof(applianceUsage));
-            if (applianceUsage.ApplianceId != appliance.Id)
-            {
-                applianceUsage.SetAppliance(appliance);
-            }
-        }
     }
 }
