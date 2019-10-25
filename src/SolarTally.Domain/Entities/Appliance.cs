@@ -8,7 +8,7 @@ namespace SolarTally.Domain.Entities
     /// </summary>
     public class Appliance : BaseEntity<int>
     {
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         public string Description { get; set; }
 
@@ -27,9 +27,15 @@ namespace SolarTally.Domain.Entities
         public Appliance(string name, string description,
             decimal defaultPowerConsumption)
         {
-            Name = name;
-            Description = description;
+            this.SetName(name);
             this.SetDefaultPowerConsumption(defaultPowerConsumption);
+            Description = description;
+        }
+
+        public void SetName(string name)
+        {
+            Guard.Against.NullOrWhiteSpace(name, nameof(name));
+            Name = name;
         }
 
         public void SetDefaultPowerConsumption(decimal defaultPowerConsumption)

@@ -21,9 +21,10 @@ namespace SolarTally.UnitTests.Builders
             return _appliance;
         }
 
-        public Appliance WithoutNameAndDescription()
+        public Appliance WithoutDescription()
         {
-            _appliance = new Appliance("", "", TestDefaultPowerConsumption);
+            _appliance = new Appliance(TestName, "",
+                TestDefaultPowerConsumption);
             return _appliance;
         }
     }

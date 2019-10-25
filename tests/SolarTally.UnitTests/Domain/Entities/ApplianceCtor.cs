@@ -18,12 +18,31 @@ namespace SolarTally.UnitTests.Domain.Entities
         }
 
         [Fact]
-        void AllowsEmptyNameAndDescription()
+        void ThrowsForNullName()
         {
             var builder = new ApplianceBuilder();
-            var appliance = builder.WithoutNameAndDescription();
+            Assert.Throws<ArgumentNullException>(() => {
+                new Appliance(null, builder.TestDescription,
+                    builder.TestDefaultPowerConsumption);
+            });
+        }
 
-            Assert.Equal("", appliance.Name);
+        [Fact]
+        void ThrowsForEmptyName()
+        {
+            var builder = new ApplianceBuilder();
+            Assert.Throws<ArgumentException>(() => {
+                new Appliance("", builder.TestDescription,
+                    builder.TestDefaultPowerConsumption);
+            });
+        }
+
+        [Fact]
+        void AllowsEmptyDescription()
+        {
+            var builder = new ApplianceBuilder();
+            var appliance = builder.WithoutDescription();
+
             Assert.Equal("", appliance.Description);
         }
     }
