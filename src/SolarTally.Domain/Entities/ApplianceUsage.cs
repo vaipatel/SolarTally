@@ -110,7 +110,7 @@ namespace SolarTally.Domain.Entities
         {
             Guard.Against.LessThan(powerConsumption,
                 nameof(powerConsumption), 0);
-            PowerConsumption = Appliance.DefaultPowerConsumption;
+            PowerConsumption = powerConsumption;
             this.Recalculate();
         }
 
