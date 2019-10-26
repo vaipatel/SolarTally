@@ -12,9 +12,10 @@ namespace SolarTally.UnitTests.Domain.Entities
         {
             var builder = new ApplianceUsageBuilder();
             Assert.Throws<ArgumentNullException>(() => {
-                new ApplianceUsage(null, builder.TestQuantity,
-                    builder.TestPowerConsumption, builder.TestNumHours,
-                    builder.TestPercentHrsOnSolar, builder.TestEnabled);
+                new ApplianceUsage(builder.ConsumptionCalculator, null,
+                    builder.TestQuantity, builder.TestPowerConsumption,
+                    builder.TestNumHours, builder.TestPercentHrsOnSolar,
+                    builder.TestEnabled);
             });
         }
 
@@ -23,9 +24,10 @@ namespace SolarTally.UnitTests.Domain.Entities
         {
             var builder = new ApplianceUsageBuilder();
             Assert.Throws<ArgumentOutOfRangeException>(() => {
-                new ApplianceUsage(builder.TestAppliance, -1,
-                    builder.TestPowerConsumption, builder.TestNumHours,
-                    builder.TestPercentHrsOnSolar, builder.TestEnabled);
+                new ApplianceUsage(builder.ConsumptionCalculator,
+                    builder.TestAppliance, -1, builder.TestPowerConsumption, 
+                    builder.TestNumHours, builder.TestPercentHrsOnSolar, 
+                    builder.TestEnabled);
             });
         }
 
@@ -34,7 +36,8 @@ namespace SolarTally.UnitTests.Domain.Entities
         {
             var builder = new ApplianceUsageBuilder();
             Assert.Throws<ArgumentOutOfRangeException>(() => {
-                new ApplianceUsage(builder.TestAppliance, builder.TestQuantity,
+                new ApplianceUsage(builder.ConsumptionCalculator,
+                    builder.TestAppliance, builder.TestQuantity,
                     -10.5m, builder.TestNumHours, builder.TestPercentHrsOnSolar,
                     builder.TestEnabled);
             });
@@ -45,7 +48,8 @@ namespace SolarTally.UnitTests.Domain.Entities
         {
             var builder = new ApplianceUsageBuilder();
             Assert.Throws<ArgumentOutOfRangeException>(() => {
-                new ApplianceUsage(builder.TestAppliance, builder.TestQuantity,
+                new ApplianceUsage(builder.ConsumptionCalculator,
+                    builder.TestAppliance, builder.TestQuantity,
                     builder.TestPowerConsumption, -1,
                     builder.TestPercentHrsOnSolar, builder.TestEnabled);
             });
@@ -56,7 +60,8 @@ namespace SolarTally.UnitTests.Domain.Entities
         {
             var builder = new ApplianceUsageBuilder();
             Assert.Throws<ArgumentOutOfRangeException>(() => {
-                new ApplianceUsage(builder.TestAppliance, builder.TestQuantity,
+                new ApplianceUsage(builder.ConsumptionCalculator,
+                    builder.TestAppliance, builder.TestQuantity,
                     builder.TestPowerConsumption, 25,
                     builder.TestPercentHrsOnSolar, builder.TestEnabled);
             });
@@ -67,7 +72,8 @@ namespace SolarTally.UnitTests.Domain.Entities
         {
             var builder = new ApplianceUsageBuilder();
             Assert.Throws<ArgumentOutOfRangeException>(() => {
-                new ApplianceUsage(builder.TestAppliance, builder.TestQuantity,
+                new ApplianceUsage(builder.ConsumptionCalculator,
+                    builder.TestAppliance, builder.TestQuantity,
                     builder.TestPowerConsumption, builder.TestNumHours,
                     -1.1m, builder.TestEnabled);
             });
@@ -78,7 +84,8 @@ namespace SolarTally.UnitTests.Domain.Entities
         {
             var builder = new ApplianceUsageBuilder();
             Assert.Throws<ArgumentOutOfRangeException>(() => {
-                new ApplianceUsage(builder.TestAppliance, builder.TestQuantity,
+                new ApplianceUsage(builder.ConsumptionCalculator,
+                    builder.TestAppliance, builder.TestQuantity,
                     builder.TestPowerConsumption, builder.TestNumHours,
                     -1, builder.TestEnabled);
             });

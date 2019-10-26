@@ -1,5 +1,6 @@
 using SolarTally.Domain.Common;
 using SolarTally.Domain.ValueObjects;
+using SolarTally.Domain.Interfaces;
 using Ardalis.GuardClauses;
 
 namespace SolarTally.Domain.Entities
@@ -29,6 +30,7 @@ namespace SolarTally.Domain.Entities
 
         public int ApplianceId { get; private set; }
         public Appliance Appliance { get; private set; }
+        private IConsumptionCalculator _consumptionCalculator { get; set; }
 
         /// <summary>The number of appliances owned.</summary>
         public int Quantity { get; private set; }
@@ -57,10 +59,11 @@ namespace SolarTally.Domain.Entities
             // Apparently required by EF Core
         }
 
-        public ApplianceUsage(Appliance appliance, int quantity,
-            decimal powerConsumption, int numHours, decimal percentHrsOnSolar,
-            bool enabled)
+        public ApplianceUsage(IConsumptionCalculator consumptionCalculator,
+            Appliance appliance, int quantity, decimal powerConsumption,
+            int numHours, decimal percentHrsOnSolar, bool enabled)
         {
+            _consumptionCalculator = consumptionCalculator;
             this.SetAppliance(appliance);
             this.SetQuantity(quantity);
             this.SetPowerConsumption(powerConsumption);
