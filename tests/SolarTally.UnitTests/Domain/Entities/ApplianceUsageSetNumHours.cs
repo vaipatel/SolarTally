@@ -31,7 +31,7 @@ namespace SolarTally.UnitTests.Domain.Entities
             var builder = new ApplianceUsageBuilder();
             var applianceUsage = builder.Build();
             var siteNumSolarHours =
-                builder.ConsumptionCalculator.GetSiteNumSolarHours();
+                builder.TestConsumptionCalculator.GetSiteNumSolarHours();
             // First make sure that PercentHrsOnSolar is 100%
             Assert.Equal(1, applianceUsage.PercentHrsOnSolar);
             // Now should throw when trying to set more than site solar hrs

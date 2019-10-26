@@ -7,7 +7,7 @@ namespace SolarTally.UnitTests.Builders
     public class ApplianceUsageBuilder
     {
         private ApplianceUsage _applianceUsage;
-        public IConsumptionCalculator ConsumptionCalculator;
+        public IConsumptionCalculator TestConsumptionCalculator;
         private Appliance _appliance;
         public Appliance TestAppliance => _appliance;
         public int TestQuantity => 2;
@@ -19,8 +19,8 @@ namespace SolarTally.UnitTests.Builders
         public ApplianceUsageBuilder()
         {
             _appliance = new ApplianceBuilder().Build();
-            ConsumptionCalculator = new SiteBuilder().Build().Consumption;
-            _applianceUsage = new ApplianceUsage(ConsumptionCalculator,
+            TestConsumptionCalculator = new SiteBuilder().Build().Consumption;
+            _applianceUsage = new ApplianceUsage(TestConsumptionCalculator,
                 TestAppliance, TestQuantity, TestPowerConsumption, TestNumHours,
                 TestPercentHrsOnSolar, TestEnabled);
         }
