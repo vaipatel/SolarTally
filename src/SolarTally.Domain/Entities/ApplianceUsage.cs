@@ -104,6 +104,9 @@ namespace SolarTally.Domain.Entities
         {
             Guard.Against.OutOfRange(numHours, 
                 nameof(numHours), 0, 24);
+            Guard.Against.InvalidApplianceUsageHours(numHours,
+                PercentHrsOnSolar, _consumptionCalculator.GetSiteNumSolarHours()
+            );
             NumHours = numHours;
             _consumptionCalculator.Recalculate();
         }
@@ -112,6 +115,9 @@ namespace SolarTally.Domain.Entities
         {
             Guard.Against.CustomOutOfRange(percentHrsOnSolar,
                 nameof(percentHrsOnSolar), 0, 1);
+            Guard.Against.InvalidApplianceUsageHours(NumHours,
+                percentHrsOnSolar, _consumptionCalculator.GetSiteNumSolarHours()
+                );
             PercentHrsOnSolar = percentHrsOnSolar;
             _consumptionCalculator.Recalculate();
         }
