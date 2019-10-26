@@ -1,6 +1,6 @@
 using System;
 using Xunit;
-using SolarTally.Domain.Entities;
+using SolarTally.Domain.Exceptions;
 using SolarTally.UnitTests.Builders;
 
 namespace SolarTally.UnitTests.Domain.Entities
@@ -22,6 +22,21 @@ namespace SolarTally.UnitTests.Domain.Entities
             var applianceUsage = new ApplianceUsageBuilder().Build();
             Assert.Throws<ArgumentOutOfRangeException>(() => {
                 applianceUsage.SetNumHours(25);
+            });
+        }
+
+        [Fact]
+        void ThrowsCustomExForMoreThanSiteNumSolarHours()
+        {
+            var builder = new ApplianceUsageBuilder();
+            var applianceUsage = builder.Build();
+            var siteNumSolarHours =
+                builder.ConsumptionCalculator.GetSiteNumSolarHours();
+            // First make sure that PercentHrsOnSolar is 100%
+            Assert.Equal(1, applianceUsage.PercentHrsOnSolar);
+            // Now should throw when trying to set more than site solar hrs
+            Assert.Throws<ApplianceUsageHoursInvalidException>(() => {
+                applianceUsage.SetNumHours(siteNumSolarHours + 1);
             });
         }
 
