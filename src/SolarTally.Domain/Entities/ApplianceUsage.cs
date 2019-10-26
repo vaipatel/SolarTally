@@ -52,6 +52,9 @@ namespace SolarTally.Domain.Entities
         /// </summary>
         public decimal PercentHrsOnSolar { get; private set; }
 
+        /// <summary>
+        /// Whether this ApplianceUsage should be considered in the Consumption.
+        /// </summary>
         public bool Enabled { get; private set; }
 
         private ApplianceUsage()
