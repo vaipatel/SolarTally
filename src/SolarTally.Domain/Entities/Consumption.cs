@@ -10,7 +10,8 @@ namespace SolarTally.Domain.Entities
     /// <summary>
     /// Encapsulates details of total usage across all appliances
     /// </summary>
-    public class Consumption : BaseEntity<int>, IAggregateRoot
+    public class Consumption : BaseEntity<int>, IAggregateRoot,
+        IConsumptionCalculator
     {
         // Site Foreign Key
         public int SiteId { get; private set; }
@@ -36,29 +37,21 @@ namespace SolarTally.Domain.Entities
         public void AddApplianceUsage(Appliance appliance)
         {
             Guard.Against.Null(appliance, nameof(appliance));
-            var applianceUsage = new ApplianceUsage(appliance,
+            var applianceUsage = new ApplianceUsage(this, appliance,
                 ApplianceUsage.DefaultQuantity,
                 appliance.DefaultPowerConsumption, Site.NumSolarHours,
                 ApplianceUsage.DefaultPercentHrsOnSolar, true);
             _applianceUsages.Add(applianceUsage);
         }
 
-        public void SetApplianceUsageHours(int applianceUsageId, int numHours)
+        public int GetSiteNumSolarHours()
         {
-            var applianceUsage = this.FindApplianceUsageById(applianceUsageId);
-            Guard.Against.Null(applianceUsage, nameof(applianceUsage));
-            Guard.Against.InvalidApplianceUsageHours(numHours,
-                applianceUsage.PercentHrsOnSolar, Site.NumSolarHours);
-            // Below should be fine bcoz I think applianceUsage is a ref ..
-            applianceUsage.SetNumHours(numHours);
+            return Site.NumSolarHours;
         }
 
-        private ApplianceUsage FindApplianceUsageById(int applianceUsageId)
+        public void Recalculate()
         {
-            var applianceUsage = _applianceUsages
-                .Where(au => au.Id == applianceUsageId)
-                .Single();
-            return applianceUsage;
+            // TODO
         }
     }
 }
