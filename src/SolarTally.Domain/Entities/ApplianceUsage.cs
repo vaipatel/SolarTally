@@ -8,7 +8,7 @@ namespace SolarTally.Domain.Entities
     /// <summary>
     /// Encapsulates the particular usage of an Appliance for a given Consumer.
     /// </summary>
-    /// <remark> 
+    /// <remarks> 
     /// I can't decide if ApplianceUsage has an identity in the domain outside 
     /// of Consumption. It sure seems like it doesn't. It seems much more like 
     /// an Address than an Order.
@@ -21,7 +21,7 @@ namespace SolarTally.Domain.Entities
     /// seem right to me.
     /// 
     /// I'm making it an Entity for now. We shall see.
-    /// </remark>
+    /// </remarks>
     public class ApplianceUsage : BaseEntity<int>
     {
         // Some constants to reduce magic numbers
@@ -59,6 +59,16 @@ namespace SolarTally.Domain.Entities
             // Apparently required by EF Core
         }
 
+        /// <summary>
+        /// Makes an ApplianceUsage line.
+        /// </summary>
+        /// <remarks>
+        /// We're passing in an IConsumptionCalculator so that we can get
+        /// the Consumption/Site info like NumSolarHours and tell the
+        /// Consumption it should Recalculate(), but without having to
+        /// pass in the entire Consumption object, and thus avoiding any
+        /// unintended consequences through, say, some weird list-manipulation.
+        /// </remarks>
         public ApplianceUsage(IConsumptionCalculator consumptionCalculator,
             Appliance appliance, int quantity, decimal powerConsumption,
             int numHours, decimal percentHrsOnSolar, bool enabled)
