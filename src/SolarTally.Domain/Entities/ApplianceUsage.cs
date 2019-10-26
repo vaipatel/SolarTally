@@ -57,6 +57,11 @@ namespace SolarTally.Domain.Entities
         /// </summary>
         public bool Enabled { get; private set; }
 
+        /// <summary>
+        /// Calculated Usage Totals for this ApplianceUsage.
+        /// </summary>
+        public ApplianceUsageTotal ApplianceUsageTotal { get; private set; }
+
         private ApplianceUsage()
         {
             // Apparently required by EF Core
