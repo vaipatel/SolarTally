@@ -22,7 +22,7 @@ namespace SolarTally.Domain.Entities
     /// 
     /// I'm making it an Entity for now. We shall see.
     /// </remarks>
-    public class ApplianceUsage : BaseEntity<int>
+    public class ApplianceUsage : BaseEntity<int>, IApplianceUsageInfo
     {
         // Some constants to reduce magic numbers
         public const int DefaultQuantity = 1;
@@ -34,9 +34,11 @@ namespace SolarTally.Domain.Entities
 
         /// <summary>The number of appliances owned.</summary>
         public int Quantity { get; private set; }
+        public int GetQuantity() => Quantity;
 
         /// <summary>The amount of power consumed in Watts.</summary>
         public decimal PowerConsumption { get; private set; }
+        public decimal GetPowerConsumption() => PowerConsumption;
 
         /// <summary>
         /// Hrs to run the appliance.
@@ -46,6 +48,7 @@ namespace SolarTally.Domain.Entities
         /// easier for the user to input this info.
         /// </remark>
         public int NumHours { get; private set; }
+        public int GetNumHours() => NumHours;
 
         /// <summary>
         /// Percent of hrs to run the appliance when solar is available.
@@ -154,8 +157,7 @@ namespace SolarTally.Domain.Entities
         /// </summary>
         private void Recalculate()
         {
-            ApplianceUsageTotal = new ApplianceUsageTotal(Quantity,
-                PowerConsumption, NumHours);
+            ApplianceUsageTotal = new ApplianceUsageTotal(this);
             _consumptionCalculator.Recalculate();
         }
     }

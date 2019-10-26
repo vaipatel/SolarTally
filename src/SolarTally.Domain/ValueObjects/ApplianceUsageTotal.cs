@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using SolarTally.Domain.Common;
+using SolarTally.Domain.Interfaces;
 
 namespace SolarTally.Domain.ValueObjects
 {
@@ -14,9 +15,11 @@ namespace SolarTally.Domain.ValueObjects
 
     private ApplianceUsageTotal() { }
 
-    public ApplianceUsageTotal(int quantity, decimal powerConsumption,
-        int numHours)
+    public ApplianceUsageTotal(IApplianceUsageInfo applianceUsageInfo)
     {
+        var quantity = applianceUsageInfo.GetQuantity();
+        var powerConsumption = applianceUsageInfo.GetPowerConsumption();
+        var numHours = applianceUsageInfo.GetNumHours();
         TotalPowerConsumption = quantity * powerConsumption;
         TotalEnergyConsumption = TotalPowerConsumption * numHours;
     }
