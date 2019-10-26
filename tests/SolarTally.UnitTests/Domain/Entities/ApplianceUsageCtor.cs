@@ -87,7 +87,7 @@ namespace SolarTally.UnitTests.Domain.Entities
                 new ApplianceUsage(builder.ConsumptionCalculator,
                     builder.TestAppliance, builder.TestQuantity,
                     builder.TestPowerConsumption, builder.TestNumHours,
-                    -1, builder.TestEnabled);
+                    1.1m, builder.TestEnabled);
             });
         }
     }
