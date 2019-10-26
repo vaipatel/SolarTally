@@ -89,7 +89,7 @@ namespace SolarTally.Domain.Entities
             this.SetPercentHrsOnSolar(percentHrsOnSolar);
             this.SetEnabled(enabled);
             // Recalculate
-            _consumptionCalculator.Recalculate();
+            this.Recalculate();
         }
 
         public void SetAppliance(Appliance appliance)
@@ -103,7 +103,7 @@ namespace SolarTally.Domain.Entities
         {
             Guard.Against.LessThan(quantity, nameof(quantity), 0);
             Quantity = quantity;
-            _consumptionCalculator.Recalculate();
+            this.Recalculate();
         }
 
         public void SetPowerConsumption(decimal powerConsumption)
@@ -111,13 +111,13 @@ namespace SolarTally.Domain.Entities
             Guard.Against.LessThan(powerConsumption,
                 nameof(powerConsumption), 0);
             PowerConsumption = Appliance.DefaultPowerConsumption;
-            _consumptionCalculator.Recalculate();
+            this.Recalculate();
         }
 
         public void SetPowerConsumptionToDefault()
         {
             this.SetPowerConsumption(Appliance.DefaultPowerConsumption);
-            _consumptionCalculator.Recalculate();
+            this.Recalculate();
         }
 
         public void SetNumHours(int numHours)
@@ -128,7 +128,7 @@ namespace SolarTally.Domain.Entities
                 PercentHrsOnSolar, _consumptionCalculator.GetSiteNumSolarHours()
             );
             NumHours = numHours;
-            _consumptionCalculator.Recalculate();
+            this.Recalculate();
         }
 
         public void SetPercentHrsOnSolar(decimal percentHrsOnSolar)
@@ -139,12 +139,23 @@ namespace SolarTally.Domain.Entities
                 percentHrsOnSolar, _consumptionCalculator.GetSiteNumSolarHours()
                 );
             PercentHrsOnSolar = percentHrsOnSolar;
-            _consumptionCalculator.Recalculate();
+            this.Recalculate();
         }
 
         public void SetEnabled(bool enabled)
         {
             Enabled = enabled;
+            this.Recalculate();
+        }
+
+        /// <summary>
+        /// Recalcs the ApplianceUsageTotal for this and then asks Consumption
+        /// to recalc overall totals.
+        /// </summary>
+        private void Recalculate()
+        {
+            ApplianceUsageTotal = new ApplianceUsageTotal(Quantity,
+                PowerConsumption, NumHours);
             _consumptionCalculator.Recalculate();
         }
     }
