@@ -80,6 +80,8 @@ namespace SolarTally.Domain.Entities
             this.SetNumHours(numHours);
             this.SetPercentHrsOnSolar(percentHrsOnSolar);
             this.SetEnabled(enabled);
+            // Recalculate
+            _consumptionCalculator.Recalculate();
         }
 
         public void SetAppliance(Appliance appliance)
