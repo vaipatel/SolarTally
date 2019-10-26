@@ -83,6 +83,7 @@ namespace SolarTally.Domain.Entities
         {
             Guard.Against.LessThan(quantity, nameof(quantity), 0);
             Quantity = quantity;
+            _consumptionCalculator.Recalculate();
         }
 
         public void SetPowerConsumption(decimal powerConsumption)
@@ -90,11 +91,13 @@ namespace SolarTally.Domain.Entities
             Guard.Against.LessThan(powerConsumption,
                 nameof(powerConsumption), 0);
             PowerConsumption = Appliance.DefaultPowerConsumption;
+            _consumptionCalculator.Recalculate();
         }
 
         public void SetPowerConsumptionToDefault()
         {
             this.SetPowerConsumption(Appliance.DefaultPowerConsumption);
+            _consumptionCalculator.Recalculate();
         }
 
         public void SetNumHours(int numHours)
@@ -102,6 +105,7 @@ namespace SolarTally.Domain.Entities
             Guard.Against.OutOfRange(numHours, 
                 nameof(numHours), 0, 24);
             NumHours = numHours;
+            _consumptionCalculator.Recalculate();
         }
 
         public void SetPercentHrsOnSolar(decimal percentHrsOnSolar)
@@ -109,11 +113,13 @@ namespace SolarTally.Domain.Entities
             Guard.Against.CustomOutOfRange(percentHrsOnSolar,
                 nameof(percentHrsOnSolar), 0, 1);
             PercentHrsOnSolar = percentHrsOnSolar;
+            _consumptionCalculator.Recalculate();
         }
 
         public void SetEnabled(bool enabled)
         {
             Enabled = enabled;
+            _consumptionCalculator.Recalculate();
         }
     }
 }
