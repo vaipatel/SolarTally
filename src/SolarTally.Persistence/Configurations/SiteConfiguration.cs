@@ -8,11 +8,11 @@ namespace SolarTally.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Site> builder)
         {
-            builder.Property(a => a.Name)
+            builder.Property(s => s.Name)
                 .HasMaxLength(50)
                 .IsRequired();
             
-            builder.OwnsOne(a => a.MainAddress);
+            builder.OwnsOne(s => s.MainAddress);
 
             builder.Property(s => s.NumSolarHours)
                 .HasColumnType("smallint")
