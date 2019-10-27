@@ -22,6 +22,8 @@ namespace SolarTally.Domain.Entities
         public IReadOnlyCollection<ApplianceUsage> ApplianceUsages =>
             _applianceUsages;
 
+        public ConsumptionTotal ConsumptionTotal { get; private set; }
+
         private Consumption()
         {
             // Apparently required for EF
@@ -32,6 +34,7 @@ namespace SolarTally.Domain.Entities
             _applianceUsages = new List<ApplianceUsage>();
             SiteId = site.Id;
             Site = site;
+            this.Recalculate();
         }
 
         public void AddApplianceUsage(Appliance appliance)
@@ -42,6 +45,7 @@ namespace SolarTally.Domain.Entities
                 appliance.DefaultPowerConsumption, Site.NumSolarHours,
                 ApplianceUsage.DefaultPercentHrsOnSolar, true);
             _applianceUsages.Add(applianceUsage);
+            this.Recalculate();
         }
 
         public int GetSiteNumSolarHours()
@@ -51,7 +55,7 @@ namespace SolarTally.Domain.Entities
 
         public void Recalculate()
         {
-            // TODO
+            ConsumptionTotal = new ConsumptionTotal(this);
         }
     }
 }
