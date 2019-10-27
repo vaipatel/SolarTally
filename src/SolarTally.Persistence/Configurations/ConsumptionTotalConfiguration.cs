@@ -18,8 +18,8 @@ namespace SolarTally.Persistence.Configurations
     public class ConsumptionTotalConfiguration :
         IEntityTypeConfiguration<ConsumptionTotal>
     {
-        public void Configure(EntityTypeBuilder<ConsumptionTotal>
-            ctConfiguration)
+        public void Configure(
+            EntityTypeBuilder<ConsumptionTotal> ctConfiguration)
         {
             ctConfiguration.Property(ct => ct.TotalPowerConsumption)
                 .HasColumnType("decimal(18,2)")

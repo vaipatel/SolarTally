@@ -7,8 +7,8 @@ namespace SolarTally.Persistence.Configurations
     public class ConsumptionConfiguration :
         IEntityTypeConfiguration<Consumption>
     {
-        public void Configure(EntityTypeBuilder<Consumption>
-            consumptionConfiguration)
+        public void Configure(
+            EntityTypeBuilder<Consumption> consumptionConfiguration)
         {   
             consumptionConfiguration.Ignore(b => b.DomainEvents);
 
