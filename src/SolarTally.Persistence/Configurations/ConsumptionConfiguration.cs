@@ -12,7 +12,7 @@ namespace SolarTally.Persistence.Configurations
         {   
             consumptionConfiguration.Ignore(b => b.DomainEvents);
 
-            // Don't have a reference back to our Consumption
+            // I don't have a reference back to our Consumption, should be ok.
             // See https://docs.microsoft.com/en-us/ef/core/modeling/relationships#single-navigation-property
             consumptionConfiguration
                 .HasMany<ApplianceUsage>(c => c.ApplianceUsages);
