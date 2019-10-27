@@ -8,6 +8,8 @@ namespace SolarTally.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Site> siteConfiguration)
         {
+            siteConfiguration.Ignore(b => b.DomainEvents);
+            
             siteConfiguration.Property(s => s.Name)
                 .HasMaxLength(50)
                 .IsRequired();
