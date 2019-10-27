@@ -23,10 +23,12 @@ namespace SolarTally.Persistence.Configurations
         {
             ctConfiguration.Property(ct => ct.TotalPowerConsumption)
                 .HasColumnType("decimal(18,2)")
+                .HasDefaultValue<decimal>(0.00)
                 .IsRequired();
             
             ctConfiguration.Property(ct => ct.TotalEnergyConsumption)
                 .HasColumnType("decimal(18,2)")
+                .HasDefaultValue<decimal>(0.00)
                 .IsRequired();
         }
     }

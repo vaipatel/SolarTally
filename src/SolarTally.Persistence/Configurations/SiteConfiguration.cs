@@ -9,15 +9,17 @@ namespace SolarTally.Persistence.Configurations
         public void Configure(EntityTypeBuilder<Site> siteConfiguration)
         {
             siteConfiguration.Ignore(b => b.DomainEvents);
-            
+
             siteConfiguration.Property(s => s.Name)
                 .HasMaxLength(50)
+                .HasDefaultValue("Default Site Name")
                 .IsRequired();
             
             siteConfiguration.OwnsOne(s => s.MainAddress);
 
             siteConfiguration.Property(s => s.NumSolarHours)
                 .HasColumnType("smallint")
+                .HasDefaultValue<int>(8)
                 .IsRequired();
 
             // Don't think this is needed as it shud be autoconfigured by efcore
