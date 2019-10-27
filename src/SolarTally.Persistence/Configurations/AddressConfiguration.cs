@@ -6,24 +6,24 @@ namespace SolarTally.Persistence.Configurations
 {
     public class AddressConfiguration : IEntityTypeConfiguration<Address>
     {
-        public void Configure(EntityTypeBuilder<Address> builder)
+        public void Configure(EntityTypeBuilder<Address> addressConfiguration)
         {
-            builder.Property(a => a.ZipCode)
+            addressConfiguration.Property(a => a.ZipCode)
                 .HasMaxLength(18)
                 .IsRequired();
 
-            builder.Property(a => a.Street)
+            addressConfiguration.Property(a => a.Street)
                 .HasMaxLength(180)
                 .IsRequired();
 
-            builder.Property(a => a.State)
+            addressConfiguration.Property(a => a.State)
                 .HasMaxLength(60);
 
-            builder.Property(a => a.Country)
+            addressConfiguration.Property(a => a.Country)
                 .HasMaxLength(90)
                 .IsRequired();
 
-            builder.Property(a => a.City)
+            addressConfiguration.Property(a => a.City)
                 .HasMaxLength(100)
                 .IsRequired();
         }
