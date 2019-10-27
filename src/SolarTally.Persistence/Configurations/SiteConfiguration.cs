@@ -6,20 +6,20 @@ namespace SolarTally.Persistence.Configurations
 {
     public class SiteConfiguration : IEntityTypeConfiguration<Site>
     {
-        public void Configure(EntityTypeBuilder<Site> builder)
+        public void Configure(EntityTypeBuilder<Site> siteConfiguration)
         {
-            builder.Property(s => s.Name)
+            siteConfiguration.Property(s => s.Name)
                 .HasMaxLength(50)
                 .IsRequired();
             
-            builder.OwnsOne(s => s.MainAddress);
+            siteConfiguration.OwnsOne(s => s.MainAddress);
 
-            builder.Property(s => s.NumSolarHours)
+            siteConfiguration.Property(s => s.NumSolarHours)
                 .HasColumnType("smallint")
                 .IsRequired();
 
             // Don't think this is needed as it shud be autoconfigured by efcore
-            // builder.HasOne(s => s.Consumption)
+            // siteConfiguration.HasOne(s => s.Consumption)
             //     .WithOne(c => c.Site)
             //     .HasForeignKey<Consumption>(c => c.SiteId);
         }
