@@ -14,8 +14,14 @@ namespace SolarTally.Persistence.Configurations
             
             builder.OwnsOne(a => a.MainAddress);
 
-            builder.Property(a => a.NumSolarHours)
+            builder.Property(s => s.NumSolarHours)
+                .HasColumnType("smallint")
                 .IsRequired();
+
+            // Don't think this is needed as it shud be autoconfigured by efcore
+            // builder.HasOne(s => s.Consumption)
+            //     .WithOne(c => c.Site)
+            //     .HasForeignKey<Consumption>(c => c.SiteId);
         }
     }
 }
