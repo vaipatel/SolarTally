@@ -1,6 +1,6 @@
 # Domain Layer
 
-This folder should contain all the "core" or "domain-related" classes and 
+This folder should contain all the strictly "domain-related" classes and 
 functions - it represents the [innermost circles upto the "Application" layer 
 in the "onion architecture"](https://youtu.be/Zygw4UAxCdg?t=55).
 
