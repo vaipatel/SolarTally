@@ -8,6 +8,7 @@
 
   <ItemGroup>
 		<PackageReference Include="AutoMapper" Version="9.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
@@ -17,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\SolarTally.Domain\SolarTally.Domain.csproj" />
     <ProjectReference Include="..\..\src\SolarTally.Application\SolarTally.Application.csproj" />
+    <ProjectReference Include="..\..\src\SolarTally.Persistence\SolarTally.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
