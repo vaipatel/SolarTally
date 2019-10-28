@@ -1,4 +1,3 @@
-using Microsoft.EntityFrameworkCore;
 using SolarTally.Application.Common.Interfaces;
 using SolarTally.Domain.Entities;
 using System;
