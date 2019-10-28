@@ -17,8 +17,6 @@ namespace SolarTally.Domain.Entities
         /// <summary>The amount of power consumed in Watts.</summary>
         public decimal DefaultPowerConsumption { get; private set; }
 
-        public int ApplianceUsageId { get; private set; }
-
         private Appliance()
         {
             // Apparently required by EF
