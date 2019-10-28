@@ -4,7 +4,7 @@ using SolarTally.Application.Common.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SolarTally.Application//.System.Commands.SeedSampleData
+namespace SolarTally.Application.System.Commands.SeedSampleData
 {
     public class SeedSampleDataCommand : IRequest
     {
