@@ -12,8 +12,8 @@ namespace SolarTally.Domain.Common
     /// </summary>
     /// <remarks>
     /// I've stolen most of the below from the
-    /// <see href="https://bit.ly/33Qe0l9">Entity class in the SeedWork folder
-    /// of the Ordering.Domain project in eShopOnContainers.</see>
+    /// <a href="https://bit.ly/33Qe0l9">Entity class in the SeedWork folder
+    /// of the Ordering.Domain project in eShopOnContainers.</a>
     /// The key difference is that I've genericized the class to accept int or
     /// Guid.
     ///

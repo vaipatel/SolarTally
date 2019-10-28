@@ -9,10 +9,10 @@ namespace SolarTally.Persistence.Configurations
     /// object.
     /// </summary>
     /// <remarks>
-    /// It seems that while we <see href="https://docs.microsoft.com/en-us/ef/core/modeling/owned-entities#by-design-restrictions">
-    /// cannot have a DbSet for a value object by design</see>, we <see href="https://github.com/dotnet-architecture/eShopOnWeb/blob/master/src/Infrastructure/Data/Config/AddressConfiguration.cs">
-    /// can have a configuration</see> <see href="https://github.com/dotnet-architecture/eShopOnWeb/blob/master/src/Infrastructure/Data/CatalogContext.cs#L40">
-    /// for the value object</see>. This makes sense to me because the
+    /// It seems that while we <a href="https://docs.microsoft.com/en-us/ef/core/modeling/owned-entities#by-design-restrictions">
+    /// cannot have a DbSet for a value object by design</a>, we <a href="https://github.com/dotnet-architecture/eShopOnWeb/blob/master/src/Infrastructure/Data/Config/AddressConfiguration.cs">
+    /// can have a configuration</a> <a href="https://github.com/dotnet-architecture/eShopOnWeb/blob/master/src/Infrastructure/Data/CatalogContext.cs#L40">
+    /// for the value object</a>. This makes sense to me because the
     /// configuration can offer info on the data types and constraints.
     /// </remarks>
     public class ConsumptionTotalConfiguration :
