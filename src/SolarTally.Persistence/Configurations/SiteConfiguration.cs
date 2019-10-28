@@ -22,10 +22,10 @@ namespace SolarTally.Persistence.Configurations
                 .HasDefaultValue<int>(8)
                 .IsRequired();
 
-            // Don't think this is needed as it shud be autoconfigured by efcore
-            // siteConfiguration.HasOne(s => s.Consumption)
-            //     .WithOne(c => c.Site)
-            //     .HasForeignKey<Consumption>(c => c.SiteId);
+            siteConfiguration.HasOne(s => s.Consumption)
+                .WithOne(c => c.Site)
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired(true);
         }
     }
 }
