@@ -7,7 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SolarTally.Application
+namespace SolarTally.Application.System.Commands.SeedSampleData
 {
     public class SampleDataSeeder
     {
