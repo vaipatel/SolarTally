@@ -2,7 +2,7 @@ using System;
 using Xunit;
 using SolarTally.Domain.Entities;
 
-namespace SolarTally.UnitTests.Domain.Entities
+namespace SolarTally.Domain.UnitTests.Entities
 {
     public class SiteCtor
     {

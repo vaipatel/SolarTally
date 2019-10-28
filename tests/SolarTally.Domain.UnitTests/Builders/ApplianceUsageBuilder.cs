@@ -2,7 +2,7 @@ using System;
 using SolarTally.Domain.Entities;
 using SolarTally.Domain.Interfaces;
 
-namespace SolarTally.UnitTests.Builders
+namespace SolarTally.Domain.UnitTests.Builders
 {
     public class ApplianceUsageBuilder
     {

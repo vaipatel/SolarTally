@@ -1,7 +1,7 @@
 using System;
 using SolarTally.Domain.Entities;
 
-namespace SolarTally.UnitTests.Builders
+namespace SolarTally.Domain.UnitTests.Builders
 {
     public class ApplianceBuilder
     {

@@ -1,9 +1,9 @@
 using System;
 using Xunit;
 using SolarTally.Domain.Entities;
-using SolarTally.UnitTests.Builders;
+using SolarTally.Domain.UnitTests.Builders;
 
-namespace SolarTally.UnitTests.Domain.Entities
+namespace SolarTally.Domain.UnitTests.Entities
 {
     public class ConsumptionCtor
     {

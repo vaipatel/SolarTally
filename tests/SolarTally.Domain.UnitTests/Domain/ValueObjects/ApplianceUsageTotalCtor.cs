@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using Xunit;
 using SolarTally.Domain.ValueObjects;
 using SolarTally.Domain.Entities;
-using SolarTally.UnitTests.Builders;
+using SolarTally.Domain.UnitTests.Builders;
 
-namespace SolarTally.UnitTests.Domain.ValueObjects
+namespace SolarTally.Domain.UnitTests.ValueObjects
 {
     public class ApplianceUsageTotalCtor
     {
