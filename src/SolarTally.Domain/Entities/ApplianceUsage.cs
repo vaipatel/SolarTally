@@ -32,6 +32,22 @@ namespace SolarTally.Domain.Entities
         public Appliance Appliance { get; private set; }
         private IConsumptionCalculator _consumptionCalculator { get; set; }
 
+        /// <summary>
+        /// FK back to the Consumption that owns this ApplianceUsage
+        /// </summary>
+        /// <remarks>
+        /// I need a FK back to Consumption for Cascade Delete to work without
+        /// having a nav prop, I think.
+        /// See <a href="https://docs.microsoft.com/en-us/ef/core/modeling/relationships#without-navigation-property">docs on efcore</a>.
+        ///
+        /// Hopefully this won't "leak" out too much - not much damage can be
+        /// done without having all the Site entities, at which point you also
+        /// own all the Consumption entities.
+        /// Additionally, the Site cannot be gotten from the ConsumptionId or
+        /// this ApplianceUsage.
+        /// </remarks>
+        public int ConsumptionId { get; set; }
+
         /// <summary>The number of appliances owned.</summary>
         public int Quantity { get; private set; }
         public int GetQuantity() => Quantity;
