@@ -23,6 +23,12 @@ namespace SolarTally.Application
         private readonly Dictionary<int, Appliance> Appliances =
             new Dictionary<int, Appliance>();
 
+        public SampleDataSeeder(ISolarTallyDbContext context, IUserManager userManager)
+        {
+            _context = context;
+            _userManager = userManager;
+        }
+        
         public async Task SeedAllAsync(CancellationToken cancellationToken)
         {
             MakeAppliances();
