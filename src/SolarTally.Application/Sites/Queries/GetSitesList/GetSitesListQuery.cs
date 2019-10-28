@@ -12,43 +12,43 @@ namespace SolarTally.Application.Sites.Queries.GetSitesList
     /// Request DTO for getting all the sites in a SitesListVm.
     /// </summary>
     /// <remarks>
-    /// The handler is nested with the request for Jason Taylor's practice.
+    /// The handler is placed after the request.
     /// </remarks>
     public class GetSitesListQuery : IRequest<SitesListVm>
     {
         // No props in our Query DTO at the moment. Maybe later we add UserId.
-        
-        /// <summary>
-        /// Handler for handling the GetSitesListsQuery request.
-        /// </summary>
-        public class GetSitesListQueryHandler :
-            IRequestHandler<GetSitesListQuery, SitesListVm>
+    }
+
+    /// <summary>
+    /// Handler for handling the GetSitesListsQuery request.
+    /// </summary>
+    public class GetSitesListQueryHandler :
+        IRequestHandler<GetSitesListQuery, SitesListVm>
+    {
+        private readonly ISolarTallyDbContext _context;
+        private readonly IMapper _mapper;
+
+        public GetSitesListQueryHandler(ISolarTallyDbContext context,
+            IMapper mapper)
         {
-            private readonly ISolarTallyDbContext _context;
-            private readonly IMapper _mapper;
+            _context = context;
+            _mapper = mapper;
+        }
 
-            public GetSitesListQueryHandler(ISolarTallyDbContext context,
-                IMapper mapper)
+        public async Task<SitesListVm> Handle(GetSitesListQuery request,
+            CancellationToken cancellationToken)
+        {
+            var sites = await _context.Sites
+                .ProjectTo<SiteDto>(_mapper.ConfigurationProvider)
+                .ToListAsync(cancellationToken);
+            
+            var vm = new SitesListVm
             {
-                _context = context;
-                _mapper = mapper;
-            }
+                Sites = sites,
+                Count = sites.Count
+            };
 
-            public async Task<SitesListVm> Handle(GetSitesListQuery request,
-                CancellationToken cancellationToken)
-            {
-                var sites = await _context.Sites
-                    .ProjectTo<SiteDto>(_mapper.ConfigurationProvider)
-                    .ToListAsync(cancellationToken);
-                
-                var vm = new SitesListVm
-                {
-                    Sites = sites,
-                    Count = sites.Count
-                };
-
-                return vm;
-            }
+            return vm;
         }
     }
 }
