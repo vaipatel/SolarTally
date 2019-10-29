@@ -32,7 +32,7 @@ namespace SolarTally.Application.UnitTests.Common
             };
             context.Appliances.AddRange(appliances);
             // TODO: Is this okay to do?
-            context.SaveChanges();
+            // context.SaveChanges();
 
             var site = new Site("PetroCanada Station", 7);
             context.Sites.Add(site);
