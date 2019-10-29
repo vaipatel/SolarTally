@@ -38,7 +38,20 @@ namespace SolarTally.Application.Sites.Queries.GetSitesList
         public async Task<SitesListVm> Handle(GetSitesListQuery request,
             CancellationToken cancellationToken)
         {
+            // Note: I'm adding AsNoTracking() below because without it I get
+            // the following error
+            // ------
+            // System.InvalidOperationException : A tracking query projects 
+            // owned entity without corresponding owner in result. Owned 
+            // entities cannot be tracked without their owner. Either include 
+            // the owner entity in the result or make query non-tracking using 
+            // AsNoTracking().
+            // ------
+            // Note (cont.): This might be a bug in EF Core 3.0, and might be
+            // resolved in 3.1.0, 3.1.0 preview.
+            // See https://github.com/aspnet/EntityFrameworkCore/issues/18024
             var sites = await _context.Sites
+                .AsNoTracking()
                 .ProjectTo<SiteDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
             
