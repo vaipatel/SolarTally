@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using SolarTally.Application.Appliances.Queries.Dtos;
 
 namespace SolarTally.Application.Appliances.Queries.GetAppliancesList
 {

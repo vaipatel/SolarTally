@@ -3,7 +3,7 @@ using SolarTally.Application.Common.Mappings;
 using SolarTally.Domain.Entities;
 using SolarTally.Domain.ValueObjects;
 
-namespace SolarTally.Application.Appliances.Queries.GetAppliancesList
+namespace SolarTally.Application.Appliances.Queries.Dtos
 {
     public class ApplianceDto : IMapFrom<Appliance>
     {

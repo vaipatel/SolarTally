@@ -5,6 +5,7 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SolarTally.Application.Common.Interfaces;
+using SolarTally.Application.Appliances.Queries.Dtos;
 
 namespace SolarTally.Application.Appliances.Queries.GetAppliancesList
 {
