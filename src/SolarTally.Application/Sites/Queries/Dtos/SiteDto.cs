@@ -21,10 +21,6 @@ namespace SolarTally.Application.Sites.Queries.Dtos
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Site, SiteDto>()
-                .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
-                .ForMember(d => d.Name, opt => opt.MapFrom(s => s.Name))
-                .ForMember(d => d.NumSolarHours, 
-                    opt => opt.MapFrom(s => s.NumSolarHours))
                 .ForMember(d => d.MainAddress,
                     opt => opt.MapFrom(s => s.MainAddress))
                 .ForMember(d => d.Consumption,

@@ -21,8 +21,6 @@ namespace SolarTally.Application.Consumptions.Queries.Dtos
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Consumption, ConsumptionDto>()
-                // .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
-                // .ForMember(d => d.Site, opt => opt.MapFrom(s => s.Site))
                 // .ForMember(d => d.ApplianceUsages,
                 //     opt => opt.MapFrom(s => s.ApplianceUsages)
                 // )
