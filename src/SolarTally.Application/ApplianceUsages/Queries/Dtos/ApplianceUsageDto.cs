@@ -25,19 +25,9 @@ namespace SolarTally.Application.ApplianceUsages.Queries.Dtos
         public void Mapping(Profile profile)
         {
             profile.CreateMap<ApplianceUsage, ApplianceUsageDto>()
-                .ForMember(d => d.Id, opt => opt.MapFrom(s => s.Id))
                 .ForMember(d => d.ApplianceDto, 
                     opt => opt.MapFrom(s => s.Appliance))
-                .ForMember(d => d.Quantity, 
-                    opt => opt.MapFrom(s => s.Quantity))
-                .ForMember(d => d.PowerConsumption,
-                    opt => opt.MapFrom(s => s.PowerConsumption))
-                .ForMember(d => d.NumHours,
-                    opt => opt.MapFrom(s => s.NumHours))
-                .ForMember(d => d.PercentHrsOnSolar,
-                    opt => opt.MapFrom(s => s.PercentHrsOnSolar))
-                .ForMember(d => d.Enabled,
-                    opt => opt.MapFrom(s => s.Enabled));
+                ;
         }
     }
 }
