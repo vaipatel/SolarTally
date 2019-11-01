@@ -23,9 +23,7 @@ namespace SolarTally.Application.UnitTests.Sites
 
         [Fact]
         public async Task GetSitesTest()
-        //public void GetSitesTest()
         {
-            // Assert.Equal(1,1);
             var handler = new GetSitesListQueryHandler(
                 _context, _mapper);
 
