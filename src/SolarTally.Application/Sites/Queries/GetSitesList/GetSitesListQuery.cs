@@ -5,6 +5,7 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SolarTally.Application.Common.Interfaces;
+using SolarTally.Application.Sites.Queries.Dtos;
 
 namespace SolarTally.Application.Sites.Queries.GetSitesList
 {

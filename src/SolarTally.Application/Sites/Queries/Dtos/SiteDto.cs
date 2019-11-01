@@ -1,9 +1,10 @@
 using AutoMapper;
 using SolarTally.Application.Common.Mappings;
+using SolarTally.Application.Consumptions.Queries.Dtos;
 using SolarTally.Domain.Entities;
 using SolarTally.Domain.ValueObjects;
 
-namespace SolarTally.Application.Sites.Queries.GetSitesList
+namespace SolarTally.Application.Sites.Queries.Dtos
 {
     public class SiteDto : IMapFrom<Site>
     {
@@ -15,6 +16,8 @@ namespace SolarTally.Application.Sites.Queries.GetSitesList
 
         public Address MainAddress { get; set; }
 
+        public ConsumptionDto Consumption { get; set; }
+
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Site, SiteDto>()
@@ -23,7 +26,10 @@ namespace SolarTally.Application.Sites.Queries.GetSitesList
                 .ForMember(d => d.NumSolarHours, 
                     opt => opt.MapFrom(s => s.NumSolarHours))
                 .ForMember(d => d.MainAddress,
-                    opt => opt.MapFrom(s => s.MainAddress));
+                    opt => opt.MapFrom(s => s.MainAddress))
+                .ForMember(d => d.Consumption,
+                    opt => opt.MapFrom(s => s.Consumption))
+                ;
         }
     }
 }

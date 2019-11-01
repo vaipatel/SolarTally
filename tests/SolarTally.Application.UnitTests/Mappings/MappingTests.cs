@@ -1,5 +1,5 @@
 using AutoMapper;
-using SolarTally.Application.Sites.Queries.GetSitesList;
+using SolarTally.Application.Sites.Queries.Dtos;
 using SolarTally.Domain.Entities;
 using SolarTally.Domain.ValueObjects;
 using Xunit;
