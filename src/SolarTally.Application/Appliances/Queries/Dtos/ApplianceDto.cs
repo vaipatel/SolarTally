@@ -13,7 +13,7 @@ namespace SolarTally.Application.Appliances.Queries.Dtos
 
         public string Description { get; set; }
 
-        public int DefaultPowerConsumption { get; set; }
+        public decimal DefaultPowerConsumption { get; set; }
 
         public void Mapping(Profile profile)
         {
