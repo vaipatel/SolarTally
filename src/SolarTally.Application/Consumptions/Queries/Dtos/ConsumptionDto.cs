@@ -18,6 +18,8 @@ namespace SolarTally.Application.Consumptions.Queries.Dtos
         // public IReadOnlyCollection<ApplianceUsageDto> ApplianceUsages
         // { get; set; }
 
+        public ConsumptionTotal ConsumptionTotal { get; set; }
+
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Consumption, ConsumptionDto>()
