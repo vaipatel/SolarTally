@@ -19,7 +19,7 @@ namespace SolarTally.Domain.UnitTests.Entities
             var consumption = CreateConsumption();
             var appliance = new ApplianceBuilder().Build();
             consumption.AddApplianceUsage(appliance);
-            Assert.Equal(1, consumption.ApplianceUsages.Count);
+            Assert.Single(consumption.ApplianceUsages);
         }
 
         [Fact]
