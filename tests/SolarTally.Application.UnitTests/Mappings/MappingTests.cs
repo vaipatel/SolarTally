@@ -1,4 +1,7 @@
+using System.Linq;
 using AutoMapper;
+using SolarTally.Application.ApplianceUsages.Queries.Dtos;
+using SolarTally.Application.Consumptions.Queries.Dtos;
 using SolarTally.Application.Sites.Queries.Dtos;
 using SolarTally.Domain.Entities;
 using SolarTally.Domain.ValueObjects;
@@ -35,6 +38,37 @@ namespace SolarTally.Application.UnitTests.Mappings
             Assert.NotNull(result);
             Assert.IsType<SiteDto>(result);
             Assert.Equal(entity.MainAddress, result.MainAddress);
+        }
+
+        [Fact]
+        public void ShouldMapConsumptionToConsumptionDTO()
+        {
+            var site = new Site("A Site", 9);
+            decimal totalPowerConsumption = 500;
+            site.Consumption.AddApplianceUsage(
+                new Appliance("TV", "Television", totalPowerConsumption));
+
+            var result = _mapper.Map<ConsumptionDto>(site.Consumption);
+
+            Assert.NotNull(result);
+            Assert.IsType<ConsumptionDto>(result);
+            Assert.Equal(totalPowerConsumption,
+                result.ConsumptionTotal.TotalPowerConsumption);
+        }
+
+        [Fact]
+        public void ShouldMapApplianceUsageToApplianceUsageDto()
+        {
+            var site = new Site("A Site", 9);
+            site.Consumption.AddApplianceUsage(
+                new Appliance("TV", "Television", 500));
+            var au = site.Consumption.ApplianceUsages.Last();
+
+            var result = _mapper.Map<ApplianceUsageDto>(au);
+
+            Assert.NotNull(result);
+            Assert.IsType<ApplianceUsageDto>(result);
+            Assert.Equal(au.NumHours, result.NumHours);
         }
     }
 }
