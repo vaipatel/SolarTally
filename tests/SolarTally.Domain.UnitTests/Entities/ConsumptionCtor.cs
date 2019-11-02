@@ -20,7 +20,7 @@ namespace SolarTally.Domain.UnitTests.Entities
         {
             var site = new SiteBuilder().Build();
             var consumption = new Consumption(site);
-            Assert.Equal(0, consumption.ApplianceUsages.Count);
+            Assert.Empty(consumption.ApplianceUsages);
         }
     }
 }
