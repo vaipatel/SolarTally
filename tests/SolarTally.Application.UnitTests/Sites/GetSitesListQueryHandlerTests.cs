@@ -31,6 +31,7 @@ namespace SolarTally.Application.UnitTests.Sites
                 CancellationToken.None);
             
             Assert.IsType<SitesListVm>(result);
+            // Check num sites
             Assert.Equal(1, result.Sites.Count);
             Assert.Equal(1, result.Count);
             Assert.Equal("PetroCanada Station", result.Sites.Last().Name);
