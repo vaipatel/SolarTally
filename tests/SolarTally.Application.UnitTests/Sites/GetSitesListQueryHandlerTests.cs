@@ -42,8 +42,7 @@ namespace SolarTally.Application.UnitTests.Sites
             Assert.Equal(2*(20 + 800 + 2000), 
                 lastSiteDto.Consumption.ConsumptionTotal.TotalPowerConsumption);
             // Check ApplianceUsages count
-            Assert.Equal(3,
-                result.Sites.Single().Consumption.ApplianceUsages.Count);
+            Assert.Equal(3, lastSiteDto.Consumption.ApplianceUsages.Count);
             // Get first ApplianceUsage
             var firstAU = lastSiteDto.Consumption.ApplianceUsages.First();
             // Check power consumption of the first ApplianceUsage
