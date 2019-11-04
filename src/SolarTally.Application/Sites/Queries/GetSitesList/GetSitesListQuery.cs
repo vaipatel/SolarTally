@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -39,6 +40,8 @@ namespace SolarTally.Application.Sites.Queries.GetSitesList
         public async Task<SitesListVm> Handle(GetSitesListQuery request,
             CancellationToken cancellationToken)
         {
+            // Previous
+            // --------------------------------------------------------------
             // Note: I'm adding AsNoTracking() below because without it I get
             // the following error
             // ------
@@ -51,15 +54,37 @@ namespace SolarTally.Application.Sites.Queries.GetSitesList
             // Note (cont.): This might be a bug in EF Core 3.0, and might be
             // resolved in 3.1.0, 3.1.0 preview.
             // See https://github.com/aspnet/EntityFrameworkCore/issues/18024
-            var sites = await _context.Sites
-                .AsNoTracking()
-                .ProjectTo<SiteDto>(_mapper.ConfigurationProvider)
-                .ToListAsync(cancellationToken);
+
+            // var sites = await _context.Sites
+            //     .AsNoTracking()
+            //     .ProjectTo<SiteDto>(_mapper.ConfigurationProvider)
+            //     .ToListAsync(cancellationToken);
+            // --------------------------------------------------------------
+
+            // Edit
+            // --------------------------------------------------------------
+            // So it seems that while the exclusion of AsNoTracking() causes
+            // buggy behavior related to owned types, it also seems that the
+            // AsNoTracking() was killing all the relational information (0 ids
+            // being a clear sign) in the returned entities.
+            // So, for example, the operation would fail to get any of the
+            // associated ApplianceUsages.
+            // I'm deciding to get all the tracked entities instead and just map
+            // each to its Dto myself.
+            // --------------------------------------------------------------
+            
+            var sites = await _context.Sites.ToListAsync(cancellationToken);
+            var siteDtos = new List<SiteDto>();
+            foreach( var site in sites)
+            {
+                var siteDto = _mapper.Map<SiteDto>(site);
+                siteDtos.Add(siteDto);
+            }
             
             var vm = new SitesListVm
             {
-                Sites = sites,
-                Count = sites.Count
+                Sites = siteDtos,
+                Count = siteDtos.Count
             };
 
             return vm;
