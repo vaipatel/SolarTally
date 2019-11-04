@@ -22,6 +22,8 @@ namespace SolarTally.Application.ApplianceUsages.Queries.Dtos
 
         public bool Enabled { get; set; }
 
+        public int ConsumptionId { get; set; }
+
         public void Mapping(Profile profile)
         {
             profile.CreateMap<ApplianceUsage, ApplianceUsageDto>()
