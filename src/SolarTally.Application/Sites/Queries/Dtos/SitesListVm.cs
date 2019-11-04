@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using SolarTally.Application.Sites.Queries.Dtos;
 
-namespace SolarTally.Application.Sites.Queries.GetSitesList
+namespace SolarTally.Application.Sites.Queries.Dtos
 {
     public class SitesListVm
     {

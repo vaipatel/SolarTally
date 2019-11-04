@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using SolarTally.Application.Sites.Queries.Dtos;
 using SolarTally.Application.Sites.Queries.GetSitesList;
 using SolarTally.Application.UnitTests.Common;
 using SolarTally.Persistence;
