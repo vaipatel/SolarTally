@@ -18,10 +18,14 @@ namespace SolarTally.Application.UnitTests.Common
         public static SolarTallyDbContext Create()
         {
             var options = new DbContextOptionsBuilder<SolarTallyDbContext>()
-                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                // .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .UseSqlite("DataSource=:memory:")
                 .Options;
             
             var context = new SolarTallyDbContext(options);
+
+            // Need to do for SQLite.
+            context.Database.OpenConnection();
 
             context.Database.EnsureCreated();
 
@@ -53,6 +57,9 @@ namespace SolarTally.Application.UnitTests.Common
 
         public static void Destroy(SolarTallyDbContext context)
         {
+            // For SQLite, I'm guessing I need to do this on Destroy().
+            context.Database.CloseConnection();
+
             context.Database.EnsureDeleted();
 
             context.Dispose();
