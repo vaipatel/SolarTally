@@ -23,20 +23,7 @@ namespace SolarTally.Application.Consumptions.Queries.Dtos
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Consumption, ConsumptionDto>()
-                // .ForMember(d => d.ApplianceUsages,
-                //     opt => opt.MapFrom(s => s.ApplianceUsages)
-                // )
                 ;
         }
-
-        // public IReadOnlyCollection<ApplianceUsageDto> ConvertAUs(Consumption c)
-        // {
-        //     var result = new List<ApplianceUsageDto>();
-        //     foreach(var au in c.ApplianceUsages)
-        //     {
-        //         //
-        //     }
-        //     return new List<ApplianceUsageDto>();
-        // }
     }
 }
