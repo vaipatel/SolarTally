@@ -19,7 +19,7 @@ namespace SolarTally.Persistence
         {
             // Get the current dir, backup one with .. and get web app dir.
             var basePath = Directory.GetCurrentDirectory() + 
-                string.Format("{0}..{0}WebUI_Ng",
+                string.Format("{0}..{0}SolarTally.WebUI_Ng",
                     Path.DirectorySeparatorChar);
             return Create(basePath,
                 Environment.GetEnvironmentVariable(AspNetCoreEnvironment));
