@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SolarTally.Application;
 using SolarTally.Persistence;
 
 namespace SolarTally.WebUI_Ng
@@ -23,6 +24,12 @@ namespace SolarTally.WebUI_Ng
         {
             // Add Persistence objects (basically the DbContext)
             services.AddPersistence(Configuration);
+
+            // Add Application objects (basically a lot of the key interfaces,
+            // AutoMapper config/mappings, MediatR queries/commands/dtos).
+            // Adding this after cuz it's the same way in NorthwindTraders,
+            // see https://github.com/JasonGT/NorthwindTraders/blob/3f525af3b48a10ea0cb686d71a18d35be39f33e1/Src/WebUI/Startup.cs#L35-L37)
+            services.AddApplication();
 
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
