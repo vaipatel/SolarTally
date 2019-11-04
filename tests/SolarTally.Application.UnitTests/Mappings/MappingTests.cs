@@ -54,6 +54,7 @@ namespace SolarTally.Application.UnitTests.Mappings
             Assert.IsType<ConsumptionDto>(result);
             Assert.Equal(totalPowerConsumption,
                 result.ConsumptionTotal.TotalPowerConsumption);
+            Assert.Single(result.ApplianceUsages);
         }
 
         [Fact]
