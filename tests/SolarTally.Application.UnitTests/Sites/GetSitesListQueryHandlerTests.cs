@@ -37,6 +37,16 @@ namespace SolarTally.Application.UnitTests.Sites
             // Get the last site
             var lastSiteDto = result.Sites.Last();
             Assert.Equal("PetroCanada Station", lastSiteDto.Name);
+            // Check power
+            Assert.Equal(2*(20 + 800 + 2000), 
+                lastSiteDto.Consumption.ConsumptionTotal.TotalPowerConsumption);
+            // Check ApplianceUsages count
+            Assert.Equal(3,
+                result.Sites.Single().Consumption.ApplianceUsages.Count);
+            // Get first ApplianceUsage
+            var firstAU = lastSiteDto.Consumption.ApplianceUsages.First();
+            // Check power consumption of the first ApplianceUsage
+            Assert.Equal(20, firstAU.PowerConsumption);
         }
 
     }
