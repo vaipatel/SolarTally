@@ -39,7 +39,8 @@ namespace SolarTally.Application.UnitTests.Common
             // context.SaveChanges();
 
             var site = new Site("PetroCanada Station", 7);
-            context.Sites.Add(site);
+            site.MainAddress = new Domain.ValueObjects.Address("0 Yonge St.",
+            "Toronto", "Ontario", "Canada", "M1N2O3");
 
             foreach(var appliance in appliances)
             {
@@ -47,6 +48,7 @@ namespace SolarTally.Application.UnitTests.Common
                 var au = site.Consumption.ApplianceUsages.Last();
                 au.SetQuantity(2);
             }
+            context.Sites.Add(site);
             context.Consumptions.Add(site.Consumption);
             context.ApplianceUsages.AddRange(site.Consumption.ApplianceUsages);
 
