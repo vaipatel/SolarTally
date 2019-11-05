@@ -25,6 +25,11 @@ namespace SolarTally.WebUI_Ng
             // Add Persistence objects (basically the DbContext)
             services.AddPersistence(Configuration);
 
+            this.CommonConfigureServices(services);
+        }
+
+        private void CommonConfigureServices(IServiceCollection services)
+        {
             // Add Application objects (basically a lot of the key interfaces,
             // AutoMapper config/mappings, MediatR queries/commands/dtos).
             // Adding this after cuz it's the same way in NorthwindTraders,
