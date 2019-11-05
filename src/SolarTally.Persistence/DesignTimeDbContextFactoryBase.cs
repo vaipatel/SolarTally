@@ -6,6 +6,7 @@ using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 
 namespace SolarTally.Persistence
 {
@@ -63,6 +64,23 @@ namespace SolarTally.Persistence
             optionsBuilder.UseNpgsql(connectionString);
 
             return CreateNewInstance(optionsBuilder.Options);
+        }
+
+        /// <summary>
+        /// Checks that environmentName corresponds to a development env.
+        /// </summary>
+        /// <remarks>
+        /// Borrowed from https://github.com/aspnet/AspNetCore/blob/4e44025a52e4b73aa17e09a8041b0e166e0c5ce0/src/Hosting/Abstractions/src/HostingEnvironmentExtensions.cs#L65-L78
+        /// </remarks>
+        private bool IsDevelopment(string environmentName)
+        {
+            if (environmentName == null)
+            {
+                throw new ArgumentNullException(nameof(environmentName));
+            }
+
+            return string.Equals(environmentName, Environments.Development,
+                StringComparison.OrdinalIgnoreCase);
         }
     }
 }
