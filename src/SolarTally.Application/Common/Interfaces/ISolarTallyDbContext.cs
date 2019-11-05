@@ -13,5 +13,7 @@ namespace SolarTally.Application.Common.Interfaces
         DbSet<Appliance> Appliances { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
+
+        int SaveChanges(bool acceptAllChangesOnSuccess);
     }
 }
