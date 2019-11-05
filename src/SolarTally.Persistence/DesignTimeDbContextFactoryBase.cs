@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Npgsql;
 
 namespace SolarTally.Persistence
 {
@@ -14,6 +15,8 @@ namespace SolarTally.Persistence
         IDesignTimeDbContextFactory<TContext> where TContext : DbContext
     {
         private const string ConnectionStringName = "SolarTallyDb";
+        private const string PostgresUsernameKey = "PostgresUsername";
+        private const string PostgresPasswordKey = "PostgresPassword";
         private const string AspNetCoreEnvironment = "ASPNETCORE_ENVIRONMENT";
 
         public TContext CreateDbContext(string[] args)
@@ -32,18 +35,37 @@ namespace SolarTally.Persistence
         private TContext Create(string basePath, string environmentName)
         {
             
-            var configuration = new ConfigurationBuilder()
+            var configBuilder = new ConfigurationBuilder()
                 .SetBasePath(basePath)
                 .AddJsonFile("appsettings.json")
                 .AddJsonFile($"appsettings.Local.json", optional: true)
                 .AddJsonFile($"appsettings.{environmentName}.json", optional: true)
-                .AddEnvironmentVariables()
-                .Build();
+                .AddEnvironmentVariables();
+            
+            Console.WriteLine("Checking if environment is development");
+            // If dev env, add user secrets
+            if (this.IsDevelopment(environmentName))
+            {
+                configBuilder.AddUserSecrets<SolarTallyDbContext>();
+                Console.WriteLine($@"Environment '{environmentName}' is a development environment. User secrets added.");
+            }
+            else
+            {
+                Console.WriteLine($@"Environment '{environmentName}' is not a development environment. User secrets will not be added.");
+            }
+            var configuration = configBuilder.Build();
 
-            var connectionString =
-                configuration.GetConnectionString(ConnectionStringName);
+            var connStrBuilder = new NpgsqlConnectionStringBuilder(
+                configuration.GetConnectionString(ConnectionStringName)
+            );
+            if (this.IsDevelopment(environmentName))
+            {
+                connStrBuilder.Username = configuration[PostgresUsernameKey];
+                connStrBuilder.Password = configuration[PostgresPasswordKey];
+            }
+            Console.WriteLine("Using username: {0}", connStrBuilder.Username);
 
-            return Create(connectionString);
+            return Create(connStrBuilder.ConnectionString);
         }
 
         private TContext Create(string connectionString)
