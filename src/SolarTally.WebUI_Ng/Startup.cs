@@ -23,7 +23,17 @@ namespace SolarTally.WebUI_Ng
         public void ConfigureServices(IServiceCollection services)
         {
             // Add Persistence objects (basically the DbContext)
-            services.AddPersistence(Configuration);
+            services.AddPersistence(Configuration, false);
+
+            this.CommonConfigureServices(services);
+        }
+
+        public void ConfigureDevelopmentServices(IServiceCollection services)
+        {
+            System.Console.WriteLine("\nUsing Development ConfigureServices\n");
+            
+            // Add Persistence objects, basically the DbContext, and use secrets
+            services.AddPersistence(Configuration, true);
 
             this.CommonConfigureServices(services);
         }
