@@ -26,16 +26,22 @@ There are quite a few pros and cons of each architecural style.
 ### Domain-Driven Design or DDD
 
 The entire architecure tries to adhere to the Domain-Driven design or DDD. In
-DDD, the core layers contain:
+DDD, the Core layers contain:
 * a representation of business-wide entities as the foundation of the entire
   project, called the Domain layer, and
 * the surrounding application-wide logic for interfacing with those entities,
   called the Application layer
 
 Specific technologies for Persistence and Web access must adhere to the
-data + logic imposed by the core layers. But the core can never rely on these
-specific technologies. So you should not have the Domain or Application
-referencing, say, EF Core, because that is an ORM that deals with Persistence.
+data + logic imposed by the Core layers. But the Core layers must not rely on
+anything implemented in the Persistence and Web layers.
+
+In fact, I feel like a stronger adherent would make sure that Core does not rely
+on the specific technologies used in Persistence and Web. That would make it
+easy to swap out different ORMs etc. So, for example, you should not have the
+Domain or Application referencing, say, EF Core, because that is an ORM that
+deals with Persistence. Anyway, maybe that's too ignorant of the vastly more
+common cases.
 
 Instead Application can expose a ISolarTallyDbContext interface, which can
 impose behavioral contracts that an ORM's database context must implement.
