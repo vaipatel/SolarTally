@@ -27,7 +27,7 @@ There are quite a few pros and cons of each architecural style.
 
 The entire architecure tries to adhere to the Domain-Driven design or DDD. In
 DDD, the Core layers contain:
-* a representation of business-wide entities as the foundation of the entire
+* a representation of business-wide entities at the foundation of the entire
   project, called the Domain layer, and
 * the surrounding application-wide logic for interfacing with those entities,
   called the Application layer
@@ -43,7 +43,30 @@ Domain or Application referencing, say, EF Core, because that is an ORM that
 deals with Persistence. Anyway, maybe that's too ignorant of the vastly more
 common cases.
 
-### Resources
+## Configuring Secrets for Development enviroment
+
+When working in the Development environment, I use the
+[Secret Manager tool](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-3.0&tabs=linux#secret-manager)
+to configure user secrets in the connection strings.
+
+Since we're using postgres for our database, I've assigned the secret id to be
+`postgres` (but perhaps later I can generalize this).
+
+In order to configure the secrets on your machine, you should:
+
+1. `cd src/SolarTally.WebUI_Ng`
+2. `dotnet user-secrets init --id postgres`
+   
+   This shouldn't change anything in the `SolarTally.WebUI_Ng.csproj`
+   because the `<UserSecretsId>postgres</UserSecretsId>` attribute is already
+   added to the csproj. Nevertheless, depending on your platform, it might cause
+   some harmless formatting changes to the xml, which might be ok to commit.
+3. `dotnet user-secrets set "PostgresUsername" "YOUR_POSTGRES_USERNAME"`
+4. `dotnet user-secrets set "PostgresPassword" "YOUR_POSTGRES_PASSWORD"`
+
+Now the secrets can be accessed from both the WebUI_Ng and Persistence projects.
+
+## Resources
 
 Here were some resources I referenced when making the app.
 
