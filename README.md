@@ -25,8 +25,20 @@ There are quite a few pros and cons of each architecural style.
 
 ### Domain-Driven Design or DDD
 
-The entire architecure tries to adhere to the Domain-Driven design or DDD. In 
-fact, I partly made this app to learn more about Domain-Driven design.
+The entire architecure tries to adhere to the Domain-Driven design or DDD. In
+DDD, the core layers contain:
+* a representation of business-wide entities as the foundation of the entire
+  project, called the Domain layer, and
+* the surrounding application-wide logic for interfacing with those entities,
+  called the Application layer
+
+Specific technologies for Persistence and Web access must adhere to the
+data + logic imposed by the core layers. But the core can never rely on these
+specific technologies. So you should not have the Domain or Application
+referencing, say, EF Core, because that is an ORM that deals with Persistence.
+
+Instead Application can expose a ISolarTallyDbContext interface, which can
+impose behavioral contracts that an ORM's database context must implement.
 
 ### Resources
 
