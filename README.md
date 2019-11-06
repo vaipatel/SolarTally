@@ -43,9 +43,6 @@ Domain or Application referencing, say, EF Core, because that is an ORM that
 deals with Persistence. Anyway, maybe that's too ignorant of the vastly more
 common cases.
 
-Instead Application can expose a ISolarTallyDbContext interface, which can
-impose behavioral contracts that an ORM's database context must implement.
-
 ### Resources
 
 Here were some resources I referenced when making the app.
