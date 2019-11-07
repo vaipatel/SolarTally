@@ -38,9 +38,6 @@ namespace SolarTally.Application.UnitTests.Sites
             // Get the last site
             var lastSitePartialDto = result.Sites.Last();
             Assert.Equal("PetroCanada Station", lastSitePartialDto.Name);
-            // Check consumption id (this is more testing that ef core persisted
-            // the one consumption properly)
-            Assert.Equal(1, lastSitePartialDto.ConsumptionId);
         }
 
     }
