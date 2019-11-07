@@ -11,12 +11,12 @@ using Xunit;
 namespace SolarTally.Application.UnitTests.Sites
 {
     [Collection("QueryCollection")]
-    public class GetSitesListQueryHandlerTests
+    public class GetSitesListQueryTests
     {
         private readonly SolarTallyDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetSitesListQueryHandlerTests(QueryTestFixture fixture)
+        public GetSitesListQueryTests(QueryTestFixture fixture)
         {
             _context = fixture.Context;
             _mapper = fixture.Mapper;
