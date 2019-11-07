@@ -32,13 +32,11 @@ namespace SolarTally.WebUI_Ng
                     var solarTallyDbContext = services
                         .GetRequiredService<SolarTallyDbContext>();
                     solarTallyDbContext.Database.Migrate();
-                    
-                    // var mediator = services.GetRequiredService<IMediator>();
-                    // mediator.Send(new SeedSampleDataCommand(),
-                    //     CancellationToken.None);
-                    
-                    var seeder = new CustomSeeder(solarTallyDbContext);
-                    seeder.SeedAll();
+                    if (!solarTallyDbContext.Sites.Any())
+                    {
+                        var seeder = new CustomSeeder(solarTallyDbContext);
+                        seeder.SeedAll();
+                    }
                 }
                 catch (Exception ex)
                 {
