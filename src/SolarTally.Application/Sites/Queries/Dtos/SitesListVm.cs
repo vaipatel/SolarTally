@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace SolarTally.Application.Sites.Queries.Dtos
 {
-    public class SiteDtosListVm
+    public class SitesListVm
     {
         public IList<SiteDto> SiteDtos { get; set; }
 

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using SolarTally.Application.Common.Interfaces;
 using SolarTally.Application.Sites.Queries.Dtos;
 
-namespace SolarTally.Application.Sites.Queries.GetSiteDtoById
+namespace SolarTally.Application.Sites.Queries.GetSiteDetail
 {
     /// <summary>
     /// Request DTO for getting single site by its Id.
@@ -17,29 +17,29 @@ namespace SolarTally.Application.Sites.Queries.GetSiteDtoById
     /// <remarks>
     /// The handler is placed after the request.
     /// </remarks>
-    public class GetSiteDtoByIdQuery : IRequest<SiteDto>
+    public class GetSiteDetailQuery : IRequest<SiteDto>
     {
         /// Id of the site
         public int Id { get; set; }
     }
 
     /// <summary>
-    /// Handler for handling the GetSiteDtoByIdQuery request.
+    /// Handler for handling the GetSiteDetailQuery request.
     /// </summary>
-    public class GetSiteDtoByIdQueryHandler :
-        IRequestHandler<GetSiteDtoByIdQuery, SiteDto>
+    public class GetSiteDetailQueryHandler :
+        IRequestHandler<GetSiteDetailQuery, SiteDto>
     {
         private readonly ISolarTallyDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetSiteDtoByIdQueryHandler(ISolarTallyDbContext context,
+        public GetSiteDetailQueryHandler(ISolarTallyDbContext context,
             IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public async Task<SiteDto> Handle(GetSiteDtoByIdQuery request,
+        public async Task<SiteDto> Handle(GetSiteDetailQuery request,
             CancellationToken cancellationToken)
         {
             var query =

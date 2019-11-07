@@ -1,6 +1,6 @@
 using AutoMapper;
 using SolarTally.Application.Sites.Queries.Dtos;
-using SolarTally.Application.Sites.Queries.GetSiteDtosList;
+using SolarTally.Application.Sites.Queries.GetSitesList;
 using SolarTally.Application.UnitTests.Common;
 using SolarTally.Persistence;
 using System.Linq;
@@ -11,36 +11,36 @@ using Xunit;
 namespace SolarTally.Application.UnitTests.Sites
 {
     [Collection("QueryCollection")]
-    public class GetSiteDtosListQueryHandlerTests
+    public class GetSitesListQueryHandlerTests
     {
         private readonly SolarTallyDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetSiteDtosListQueryHandlerTests(QueryTestFixture fixture)
+        public GetSitesListQueryHandlerTests(QueryTestFixture fixture)
         {
             _context = fixture.Context;
             _mapper = fixture.Mapper;
         }
 
         [Fact]
-        public async Task GetSiteDtosTest()
+        public async Task GetSitesListTest()
         {
-            var handler = new GetSiteDtosListQueryHandler(
+            var handler = new GetSitesListQueryHandler(
                 _context, _mapper);
 
-            var result = await handler.Handle(new GetSiteDtosListQuery(),
+            var result = await handler.Handle(new GetSitesListQuery(),
                 CancellationToken.None);
             
-            Assert.IsType<SiteDtosListVm>(result);
+            Assert.IsType<SitesListVm>(result);
             // Check num sites
             Assert.Equal(1, result.SiteDtos.Count);
             Assert.Equal(1, result.Count);
             // Get the last site
-            var lastSitePartialDto = result.SiteDtos.Last();
-            Assert.Equal("PetroCanada Station", lastSitePartialDto.Name);
+            var lastSiteDto = result.SiteDtos.Last();
+            Assert.Equal("PetroCanada Station", lastSiteDto.Name);
             // Check total power consumption
             Assert.Equal(2*(20 + 800 + 2000),
-                lastSitePartialDto.ConsumptionTotal.TotalPowerConsumption);
+                lastSiteDto.ConsumptionTotal.TotalPowerConsumption);
         }
 
     }

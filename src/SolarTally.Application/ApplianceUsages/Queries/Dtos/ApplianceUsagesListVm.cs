@@ -5,6 +5,6 @@ namespace SolarTally.Application.ApplianceUsages.Queries.Dtos
 {
     public class ApplianceUsagesListVm
     {
-        public IList<ApplianceUsageDto> ApplianceUsages { get; set; }
+        public IList<ApplianceUsageDto> ApplianceUsageDtos { get; set; }
     }
 }

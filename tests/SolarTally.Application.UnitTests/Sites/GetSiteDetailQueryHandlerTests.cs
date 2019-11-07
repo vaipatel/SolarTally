@@ -1,6 +1,6 @@
 using AutoMapper;
 using SolarTally.Application.Sites.Queries.Dtos;
-using SolarTally.Application.Sites.Queries.GetSiteDtoById;
+using SolarTally.Application.Sites.Queries.GetSiteDetail;
 using SolarTally.Application.UnitTests.Common;
 using SolarTally.Persistence;
 using System.Linq;
@@ -11,24 +11,24 @@ using Xunit;
 namespace SolarTally.Application.UnitTests.Sites
 {
     [Collection("QueryCollection")]
-    public class GetSiteDtoByIdQueryHandlerTests
+    public class GetSiteDetailQueryHandlerTests
     {
         private readonly SolarTallyDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetSiteDtoByIdQueryHandlerTests(QueryTestFixture fixture)
+        public GetSiteDetailQueryHandlerTests(QueryTestFixture fixture)
         {
             _context = fixture.Context;
             _mapper = fixture.Mapper;
         }
 
         [Fact]
-        public async Task GetSiteDtoByIdTest()
+        public async Task GetSiteDetail()
         {
-            var handler = new GetSiteDtoByIdQueryHandler(
+            var handler = new GetSiteDetailQueryHandler(
                 _context, _mapper);
 
-            var result = await handler.Handle(new GetSiteDtoByIdQuery()
+            var result = await handler.Handle(new GetSiteDetailQuery()
             { Id = 1 }, CancellationToken.None);
             
             Assert.IsType<SiteDto>(result);

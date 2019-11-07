@@ -9,37 +9,37 @@ using Microsoft.EntityFrameworkCore;
 using SolarTally.Application.Common.Interfaces;
 using SolarTally.Application.Sites.Queries.Dtos;
 
-namespace SolarTally.Application.Sites.Queries.GetSiteDtosList
+namespace SolarTally.Application.Sites.Queries.GetSitesList
 {
     /// <summary>
-    /// Request DTO for getting all the Sites in a SiteDtosListVm.
+    /// Request DTO for getting all the Sites in a SiteListVm.
     /// </summary>
     /// <remarks>
     /// The handler is placed after the request.
     /// </remarks>
-    public class GetSiteDtosListQuery : IRequest<SiteDtosListVm>
+    public class GetSitesListQuery : IRequest<SitesListVm>
     {
         // No props in our Query DTO at the moment. Maybe later we add UserId.
     }
 
     /// <summary>
-    /// Handler for handling the GetSiteDtosListQuery request.
+    /// Handler for handling the GetSitesListQuery request.
     /// </summary>
-    public class GetSiteDtosListQueryHandler :
-        IRequestHandler<GetSiteDtosListQuery, SiteDtosListVm>
+    public class GetSitesListQueryHandler :
+        IRequestHandler<GetSitesListQuery, SitesListVm>
     {
         private readonly ISolarTallyDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetSiteDtosListQueryHandler(ISolarTallyDbContext context,
+        public GetSitesListQueryHandler(ISolarTallyDbContext context,
             IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public async Task<SiteDtosListVm> Handle(
-            GetSiteDtosListQuery request,
+        public async Task<SitesListVm> Handle(
+            GetSitesListQuery request,
             CancellationToken cancellationToken)
         {
             var query =
@@ -58,7 +58,7 @@ namespace SolarTally.Application.Sites.Queries.GetSiteDtosList
                 siteDtos.Add(siteDto);
             }
             
-            var vm = new SiteDtosListVm
+            var vm = new SitesListVm
             {
                 SiteDtos = siteDtos,
                 Count = siteDtos.Count
