@@ -13,8 +13,6 @@ namespace SolarTally.Application.Consumptions.Queries.Dtos
     {
         public int Id { get; set; }
 
-        public SiteDto Site { get; set; }
-
         public IReadOnlyCollection<ApplianceUsageDto> ApplianceUsages
         { get; set; }
 
