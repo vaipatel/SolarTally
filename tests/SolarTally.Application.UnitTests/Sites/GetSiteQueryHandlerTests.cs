@@ -34,6 +34,10 @@ namespace SolarTally.Application.UnitTests.Sites
             Assert.IsType<SiteDto>(result);
             // Get the site name
             Assert.Equal("PetroCanada Station", result.Name);
+            // Check city
+            Assert.Equal("Toronto", result.MainAddress.City);
+            // Check num solar hours
+            Assert.Equal(7, result.NumSolarHours);
             // Check power
             Assert.Equal(2*(20 + 800 + 2000), 
                 result.ConsumptionTotal.TotalPowerConsumption);
