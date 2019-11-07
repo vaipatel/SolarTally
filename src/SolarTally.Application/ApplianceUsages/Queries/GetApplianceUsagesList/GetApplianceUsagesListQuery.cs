@@ -16,7 +16,7 @@ namespace SolarTally.Application.ApplianceUsages.Queries.GetApplianceUsagesList
     /// <remarks>
     /// The handler is placed after the request.
     /// </remarks>
-    public class GetApplianceUsagesListQuery : IRequest<ApplianceUsagesListVm>
+    public class GetApplianceUsagesListQuery : IRequest<ApplianceUsagesListDto>
     {
     }
 
@@ -24,7 +24,7 @@ namespace SolarTally.Application.ApplianceUsages.Queries.GetApplianceUsagesList
     /// Handler for handling the GetApplianceUsagesListQuery request.
     /// </summary>
     public class GetApplianceUsagesListQueryHandler :
-        IRequestHandler<GetApplianceUsagesListQuery, ApplianceUsagesListVm>
+        IRequestHandler<GetApplianceUsagesListQuery, ApplianceUsagesListDto>
     {
         private readonly ISolarTallyDbContext _context;
         private readonly IMapper _mapper;
@@ -36,7 +36,7 @@ namespace SolarTally.Application.ApplianceUsages.Queries.GetApplianceUsagesList
             _mapper = mapper;
         }
 
-        public async Task<ApplianceUsagesListVm> Handle(
+        public async Task<ApplianceUsagesListDto> Handle(
             GetApplianceUsagesListQuery request,
             CancellationToken cancellationToken)
         {
@@ -57,9 +57,9 @@ namespace SolarTally.Application.ApplianceUsages.Queries.GetApplianceUsagesList
                 .ProjectTo<ApplianceUsageDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
             
-            var vm = new ApplianceUsagesListVm
+            var vm = new ApplianceUsagesListDto
             {
-                ApplianceUsageDtos = applianceUsagesDtos
+                ApplianceUsages = applianceUsagesDtos
             };
 
             return vm;

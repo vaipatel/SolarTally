@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using SolarTally.Application.Common.Interfaces;
 using SolarTally.Application.Sites.Queries.Dtos;
 
-namespace SolarTally.Application.Sites.Queries.GetSiteDetail
+namespace SolarTally.Application.Sites.Queries.GetSite
 {
     /// <summary>
     /// Request DTO for getting single site by its Id.
@@ -17,29 +17,29 @@ namespace SolarTally.Application.Sites.Queries.GetSiteDetail
     /// <remarks>
     /// The handler is placed after the request.
     /// </remarks>
-    public class GetSiteDetailQuery : IRequest<SiteDetail>
+    public class GetSiteQuery : IRequest<SiteDto>
     {
         /// Id of the site
         public int Id { get; set; }
     }
 
     /// <summary>
-    /// Handler for handling the GetSiteDetailQuery request.
+    /// Handler for handling the GetSiteQuery request.
     /// </summary>
-    public class GetSiteDetailQueryHandler :
-        IRequestHandler<GetSiteDetailQuery, SiteDetail>
+    public class GetSiteQueryHandler :
+        IRequestHandler<GetSiteQuery, SiteDto>
     {
         private readonly ISolarTallyDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetSiteDetailQueryHandler(ISolarTallyDbContext context,
+        public GetSiteQueryHandler(ISolarTallyDbContext context,
             IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public async Task<SiteDetail> Handle(GetSiteDetailQuery request,
+        public async Task<SiteDto> Handle(GetSiteQuery request,
             CancellationToken cancellationToken)
         {
             var query =
@@ -51,7 +51,7 @@ namespace SolarTally.Application.Sites.Queries.GetSiteDetail
             var queryRes = await
                 query.AsNoTracking().SingleAsync(cancellationToken);
             
-            var siteDto = _mapper.Map<SiteDetail>(queryRes.Site);
+            var siteDto = _mapper.Map<SiteDto>(queryRes.Site);
             siteDto.ConsumptionTotal = queryRes.ConsumptionTotal;
 
             return siteDto;

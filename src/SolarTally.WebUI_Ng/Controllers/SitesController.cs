@@ -10,7 +10,7 @@ namespace SolarTally.WebUI_Ng.Controllers
     public class SitesController : BaseController
     {
         [HttpGet]
-        public async Task<ActionResult<SiteDetailsList>> GetAll()
+        public async Task<ActionResult<SitesListDto>> GetAll()
         {
             return Ok(await Mediator.Send(new GetSitesListQuery()));
         }

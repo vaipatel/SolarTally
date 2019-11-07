@@ -1,6 +1,6 @@
 using AutoMapper;
 using SolarTally.Application.Sites.Queries.Dtos;
-using SolarTally.Application.Sites.Queries.GetSiteDetail;
+using SolarTally.Application.Sites.Queries.GetSite;
 using SolarTally.Application.UnitTests.Common;
 using SolarTally.Persistence;
 using System.Linq;
@@ -25,13 +25,13 @@ namespace SolarTally.Application.UnitTests.Sites
         [Fact]
         public async Task GetSiteDetail()
         {
-            var handler = new GetSiteDetailQueryHandler(
+            var handler = new GetSiteQueryHandler(
                 _context, _mapper);
 
-            var result = await handler.Handle(new GetSiteDetailQuery()
+            var result = await handler.Handle(new GetSiteQuery()
             { Id = 1 }, CancellationToken.None);
             
-            Assert.IsType<SiteDetail>(result);
+            Assert.IsType<SiteDto>(result);
             // Get the site name
             Assert.Equal("PetroCanada Station", result.Name);
             // Check power

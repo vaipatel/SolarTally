@@ -6,7 +6,7 @@ using SolarTally.Domain.ValueObjects;
 
 namespace SolarTally.Application.Sites.Queries.Dtos
 {
-    public class SiteDetail : IMapFrom<Site>
+    public class SiteDto : IMapFrom<Site>
     {
         public int Id { get; set; }
 
@@ -20,7 +20,7 @@ namespace SolarTally.Application.Sites.Queries.Dtos
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Site, SiteDetail>()
+            profile.CreateMap<Site, SiteDto>()
                 .ForMember(d => d.ConsumptionTotal,
                     o => o.Ignore())
                 ;

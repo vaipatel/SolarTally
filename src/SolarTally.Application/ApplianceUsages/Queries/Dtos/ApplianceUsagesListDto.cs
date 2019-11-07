@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace SolarTally.Application.ApplianceUsages.Queries.Dtos
 {
-    public class ApplianceUsagesListVm
+    public class ApplianceUsagesListDto
     {
-        public IList<ApplianceUsageDto> ApplianceUsageDtos { get; set; }
+        public IList<ApplianceUsageDto> ApplianceUsages { get; set; }
     }
 }
