@@ -23,10 +23,16 @@ In order to configure the secrets on your machine, you should:
 1. `cd src/SolarTally.WebUI_Ng`
 2. `dotnet user-secrets init --id postgres`
    
-   This shouldn't change anything in the `SolarTally.WebUI_Ng.csproj`
-   because the `<UserSecretsId>postgres</UserSecretsId>` attribute is already
-   added to the csproj. Nevertheless, depending on your platform, it might cause
-   some harmless formatting changes to the xml, which might be ok to commit.
+   Unless you've already used the `postgres` id for a previous project, this
+   will create an empty `secrets.json` under
+   [`{user_secrets_path}`/](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-3.0&tabs=windows#how-the-secret-manager-tool-works)`postgres`.
+   
+   It normally also adds a `<UserSecretsId>postgres</UserSecretsId>` to the
+   csproj, but in our case the `SolarTally.WebUI_Ng.csproj` already has this
+   attribute.
+   
+   Nevertheless, depending on your platform, it might cause some harmless
+   formatting changes to the csproj xml, which *should* be ok to commit.
 3. `dotnet user-secrets set "PostgresUsername" "YOUR_POSTGRES_USERNAME"`
 4. `dotnet user-secrets set "PostgresPassword" "YOUR_POSTGRES_PASSWORD"`
 
