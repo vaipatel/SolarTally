@@ -17,7 +17,7 @@ namespace SolarTally.Application.Sites.Queries.GetSiteById
     /// <remarks>
     /// The handler is placed after the request.
     /// </remarks>
-    public class GetSiteByIdQuery : IRequest<SiteDto>
+    public class GetSiteByIdQuery : IRequest<SitePartialDto>
     {
         /// Id of the site
         public int Id { get; set; }
@@ -27,7 +27,7 @@ namespace SolarTally.Application.Sites.Queries.GetSiteById
     /// Handler for handling the GetSiteByIdQuery request.
     /// </summary>
     public class GetSiteByIdQueryHandler :
-        IRequestHandler<GetSiteByIdQuery, SiteDto>
+        IRequestHandler<GetSiteByIdQuery, SitePartialDto>
     {
         private readonly ISolarTallyDbContext _context;
         private readonly IMapper _mapper;
@@ -39,14 +39,20 @@ namespace SolarTally.Application.Sites.Queries.GetSiteById
             _mapper = mapper;
         }
 
-        public async Task<SiteDto> Handle(GetSiteByIdQuery request,
+        public async Task<SitePartialDto> Handle(GetSiteByIdQuery request,
             CancellationToken cancellationToken)
         {
-            var site = await _context.Sites
-                .Where(s => s.Id == request.Id)
-                .SingleAsync(cancellationToken);
+            var query =
+                from site in _context.Sites
+                join consumption in _context.Consumptions on site.Id equals consumption.Id
+                where site.Id == request.Id
+                select new { Site = site, ConsumptionTotal = consumption.ConsumptionTotal };
             
-            var siteDto = _mapper.Map<SiteDto>(site);
+            var queryRes = await
+                query.AsNoTracking().SingleAsync(cancellationToken);
+            
+            var siteDto = _mapper.Map<SitePartialDto>(queryRes.Site);
+            siteDto.ConsumptionTotal = queryRes.ConsumptionTotal;
 
             return siteDto;
         }

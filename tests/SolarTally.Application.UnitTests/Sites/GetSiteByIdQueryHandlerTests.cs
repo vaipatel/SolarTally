@@ -31,18 +31,12 @@ namespace SolarTally.Application.UnitTests.Sites
             var result = await handler.Handle(new GetSiteByIdQuery() { Id = 1 },
                 CancellationToken.None);
             
-            Assert.IsType<SiteDto>(result);
+            Assert.IsType<SitePartialDto>(result);
             // Get the site name
             Assert.Equal("PetroCanada Station", result.Name);
             // Check power
             Assert.Equal(2*(20 + 800 + 2000), 
-                result.Consumption.ConsumptionTotal.TotalPowerConsumption);
-            // Check ApplianceUsages count
-            Assert.Equal(3, result.Consumption.ApplianceUsages.Count);
-            // Get first ApplianceUsage
-            var firstAU = result.Consumption.ApplianceUsages.First();
-            // Check power consumption of the first ApplianceUsage
-            Assert.Equal(20, firstAU.PowerConsumption);
+                result.ConsumptionTotal.TotalPowerConsumption);
         }
 
     }

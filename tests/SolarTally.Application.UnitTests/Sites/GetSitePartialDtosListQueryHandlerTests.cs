@@ -39,7 +39,7 @@ namespace SolarTally.Application.UnitTests.Sites
             var lastSitePartialDto = result.Sites.Last();
             Assert.Equal("PetroCanada Station", lastSitePartialDto.Name);
             // Check total power consumption
-            Assert.Equal(5640,
+            Assert.Equal(2*(20 + 800 + 2000),
                 lastSitePartialDto.ConsumptionTotal.TotalPowerConsumption);
         }
 
