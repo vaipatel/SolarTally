@@ -16,9 +16,13 @@ namespace SolarTally.Application.Sites.Queries.Dtos
 
         public Address MainAddress { get; set; }
 
+        public ConsumptionTotal ConsumptionTotal { get; set; }
+
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Site, SitePartialDto>()
+                .ForMember(d => d.ConsumptionTotal,
+                    o => o.Ignore())
                 ;
         }
     }

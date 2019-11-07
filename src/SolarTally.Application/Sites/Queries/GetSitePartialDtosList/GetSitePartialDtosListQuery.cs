@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -41,11 +42,19 @@ namespace SolarTally.Application.Sites.Queries.GetSitePartialDtosList
             GetSitePartialDtosListQuery request,
             CancellationToken cancellationToken)
         {
-            var sites = await _context.Sites.ToListAsync(cancellationToken);
+            var query =
+                from site in _context.Sites
+                join consumption in _context.Consumptions on site.Id equals consumption.Id
+                select new { Site = site, ConsumptionTotal = consumption.ConsumptionTotal };
+            
+            var queryOut = await 
+                query.AsNoTracking().ToListAsync(cancellationToken);
+            
             var sitePartialDtos = new List<SitePartialDto>();
-            foreach( var site in sites)
+            foreach( var o in queryOut)
             {
-                var sitePartialDto = _mapper.Map<SitePartialDto>(site);
+                var sitePartialDto = _mapper.Map<SitePartialDto>(o.Site);
+                sitePartialDto.ConsumptionTotal = o.ConsumptionTotal;
                 sitePartialDtos.Add(sitePartialDto);
             }
             
