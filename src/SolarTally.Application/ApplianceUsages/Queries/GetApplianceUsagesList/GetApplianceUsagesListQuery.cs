@@ -59,7 +59,7 @@ namespace SolarTally.Application.ApplianceUsages.Queries.GetApplianceUsagesList
             
             var vm = new ApplianceUsagesListDto
             {
-                ApplianceUsages = applianceUsagesDtos
+                Items = applianceUsagesDtos
             };
 
             return vm;

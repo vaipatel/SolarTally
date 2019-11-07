@@ -1,10 +1,9 @@
-using SolarTally.Application.ApplianceUsages.Queries.Dtos;
+using SolarTally.Application.Common.Dtos;
 using System.Collections.Generic;
 
 namespace SolarTally.Application.ApplianceUsages.Queries.Dtos
 {
-    public class ApplianceUsagesListDto
+    public class ApplianceUsagesListDto : BaseListDto<ApplianceUsageDto>
     {
-        public IList<ApplianceUsageDto> ApplianceUsages { get; set; }
     }
 }
