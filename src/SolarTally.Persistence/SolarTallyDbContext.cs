@@ -72,8 +72,8 @@ namespace SolarTally.Persistence
 
             modelBuilder.ApplyConfiguration(new ApplianceConfiguration());
             modelBuilder.ApplyConfiguration(new ApplianceUsageConfiguration());
-            modelBuilder.ApplyConfiguration(new ConsumptionConfiguration());
             modelBuilder.ApplyConfiguration(new SiteConfiguration());
+            modelBuilder.ApplyConfiguration(new ConsumptionConfiguration());
         }
     }
 }
