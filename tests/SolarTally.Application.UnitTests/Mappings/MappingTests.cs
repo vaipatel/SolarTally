@@ -41,6 +41,20 @@ namespace SolarTally.Application.UnitTests.Mappings
         }
 
         [Fact]
+        public void ShouldMapSiteToSiteBriefDto()
+        {
+            var entity = new Site("A Site", 9);
+            entity.MainAddress = new Address("0 Bloor St.", "Toronto",
+                "Ontario", "Canada", "M1N2O3");
+            
+            var result = _mapper.Map<SiteBriefDto>(entity);
+
+            Assert.NotNull(result);
+            Assert.IsType<SiteBriefDto>(result);
+            Assert.Equal(entity.MainAddress.City, result.MainAddressCity);
+        }
+
+        [Fact]
         public void ShouldMapConsumptionToConsumptionDTO()
         {
             var site = new Site("A Site", 9);
