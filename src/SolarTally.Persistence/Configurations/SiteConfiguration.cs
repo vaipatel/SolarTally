@@ -36,6 +36,9 @@ namespace SolarTally.Persistence.Configurations
             // Anyway, I think this is because of the PK Id conventions.
             // I've borrowed below from an [EF Core sample](https://github.com/aspnet/EntityFramework.Docs/blob/master/samples/core/Modeling/TableSplitting/TableSplittingContext.cs#L27-L28)
             // with Id conventions similar to mine.
+            // If I want like a `SiteRefId` FK in Consumption, I can switch the
+            // `.HasForeignKey<Consumption>(c => c.Id)` to
+            // `.HasPrincipalKey<Site>(s => s.Id).HasForeignKey<Consumption>(c => c.SiteRefId)`.
             // --------------------------------------------------------------
 
             siteConfiguration.HasOne(s => s.Consumption)
