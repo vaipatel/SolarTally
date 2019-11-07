@@ -4,7 +4,7 @@ namespace SolarTally.Application.Sites.Queries.Dtos
 {
     public class SitesListVm
     {
-        public IList<SiteDto> SiteDtos { get; set; }
+        public IList<SiteDetailVm> SiteDtos { get; set; }
 
         public int Count { get; set; }
     }

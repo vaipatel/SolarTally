@@ -50,10 +50,10 @@ namespace SolarTally.Application.Sites.Queries.GetSitesList
             var queryOut = await 
                 query.AsNoTracking().ToListAsync(cancellationToken);
             
-            var siteDtos = new List<SiteDto>();
+            var siteDtos = new List<SiteDetailVm>();
             foreach( var o in queryOut)
             {
-                var siteDto = _mapper.Map<SiteDto>(o.Site);
+                var siteDto = _mapper.Map<SiteDetailVm>(o.Site);
                 siteDto.ConsumptionTotal = o.ConsumptionTotal;
                 siteDtos.Add(siteDto);
             }

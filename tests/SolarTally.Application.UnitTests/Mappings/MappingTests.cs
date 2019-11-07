@@ -33,10 +33,10 @@ namespace SolarTally.Application.UnitTests.Mappings
             entity.MainAddress = new Address("0 Bloor St.", "Toronto",
                 "Ontario", "Canada", "M1N2O3");
 
-            var result = _mapper.Map<SiteDto>(entity);
+            var result = _mapper.Map<SiteDetailVm>(entity);
 
             Assert.NotNull(result);
-            Assert.IsType<SiteDto>(result);
+            Assert.IsType<SiteDetailVm>(result);
             Assert.Equal(entity.MainAddress, result.MainAddress);
         }
 

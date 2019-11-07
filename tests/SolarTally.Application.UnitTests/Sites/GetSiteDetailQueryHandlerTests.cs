@@ -31,7 +31,7 @@ namespace SolarTally.Application.UnitTests.Sites
             var result = await handler.Handle(new GetSiteDetailQuery()
             { Id = 1 }, CancellationToken.None);
             
-            Assert.IsType<SiteDto>(result);
+            Assert.IsType<SiteDetailVm>(result);
             // Get the site name
             Assert.Equal("PetroCanada Station", result.Name);
             // Check power
