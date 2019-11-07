@@ -38,6 +38,10 @@ namespace SolarTally.Application.UnitTests.Sites
             // Get the last site
             var lastSiteDto = result.Sites.Last();
             Assert.Equal("PetroCanada Station", lastSiteDto.Name);
+            // Check city
+            Assert.Equal("Toronto", lastSiteDto.MainAddress.City);
+            // Check num solar hours
+            Assert.Equal(7, lastSiteDto.NumSolarHours);
             // Check total power consumption
             Assert.Equal(2*(20 + 800 + 2000),
                 lastSiteDto.ConsumptionTotal.TotalPowerConsumption);
