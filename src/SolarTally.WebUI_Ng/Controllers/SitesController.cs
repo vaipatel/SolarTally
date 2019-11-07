@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SolarTally.Application.Sites.Queries.Dtos;
-using SolarTally.Application.Sites.Queries.GetSitesList;
+using SolarTally.Application.Sites.Queries.GetSiteBriefsList;
 using System.Threading.Tasks;
 
 namespace SolarTally.WebUI_Ng.Controllers
@@ -10,9 +10,9 @@ namespace SolarTally.WebUI_Ng.Controllers
     public class SitesController : BaseController
     {
         [HttpGet]
-        public async Task<ActionResult<SitesListDto>> GetAll()
+        public async Task<ActionResult<SiteBriefsListDto>> GetAll()
         {
-            return Ok(await Mediator.Send(new GetSitesListQuery()));
+            return Ok(await Mediator.Send(new GetSiteBriefsListQuery()));
         }
 
         // [HttpPost]
