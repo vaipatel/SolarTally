@@ -28,6 +28,8 @@ namespace SolarTally.Persistence.Configurations
                 .OnDelete(DeleteBehavior.Cascade);
 
             consumptionConfiguration.OwnsOne(c => c.ConsumptionTotal);
+
+            consumptionConfiguration.ToTable("Sites");
         }
     }
 }

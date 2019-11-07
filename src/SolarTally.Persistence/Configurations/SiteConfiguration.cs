@@ -46,6 +46,8 @@ namespace SolarTally.Persistence.Configurations
                 .HasForeignKey<Consumption>(c => c.Id)
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired(true);
+            
+            siteConfiguration.ToTable("Sites");
         }
     }
 }
