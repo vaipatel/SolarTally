@@ -22,31 +22,25 @@ namespace SolarTally.Persistence.Configurations
                 .HasDefaultValue<int>(8)
                 .IsRequired();
 
-            // Note: If I don't configure the HasForeignKey<Consumption>(), then
-            // I'll get the following error
-            // -------
-            // System.AggregateException : One or more errors occurred. (The 
-            // child/dependent side could not be determined for the one-to-one 
-            // relationship between 'Consumption.Site' and 'Site.Consumption'. 
-            // To identify the child/dependent side of the relationship, 
-            // configure the foreign key property. If these navigations should 
-            // not be part of the same relationship configure them without 
-            // specifying the inverse. 
-            // See http://go.microsoft.com/fwlink/?LinkId=724062 for more 
-            // details.)
-            // -------
-            // Note (cont.): Basically EF Core is confused about which is the
-            // child in the one-to-one relationship between Site and 
-            // Consumption. It will resolve this confusion when it can detect a
-            // FK configuration, as we have done with the HasForeignKey() call
-            // below.
-            // See the link in the error.
-            // Also see the question https://stackoverflow.com/q/51808912 to
-            // understand which one is dubbed the child by EF Core.
+            // Previous (summarized)
+            // --------------------------------------------------------------
+            // I needed to configure HasForeignKey<Consumption>(c => c.SiteId)
+            // here to let EF Core know which one is the dependant.
+            // --------------------------------------------------------------
+
+            // Edit
+            // --------------------------------------------------------------
+            // When trying to share the Sites and Consumptions tables, I got
+            // the [IncompatibleTableNoRelationship](https://github.com/aspnet/EntityFrameworkCore/blob/0d76bbf45a42148924b413ef8f37bf49c1ce10d3/src/EFCore.Relational/Properties/RelationalStrings.resx#L290-L292)
+            // error. So the two tables weren't really connected.
+            // Anyway, I think this is because of the PK Id conventions.
+            // I've borrowed below from an [EF Core sample](https://github.com/aspnet/EntityFramework.Docs/blob/master/samples/core/Modeling/TableSplitting/TableSplittingContext.cs#L27-L28)
+            // with Id conventions similar to mine.
+            // --------------------------------------------------------------
 
             siteConfiguration.HasOne(s => s.Consumption)
                 .WithOne(c => c.Site)
-                .HasForeignKey<Consumption>(c => c.SiteId)
+                .HasForeignKey<Consumption>(c => c.Id)
                 .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired(true);
         }

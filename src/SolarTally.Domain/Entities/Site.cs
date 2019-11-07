@@ -17,8 +17,6 @@ namespace SolarTally.Domain.Entities
 
         public int NumSolarHours { get; private set; }
 
-        // Consumption Foreign Key
-        public int ConsumptionId { get; private set; }
         // Consumption Nav prop
         public Consumption Consumption { get; private set; }
 
@@ -26,7 +24,6 @@ namespace SolarTally.Domain.Entities
         {   
             Name = name;
             Consumption = new Consumption(this);
-            ConsumptionId = Consumption.Id;
             
             this.SetNumSolarHours(numSolarHours);
         }

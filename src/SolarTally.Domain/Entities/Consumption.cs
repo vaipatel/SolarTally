@@ -13,8 +13,6 @@ namespace SolarTally.Domain.Entities
     public class Consumption : BaseEntity<int>, IAggregateRoot,
         IConsumptionCalculator
     {
-        // Site Foreign Key
-        public int SiteId { get; private set; }
         // Site Nav prop
         public Site Site { get; private set; }
 
@@ -32,7 +30,6 @@ namespace SolarTally.Domain.Entities
         public Consumption(Site site)
         {
             _applianceUsages = new List<ApplianceUsage>();
-            SiteId = site.Id;
             Site = site;
             this.Recalculate();
         }
