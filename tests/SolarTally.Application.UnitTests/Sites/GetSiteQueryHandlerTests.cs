@@ -11,19 +11,19 @@ using Xunit;
 namespace SolarTally.Application.UnitTests.Sites
 {
     [Collection("QueryCollection")]
-    public class GetSiteDetailQueryHandlerTests
+    public class GetSiteQueryHandlerTests
     {
         private readonly SolarTallyDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetSiteDetailQueryHandlerTests(QueryTestFixture fixture)
+        public GetSiteQueryHandlerTests(QueryTestFixture fixture)
         {
             _context = fixture.Context;
             _mapper = fixture.Mapper;
         }
 
         [Fact]
-        public async Task GetSiteDetail()
+        public async Task GetSite()
         {
             var handler = new GetSiteQueryHandler(
                 _context, _mapper);
