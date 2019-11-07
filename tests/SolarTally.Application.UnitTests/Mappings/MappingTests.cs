@@ -33,24 +33,10 @@ namespace SolarTally.Application.UnitTests.Mappings
             entity.MainAddress = new Address("0 Bloor St.", "Toronto",
                 "Ontario", "Canada", "M1N2O3");
 
-            var result = _mapper.Map<SitePartialDto>(entity);
+            var result = _mapper.Map<SiteDto>(entity);
 
             Assert.NotNull(result);
-            Assert.IsType<SitePartialDto>(result);
-            Assert.Equal(entity.MainAddress, result.MainAddress);
-        }
-
-        [Fact]
-        public void ShouldMapSiteToSitePartialDto()
-        {
-            var entity = new Site("A Site", 9);
-            entity.MainAddress = new Address("0 Bloor St.", "Toronto",
-                "Ontario", "Canada", "M1N2O3");
-
-            var result = _mapper.Map<SitePartialDto>(entity);
-
-            Assert.NotNull(result);
-            Assert.IsType<SitePartialDto>(result);
+            Assert.IsType<SiteDto>(result);
             Assert.Equal(entity.MainAddress, result.MainAddress);
         }
 

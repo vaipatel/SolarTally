@@ -9,37 +9,37 @@ using Microsoft.EntityFrameworkCore;
 using SolarTally.Application.Common.Interfaces;
 using SolarTally.Application.Sites.Queries.Dtos;
 
-namespace SolarTally.Application.Sites.Queries.GetSitePartialDtosList
+namespace SolarTally.Application.Sites.Queries.GetSiteDtosList
 {
     /// <summary>
-    /// Request DTO for getting all the Sites in a SitePartialDtosListVm.
+    /// Request DTO for getting all the Sites in a SiteDtosListVm.
     /// </summary>
     /// <remarks>
     /// The handler is placed after the request.
     /// </remarks>
-    public class GetSitePartialDtosListQuery : IRequest<SitePartialDtosListVm>
+    public class GetSiteDtosListQuery : IRequest<SiteDtosListVm>
     {
         // No props in our Query DTO at the moment. Maybe later we add UserId.
     }
 
     /// <summary>
-    /// Handler for handling the GetSitePartialDtosListQuery request.
+    /// Handler for handling the GetSiteDtosListQuery request.
     /// </summary>
-    public class GetSitePartialDtosListQueryHandler :
-        IRequestHandler<GetSitePartialDtosListQuery, SitePartialDtosListVm>
+    public class GetSiteDtosListQueryHandler :
+        IRequestHandler<GetSiteDtosListQuery, SiteDtosListVm>
     {
         private readonly ISolarTallyDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetSitePartialDtosListQueryHandler(ISolarTallyDbContext context,
+        public GetSiteDtosListQueryHandler(ISolarTallyDbContext context,
             IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public async Task<SitePartialDtosListVm> Handle(
-            GetSitePartialDtosListQuery request,
+        public async Task<SiteDtosListVm> Handle(
+            GetSiteDtosListQuery request,
             CancellationToken cancellationToken)
         {
             var query =
@@ -50,18 +50,18 @@ namespace SolarTally.Application.Sites.Queries.GetSitePartialDtosList
             var queryOut = await 
                 query.AsNoTracking().ToListAsync(cancellationToken);
             
-            var sitePartialDtos = new List<SitePartialDto>();
+            var siteDtos = new List<SiteDto>();
             foreach( var o in queryOut)
             {
-                var sitePartialDto = _mapper.Map<SitePartialDto>(o.Site);
-                sitePartialDto.ConsumptionTotal = o.ConsumptionTotal;
-                sitePartialDtos.Add(sitePartialDto);
+                var siteDto = _mapper.Map<SiteDto>(o.Site);
+                siteDto.ConsumptionTotal = o.ConsumptionTotal;
+                siteDtos.Add(siteDto);
             }
             
-            var vm = new SitePartialDtosListVm
+            var vm = new SiteDtosListVm
             {
-                Sites = sitePartialDtos,
-                Count = sitePartialDtos.Count
+                SiteDtos = siteDtos,
+                Count = siteDtos.Count
             };
 
             return vm;

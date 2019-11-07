@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using SolarTally.Application.Common.Interfaces;
 using SolarTally.Application.Sites.Queries.Dtos;
 
-namespace SolarTally.Application.Sites.Queries.GetSiteById
+namespace SolarTally.Application.Sites.Queries.GetSiteDtoById
 {
     /// <summary>
     /// Request DTO for getting single site by its Id.
@@ -17,29 +17,29 @@ namespace SolarTally.Application.Sites.Queries.GetSiteById
     /// <remarks>
     /// The handler is placed after the request.
     /// </remarks>
-    public class GetSiteByIdQuery : IRequest<SitePartialDto>
+    public class GetSiteDtoByIdQuery : IRequest<SiteDto>
     {
         /// Id of the site
         public int Id { get; set; }
     }
 
     /// <summary>
-    /// Handler for handling the GetSiteByIdQuery request.
+    /// Handler for handling the GetSiteDtoByIdQuery request.
     /// </summary>
-    public class GetSiteByIdQueryHandler :
-        IRequestHandler<GetSiteByIdQuery, SitePartialDto>
+    public class GetSiteDtoByIdQueryHandler :
+        IRequestHandler<GetSiteDtoByIdQuery, SiteDto>
     {
         private readonly ISolarTallyDbContext _context;
         private readonly IMapper _mapper;
 
-        public GetSiteByIdQueryHandler(ISolarTallyDbContext context,
+        public GetSiteDtoByIdQueryHandler(ISolarTallyDbContext context,
             IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public async Task<SitePartialDto> Handle(GetSiteByIdQuery request,
+        public async Task<SiteDto> Handle(GetSiteDtoByIdQuery request,
             CancellationToken cancellationToken)
         {
             var query =
@@ -51,7 +51,7 @@ namespace SolarTally.Application.Sites.Queries.GetSiteById
             var queryRes = await
                 query.AsNoTracking().SingleAsync(cancellationToken);
             
-            var siteDto = _mapper.Map<SitePartialDto>(queryRes.Site);
+            var siteDto = _mapper.Map<SiteDto>(queryRes.Site);
             siteDto.ConsumptionTotal = queryRes.ConsumptionTotal;
 
             return siteDto;
