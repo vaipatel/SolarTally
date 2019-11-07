@@ -31,12 +31,12 @@ namespace SolarTally.Application.UnitTests.Sites
             var result = await handler.Handle(new GetSitesListQuery(),
                 CancellationToken.None);
             
-            Assert.IsType<SitesListVm>(result);
+            Assert.IsType<SiteDetailsList>(result);
             // Check num sites
-            Assert.Equal(1, result.SiteDtos.Count);
+            Assert.Equal(1, result.SiteDetails.Count);
             Assert.Equal(1, result.Count);
             // Get the last site
-            var lastSiteDto = result.SiteDtos.Last();
+            var lastSiteDto = result.SiteDetails.Last();
             Assert.Equal("PetroCanada Station", lastSiteDto.Name);
             // Check total power consumption
             Assert.Equal(2*(20 + 800 + 2000),

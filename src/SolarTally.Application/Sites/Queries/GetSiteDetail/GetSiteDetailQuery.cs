@@ -17,7 +17,7 @@ namespace SolarTally.Application.Sites.Queries.GetSiteDetail
     /// <remarks>
     /// The handler is placed after the request.
     /// </remarks>
-    public class GetSiteDetailQuery : IRequest<SiteDetailVm>
+    public class GetSiteDetailQuery : IRequest<SiteDetail>
     {
         /// Id of the site
         public int Id { get; set; }
@@ -27,7 +27,7 @@ namespace SolarTally.Application.Sites.Queries.GetSiteDetail
     /// Handler for handling the GetSiteDetailQuery request.
     /// </summary>
     public class GetSiteDetailQueryHandler :
-        IRequestHandler<GetSiteDetailQuery, SiteDetailVm>
+        IRequestHandler<GetSiteDetailQuery, SiteDetail>
     {
         private readonly ISolarTallyDbContext _context;
         private readonly IMapper _mapper;
@@ -39,7 +39,7 @@ namespace SolarTally.Application.Sites.Queries.GetSiteDetail
             _mapper = mapper;
         }
 
-        public async Task<SiteDetailVm> Handle(GetSiteDetailQuery request,
+        public async Task<SiteDetail> Handle(GetSiteDetailQuery request,
             CancellationToken cancellationToken)
         {
             var query =
@@ -51,7 +51,7 @@ namespace SolarTally.Application.Sites.Queries.GetSiteDetail
             var queryRes = await
                 query.AsNoTracking().SingleAsync(cancellationToken);
             
-            var siteDto = _mapper.Map<SiteDetailVm>(queryRes.Site);
+            var siteDto = _mapper.Map<SiteDetail>(queryRes.Site);
             siteDto.ConsumptionTotal = queryRes.ConsumptionTotal;
 
             return siteDto;

@@ -17,7 +17,7 @@ namespace SolarTally.Application.Sites.Queries.GetSitesList
     /// <remarks>
     /// The handler is placed after the request.
     /// </remarks>
-    public class GetSitesListQuery : IRequest<SitesListVm>
+    public class GetSitesListQuery : IRequest<SiteDetailsList>
     {
         // No props in our Query DTO at the moment. Maybe later we add UserId.
     }
@@ -26,7 +26,7 @@ namespace SolarTally.Application.Sites.Queries.GetSitesList
     /// Handler for handling the GetSitesListQuery request.
     /// </summary>
     public class GetSitesListQueryHandler :
-        IRequestHandler<GetSitesListQuery, SitesListVm>
+        IRequestHandler<GetSitesListQuery, SiteDetailsList>
     {
         private readonly ISolarTallyDbContext _context;
         private readonly IMapper _mapper;
@@ -38,7 +38,7 @@ namespace SolarTally.Application.Sites.Queries.GetSitesList
             _mapper = mapper;
         }
 
-        public async Task<SitesListVm> Handle(
+        public async Task<SiteDetailsList> Handle(
             GetSitesListQuery request,
             CancellationToken cancellationToken)
         {
@@ -50,17 +50,17 @@ namespace SolarTally.Application.Sites.Queries.GetSitesList
             var queryOut = await 
                 query.AsNoTracking().ToListAsync(cancellationToken);
             
-            var siteDtos = new List<SiteDetailVm>();
+            var siteDtos = new List<SiteDetail>();
             foreach( var o in queryOut)
             {
-                var siteDto = _mapper.Map<SiteDetailVm>(o.Site);
+                var siteDto = _mapper.Map<SiteDetail>(o.Site);
                 siteDto.ConsumptionTotal = o.ConsumptionTotal;
                 siteDtos.Add(siteDto);
             }
             
-            var vm = new SitesListVm
+            var vm = new SiteDetailsList
             {
-                SiteDtos = siteDtos,
+                SiteDetails = siteDtos,
                 Count = siteDtos.Count
             };
 
