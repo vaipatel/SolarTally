@@ -38,6 +38,25 @@ In order to configure the secrets on your machine, you should:
 
 Now the secrets can be accessed from both the WebUI_Ng and Persistence projects.
 
+## Migrations
+
+Migrations stuff is done using the `dotnet ef` command
+in the `SolarTally.Persistence` project folder. In order to access connection
+strings, the `--startup-project` must be the path to the 
+`SolarTally.WebUI_Ng.csproj`.
+
+### Removing migrations
+
+`dotnet ef migrations remove --project SolarTally.Persistence.csproj  --startup-project ../SolarTally.WebUI_Ng/SolarTally.WebUI_Ng.csproj`
+
+### Initiating migrations
+
+`dotnet ef migrations add InitialCreate --project SolarTally.Persistence.csproj --startup-project ../SolarTally.WebUI_Ng/SolarTally.WebUI_Ng.csproj`
+
+### Applying migrations
+
+`dotnet ef database update --project SolarTally.Persistence.csproj  --startup-project ../SolarTally.WebUI_Ng/SolarTally.WebUI_Ng.csproj`
+
 ## Architectural Concerns
 
 ### Monolithic Architecture
