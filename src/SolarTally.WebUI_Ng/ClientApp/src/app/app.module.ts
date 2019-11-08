@@ -10,7 +10,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Material
 import {
   MatButtonModule,
+  MatCardModule,
   MatIconModule,
+  MatListModule,
   MatMenuModule,
   MatToolbarModule
 } from '@angular/material';
@@ -27,7 +29,9 @@ import {
     BrowserAnimationsModule,
     //Material
     MatButtonModule,
+    MatCardModule,
     MatIconModule,
+    MatListModule,
     MatMenuModule,
     MatToolbarModule
   ],
