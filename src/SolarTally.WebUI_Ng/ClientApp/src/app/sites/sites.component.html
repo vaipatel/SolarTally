@@ -24,4 +24,12 @@
         </button>
     </span>
 </mat-toolbar>
-<p>sites works!</p>
+
+<mat-nav-list>
+    <mat-list-item *ngFor="let site of sites; last as last" [routerLink]='["/calc-stepper", {id: site.id}]'>
+        <h4 mat-line>{{site.name}}</h4>
+        <!-- <p mat-line class="demo-2"> {{folder.updated}} </p> -->
+        <mat-icon aria-label="Edit Site">keyboard_arrow_right</mat-icon>
+        <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
+    </mat-list-item>
+</mat-nav-list>
