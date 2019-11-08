@@ -7,6 +7,14 @@ import { SitesComponent } from './sites/sites.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+// Material
+import {
+  MatButtonModule,
+  MatIconModule,
+  MatMenuModule,
+  MatToolbarModule
+} from '@angular/material';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,7 +24,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    //Material
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
