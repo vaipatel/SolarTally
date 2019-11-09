@@ -25,7 +25,7 @@
     </span>
 </mat-toolbar>
 
-<mat-nav-list>
+<!-- <mat-nav-list>
     <mat-list-item *ngFor="let site of siteBriefs; last as last" [routerLink]='["/calc-stepper", {id: site.id}]'>
         <div mat-line>
             <span>{{site.name}}</span>
@@ -35,4 +35,36 @@
         <mat-icon aria-label="Edit Site">keyboard_arrow_right</mat-icon>
         <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
     </mat-list-item>
-</mat-nav-list>
+</mat-nav-list> -->
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z0">
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let site"> {{site.name}} </td>
+    </ng-container>
+
+    <!-- Consumption Column -->
+    <ng-container matColumnDef="totalEnergyConsumption">
+        <th mat-header-cell *matHeaderCellDef> Wh </th>
+        <td mat-cell *matCellDef="let site"> {{site.consumptionTotal.totalEnergyConsumption}} </td>
+    </ng-container>
+
+    <!-- City Column -->
+    <ng-container matColumnDef="city">
+        <th mat-header-cell *matHeaderCellDef> City </th>
+        <td mat-cell *matCellDef="let site"> {{site.mainAddressCity}} </td>
+    </ng-container>
+
+    <!-- Icon Column -->
+    <ng-container matColumnDef="to_detail_arrow">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let site">
+            <mat-icon aria-label="Edit Site" aria-hidden="true">keyboard_arrow_right</mat-icon>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]='["/site-detail", {id: row.id}]' class="cursor-pointer"></tr>
+</table>
