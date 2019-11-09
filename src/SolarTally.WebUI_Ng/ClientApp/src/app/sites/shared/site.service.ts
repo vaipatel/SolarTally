@@ -9,10 +9,15 @@ import { Site, SiteBrief, SiteBriefsLst } from './site';
 export class SiteService {
 
   private sitesUrl = "api/sites/getall";
+  private siteDetailUrl = "api/sites/getdetail/";
 
   constructor(private http: HttpClient) { }
 
   getSites(): Observable<SiteBriefsLst> {
     return this.http.get<SiteBriefsLst>(this.sitesUrl);
+  }
+
+  getSiteDetail(id: string): Observable<Site> {
+    return this.http.get<Site>(this.siteDetailUrl + id);
   }
 }
