@@ -7,5 +7,5 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'Solar Tally';
+  title = 'SolarTally';
 }
