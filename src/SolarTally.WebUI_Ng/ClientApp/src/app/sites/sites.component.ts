@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Site } from './shared/site';
+import { Site, SiteBrief, SiteBriefLst } from './shared/site';
 import { SITES } from './shared/mock-sites';
+import { SiteService } from './shared/site.service';
 
 @Component({
   selector: 'app-sites',
@@ -9,11 +10,19 @@ import { SITES } from './shared/mock-sites';
 })
 export class SitesComponent implements OnInit {
 
-  sites: Site[] = SITES;
+  siteBriefs: SiteBrief[];
 
-  constructor() { }
+  constructor(public siteSrvc: SiteService) { }
 
   ngOnInit() {
+    this.getSites();
+  }
+
+  getSites(): void {
+    this.siteSrvc.getSites()
+      .subscribe(siteBriefsLst => {
+        this.siteBriefs = siteBriefsLst.items;
+      });
   }
 
 }
