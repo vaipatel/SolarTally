@@ -1,3 +1,45 @@
+@mixin mat-table-columns($columns)
+{
+   .mat-column-
+   {
+      @each $colName, $props in $columns {
+
+         $width: map-get($props, 'width');
+
+         &#{$colName} 
+         {
+            flex: $width !important;
+            min-width: $width !important;
+            @if map-has-key($map: $props, $key: 'max-width')
+            {
+                max-width: map-get($props, 'max-width');
+            }
+
+            @if map-has-key($props, 'color') 
+            {
+               color: map-get($props, 'color');
+            }
+         }  
+      }
+   }
+}
+
+@include mat-table-columns((
+    name: (width: 1rem, 'max-width': 2rem, color: rgb(92, 11, 15))
+));
+
+@media only screen and (max-width: 960px)
+{
+    @include mat-table-columns((
+        totalPowerConsumption: (width: 2rem),
+        city: (width: 1rem, 'max-width': 1rem),
+        to_detail_arrow: (width: 0.05rem, 'max-width': 0.05rem)
+    ));
+}
+
+.mat-column-to_detail_arrow {
+    text-align: right;
+}
 
 .sticky-toolbar {
     position: sticky;
