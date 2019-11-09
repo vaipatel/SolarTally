@@ -33,8 +33,18 @@
     @include mat-table-columns((
         totalEnergyConsumption: (width: 2rem, color: rgb(12, 99, 4)),
         city: (width: 1rem, 'max-width': 1rem),
-        to_detail_arrow: (width: 0.05rem, 'max-width': 0.05rem)
+        to_detail_arrow: (width: 0.01rem, 'max-width': 0.01rem)
     ));
+    
+    .mat-column-to_detail_arrow {
+        text-align: right;
+        padding-left: 10px;
+        padding-right: 8px !important;
+    }
+}
+
+.mat-column-totalEnergyConsumption {
+    text-align: center;
 }
 
 .mat-column-to_detail_arrow {
