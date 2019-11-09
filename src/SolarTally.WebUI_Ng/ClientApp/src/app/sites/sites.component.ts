@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Site, SiteBrief, SiteBriefLst } from './shared/site';
+import { Site, SiteBrief, SiteBriefsLst } from './shared/site';
 import { SITES } from './shared/mock-sites';
 import { SiteService } from './shared/site.service';
 

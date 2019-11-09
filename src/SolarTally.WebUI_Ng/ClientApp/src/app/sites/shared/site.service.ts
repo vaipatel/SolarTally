@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { Site, SiteBrief, SiteBriefLst } from './site';
+import { Site, SiteBrief, SiteBriefsLst } from './site';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class SiteService {
 
   constructor(private http: HttpClient) { }
 
-  getSites(): Observable<SiteBriefLst> {
-    return this.http.get<SiteBriefLst>(this.sitesUrl);
+  getSites(): Observable<SiteBriefsLst> {
+    return this.http.get<SiteBriefsLst>(this.sitesUrl);
   }
 }

@@ -16,6 +16,6 @@ export class SiteBrief {
     consumptionTotal: ConsumptionTotal;
 }
 
-export class SiteBriefLst {
+export class SiteBriefsLst {
     items: SiteBrief[];
 }
