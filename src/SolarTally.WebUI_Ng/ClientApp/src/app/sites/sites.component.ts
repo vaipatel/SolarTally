@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Site, SiteBrief, SiteBriefsLst } from './shared/site';
 import { SITES } from './shared/mock-sites';
 import { SiteService } from './shared/site.service';
+import { MatTableDataSource, MatTab } from '@angular/material';
 
 @Component({
   selector: 'app-sites',
@@ -11,6 +12,10 @@ import { SiteService } from './shared/site.service';
 export class SitesComponent implements OnInit {
 
   siteBriefs: SiteBrief[];
+  dataSource: MatTableDataSource<SiteBrief>;
+  displayedColumns: string[] = [
+    "name", "totalEnergyConsumption", "city", "to_detail_arrow"
+  ];
 
   constructor(public siteSrvc: SiteService) { }
 
@@ -22,6 +27,7 @@ export class SitesComponent implements OnInit {
     this.siteSrvc.getSites()
       .subscribe(siteBriefsLst => {
         this.siteBriefs = siteBriefsLst.items;
+        this.dataSource = new MatTableDataSource(this.siteBriefs);
       });
   }
 
