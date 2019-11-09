@@ -15,6 +15,7 @@ import {
   MatIconModule,
   MatListModule,
   MatMenuModule,
+  MatTableModule,
   MatToolbarModule
 } from '@angular/material';
 
@@ -35,6 +36,7 @@ import {
     MatIconModule,
     MatListModule,
     MatMenuModule,
+    MatTableModule,
     MatToolbarModule
   ],
   providers: [],
