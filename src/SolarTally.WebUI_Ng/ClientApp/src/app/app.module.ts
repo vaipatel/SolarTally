@@ -18,12 +18,14 @@ import {
   MatTableModule,
   MatToolbarModule
 } from '@angular/material';
+import { SiteDetailComponent } from './sites/site-detail/site-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SitesComponent,
-    NavMenuComponent
+    NavMenuComponent,
+    SiteDetailComponent
   ],
   imports: [
     BrowserModule,
