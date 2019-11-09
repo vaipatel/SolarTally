@@ -5,6 +5,10 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+table {
+   width: 100%;
+}
+
 .spacer {
     /* This fills the remaining space, by using flexbox. 
        Every toolbar row uses a flexbox row layout. */
