@@ -1,1 +1,17 @@
-<p>site-detail works!</p>
+<mat-toolbar color="primary" class="sticky-toolbar">
+    <span>SolarTally</span>
+
+    <!-- This fills the remaining space of the current row -->
+    <span class="spacer"></span>
+    
+    <span>
+        <mat-menu #appMenu="matMenu">
+            <button mat-menu-item>Settings</button>
+            <button mat-menu-item>Logout</button>
+        </mat-menu>
+
+        <button mat-icon-button [matMenuTriggerFor]="appMenu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+    </span>
+</mat-toolbar>
