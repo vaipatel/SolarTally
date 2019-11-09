@@ -1,3 +1,5 @@
+@import '~@angular/material/theming';
+
 @mixin mat-table-columns($columns)
 {
    .mat-column-
@@ -25,13 +27,13 @@
 }
 
 @include mat-table-columns((
-    name: (width: 1rem, 'max-width': 2rem, color: rgb(92, 11, 15))
+    name: (width: 1rem, 'max-width': 2rem, color: $dark-primary-text)
 ));
 
 @media only screen and (max-width: 960px)
 {
     @include mat-table-columns((
-        totalEnergyConsumption: (width: 2rem, color: rgb(12, 99, 4)),
+        totalEnergyConsumption: (width: 2rem),
         city: (width: 1rem, 'max-width': 1rem),
         to_detail_arrow: (width: 0.01rem, 'max-width': 0.01rem)
     ));
@@ -44,10 +46,15 @@
 }
 
 .mat-column-totalEnergyConsumption {
+    color: $dark-primary-text;
 }
 
 .mat-column-to_detail_arrow {
     text-align: right;
+}
+
+.mat-column-city {
+    color: $dark-secondary-text;
 }
 
 .sticky-toolbar {
