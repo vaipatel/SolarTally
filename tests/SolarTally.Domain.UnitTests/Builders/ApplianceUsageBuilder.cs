@@ -14,6 +14,7 @@ namespace SolarTally.Domain.UnitTests.Builders
         public decimal TestPowerConsumption => 20.5m;
         public int TestNumHours => 3;
         public decimal TestPercentHrsOnSolar => 1;
+        public int TestNumHoursOnSolar => 2;
         public bool TestEnabled => true;
 
         public ApplianceUsageBuilder()

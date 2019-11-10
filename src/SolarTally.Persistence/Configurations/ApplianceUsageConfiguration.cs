@@ -31,6 +31,11 @@ namespace SolarTally.Persistence.Configurations
                 .HasDefaultValue<decimal>(1.0)
                 .IsRequired();
 
+            auConfiguration.Property(au => au.NumHoursOnSolar)
+                .HasColumnType("smallint")
+                .HasDefaultValue<int>(8)
+                .IsRequired();
+
             auConfiguration.Property(au => au.Enabled)
                 .HasColumnType("boolean")
                 .HasDefaultValue<bool>(true)
