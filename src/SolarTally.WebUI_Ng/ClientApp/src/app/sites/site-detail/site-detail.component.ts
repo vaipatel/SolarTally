@@ -14,6 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class SiteDetailComponent implements OnInit {
 
   private site$: Observable<Site>;
+  site: Site;
 
   constructor(
     public route: ActivatedRoute,
@@ -30,6 +31,7 @@ export class SiteDetailComponent implements OnInit {
       if (!resp) {
         console.log("Site not found.");
       }
+      this.site = resp;
     }, (error: HttpErrorResponse) => console.log(
       "Site not found - Error " + error.status
     ));
