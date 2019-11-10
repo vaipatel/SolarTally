@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   MatButtonModule,
   MatCardModule,
+  MatExpansionModule,
   MatIconModule,
   MatListModule,
   MatMenuModule,
@@ -35,6 +36,7 @@ import { SiteDetailComponent } from './sites/site-detail/site-detail.component';
     //Material
     MatButtonModule,
     MatCardModule,
+    MatExpansionModule,
     MatIconModule,
     MatListModule,
     MatMenuModule,
