@@ -1,3 +1,5 @@
+@import '~@angular/material/theming';
+
 .sticky-toolbar {
     position: sticky;
     position: -webkit-sticky;
@@ -13,4 +15,9 @@
 
 .padding-10 {
     padding: 10px;
+}
+
+.a-light-primary {
+    text-decoration: none;
+    color: $light-primary-text;
 }
