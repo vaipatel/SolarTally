@@ -17,8 +17,7 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
             var builder = new ApplianceUsageBuilder();
             var applianceUsage = new ApplianceUsage(
                 builder.TestConsumptionCalculator, builder.TestAppliance,
-                quantity, powerConsumption, numHours,
-                builder.TestPercentHrsOnSolar, numHoursOnSolar,
+                quantity, powerConsumption, numHours, numHoursOnSolar,
                 builder.TestEnabled);
             var applianceUsageTotal = new ApplianceUsageTotal(applianceUsage);
 

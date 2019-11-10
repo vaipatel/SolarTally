@@ -18,8 +18,6 @@ namespace SolarTally.Application.ApplianceUsages.Queries.Dtos
 
         public int NumHours { get; set; }
 
-        public decimal PercentHrsOnSolar { get; set; }
-
         public int NumHoursOnSolar { get; set; }
 
         public bool Enabled { get; set; }

@@ -13,7 +13,6 @@ namespace SolarTally.Domain.UnitTests.Builders
         public int TestQuantity => 2;
         public decimal TestPowerConsumption => 20.5m;
         public int TestNumHours => 3;
-        public decimal TestPercentHrsOnSolar => 1;
         public int TestNumHoursOnSolar => 2;
         public bool TestEnabled => true;
 
@@ -23,7 +22,7 @@ namespace SolarTally.Domain.UnitTests.Builders
             TestConsumptionCalculator = new SiteBuilder().Build().Consumption;
             _applianceUsage = new ApplianceUsage(TestConsumptionCalculator,
                 TestAppliance, TestQuantity, TestPowerConsumption, TestNumHours,
-                TestPercentHrsOnSolar, TestNumHoursOnSolar, TestEnabled);
+                TestNumHoursOnSolar, TestEnabled);
         }
 
         public ApplianceUsage Build()

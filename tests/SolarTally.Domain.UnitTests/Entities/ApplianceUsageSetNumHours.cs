@@ -26,18 +26,15 @@ namespace SolarTally.Domain.UnitTests.Entities
         }
 
         [Fact]
-        void ThrowsCustomExForMoreThanSiteNumSolarHours()
+        void AllowsMoreThanSiteNumSolarHours()
         {
             var builder = new ApplianceUsageBuilder();
             var applianceUsage = builder.Build();
             var siteNumSolarHours =
                 builder.TestConsumptionCalculator.GetSiteNumSolarHours();
-            // First make sure that PercentHrsOnSolar is 100%
-            Assert.Equal(1, applianceUsage.PercentHrsOnSolar);
-            // Now should throw when trying to set more than site solar hrs
-            Assert.Throws<ApplianceUsageHoursInvalidException>(() => {
-                applianceUsage.SetNumHours(siteNumSolarHours + 1);
-            });
+            // Should be ok to set more than site solar hrs
+            applianceUsage.SetNumHours(siteNumSolarHours + 1);
+            
         }
 
         [Fact]

@@ -26,7 +26,6 @@ namespace SolarTally.Domain.Entities
     {
         // Some constants to reduce magic numbers
         public const int DefaultQuantity = 1;
-        public const int DefaultPercentHrsOnSolar = 1;
 
         public int ApplianceId { get; private set; }
         public Appliance Appliance { get; private set; }
@@ -67,11 +66,6 @@ namespace SolarTally.Domain.Entities
         public int GetNumHours() => NumHours;
 
         /// <summary>
-        /// Percent of hrs to run the appliance when solar is available.
-        /// </summary>
-        public decimal PercentHrsOnSolar { get; private set; }
-
-        /// <summary>
         /// Number of hrs of solar to run the appliance
         /// (must be < SiteNumSolarHours)
         /// </summary>
@@ -105,15 +99,13 @@ namespace SolarTally.Domain.Entities
         /// </remarks>
         public ApplianceUsage(IConsumptionCalculator consumptionCalculator,
             Appliance appliance, int quantity, decimal powerConsumption,
-            int numHours, decimal percentHrsOnSolar, int numHoursOnSolar,
-            bool enabled)
+            int numHours, int numHoursOnSolar, bool enabled)
         {
             _consumptionCalculator = consumptionCalculator;
             this.SetAppliance(appliance);
             this.SetQuantity(quantity);
             this.SetPowerConsumption(powerConsumption);
             this.SetNumHours(numHours);
-            this.SetPercentHrsOnSolar(percentHrsOnSolar);
             this.SetNumHoursOnSolar(numHoursOnSolar);
             this.SetEnabled(enabled);
             // Recalculate
@@ -152,21 +144,7 @@ namespace SolarTally.Domain.Entities
         {
             Guard.Against.OutOfRange(numHours, 
                 nameof(numHours), 0, 24);
-            Guard.Against.InvalidApplianceUsageHours(numHours,
-                PercentHrsOnSolar, _consumptionCalculator.GetSiteNumSolarHours()
-            );
             NumHours = numHours;
-            this.Recalculate();
-        }
-
-        public void SetPercentHrsOnSolar(decimal percentHrsOnSolar)
-        {
-            Guard.Against.CustomOutOfRange(percentHrsOnSolar,
-                nameof(percentHrsOnSolar), 0, 1);
-            Guard.Against.InvalidApplianceUsageHours(NumHours,
-                percentHrsOnSolar, _consumptionCalculator.GetSiteNumSolarHours()
-                );
-            PercentHrsOnSolar = percentHrsOnSolar;
             this.Recalculate();
         }
 

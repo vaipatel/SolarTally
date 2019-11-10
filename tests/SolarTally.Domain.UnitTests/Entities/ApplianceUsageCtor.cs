@@ -14,8 +14,8 @@ namespace SolarTally.Domain.UnitTests.Entities
             Assert.Throws<ArgumentNullException>(() => {
                 new ApplianceUsage(builder.TestConsumptionCalculator, null,
                     builder.TestQuantity, builder.TestPowerConsumption,
-                    builder.TestNumHours, builder.TestPercentHrsOnSolar,
-                    builder.TestNumHoursOnSolar, builder.TestEnabled);
+                    builder.TestNumHours, builder.TestNumHoursOnSolar,
+                    builder.TestEnabled);
             });
         }
 
@@ -26,8 +26,8 @@ namespace SolarTally.Domain.UnitTests.Entities
             Assert.Throws<ArgumentOutOfRangeException>(() => {
                 new ApplianceUsage(builder.TestConsumptionCalculator,
                     builder.TestAppliance, -1, builder.TestPowerConsumption, 
-                    builder.TestNumHours, builder.TestPercentHrsOnSolar, 
-                    builder.TestNumHoursOnSolar, builder.TestEnabled);
+                    builder.TestNumHours, builder.TestNumHoursOnSolar,
+                    builder.TestEnabled);
             });
         }
 
@@ -38,8 +38,8 @@ namespace SolarTally.Domain.UnitTests.Entities
             Assert.Throws<ArgumentOutOfRangeException>(() => {
                 new ApplianceUsage(builder.TestConsumptionCalculator,
                     builder.TestAppliance, builder.TestQuantity,
-                    -10.5m, builder.TestNumHours, builder.TestPercentHrsOnSolar,
-                    builder.TestNumHoursOnSolar, builder.TestEnabled);
+                    -10.5m, builder.TestNumHours, builder.TestNumHoursOnSolar,
+                    builder.TestEnabled);
             });
         }
 
@@ -51,8 +51,7 @@ namespace SolarTally.Domain.UnitTests.Entities
                 new ApplianceUsage(builder.TestConsumptionCalculator,
                     builder.TestAppliance, builder.TestQuantity,
                     builder.TestPowerConsumption, -1,
-                    builder.TestPercentHrsOnSolar, builder.TestNumHoursOnSolar,
-                    builder.TestEnabled);
+                    builder.TestNumHoursOnSolar, builder.TestEnabled);
             });
         }
 
@@ -64,32 +63,19 @@ namespace SolarTally.Domain.UnitTests.Entities
                 new ApplianceUsage(builder.TestConsumptionCalculator,
                     builder.TestAppliance, builder.TestQuantity,
                     builder.TestPowerConsumption, 25,
-                    builder.TestPercentHrsOnSolar, builder.TestNumHoursOnSolar,
-                    builder.TestEnabled);
+                    builder.TestNumHoursOnSolar, builder.TestEnabled);
             });
         }
 
         [Fact]
-        void ThrowsForNegativePercentHrsOnSolar()
+        void ThrowsForNumHoursOnSolarGreaterThanNumHours()
         {
             var builder = new ApplianceUsageBuilder();
             Assert.Throws<ArgumentOutOfRangeException>(() => {
                 new ApplianceUsage(builder.TestConsumptionCalculator,
                     builder.TestAppliance, builder.TestQuantity,
                     builder.TestPowerConsumption, builder.TestNumHours,
-                    -1.1m, builder.TestNumHoursOnSolar, builder.TestEnabled);
-            });
-        }
-
-        [Fact]
-        void ThrowsForGreaterThan1PercentHrsOnSolar()
-        {
-            var builder = new ApplianceUsageBuilder();
-            Assert.Throws<ArgumentOutOfRangeException>(() => {
-                new ApplianceUsage(builder.TestConsumptionCalculator,
-                    builder.TestAppliance, builder.TestQuantity,
-                    builder.TestPowerConsumption, builder.TestNumHours,
-                    1.1m, builder.TestNumHoursOnSolar, builder.TestEnabled);
+                    builder.TestNumHours + 1, builder.TestEnabled);
             });
         }
     }

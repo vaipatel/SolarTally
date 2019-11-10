@@ -25,11 +25,6 @@ namespace SolarTally.Persistence.Configurations
                 .HasColumnType("smallint")
                 .HasDefaultValue<int>(8)
                 .IsRequired();
-            
-            auConfiguration.Property(au => au.PercentHrsOnSolar)
-                .HasColumnType("decimal(2,1)")
-                .HasDefaultValue<decimal>(1.0)
-                .IsRequired();
 
             auConfiguration.Property(au => au.NumHoursOnSolar)
                 .HasColumnType("smallint")
