@@ -1,0 +1,31 @@
+<mat-toolbar color="primary" class="sticky-toolbar">
+    <span>
+        <a [routerLink]="['/sites']" class="a-light-primary">SolarTally</a>
+    </span>
+    <!-- This fills the remaining space of the current row -->
+    <span class="spacer"></span>
+
+    <span>
+        <mat-menu #addMenu="matMenu">
+            <button mat-menu-item>Appliance</button>
+        </mat-menu>
+
+        <button mat-icon-button [matMenuTriggerFor]="addMenu">
+            <mat-icon>add</mat-icon>
+        </button>
+    </span>
+    <span>
+        <mat-menu #appMenu="matMenu">
+            <button mat-menu-item>Settings</button>
+            <button mat-menu-item>Logout</button>
+        </mat-menu>
+
+        <button mat-icon-button [matMenuTriggerFor]="appMenu">
+            <mat-icon>more_vert</mat-icon>
+        </button>
+    </span>
+</mat-toolbar>
+
+<div class="padding-10">
+    <p>consumption works!</p>
+</div>

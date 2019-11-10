@@ -5,6 +5,8 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SitesComponent } from './sites/sites.component';
+import { SiteDetailComponent } from './sites/site-detail/site-detail.component';
+import { ConsumptionComponent } from './consumption/consumption.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -22,14 +24,14 @@ import {
   MatToolbarModule,
   MatTooltipModule
 } from '@angular/material';
-import { SiteDetailComponent } from './sites/site-detail/site-detail.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SitesComponent,
     NavMenuComponent,
-    SiteDetailComponent
+    SiteDetailComponent,
+    ConsumptionComponent
   ],
   imports: [
     BrowserModule,
