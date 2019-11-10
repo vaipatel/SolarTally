@@ -1,5 +1,5 @@
 @import '~@angular/material/theming';
-@import './shared/shared';
+@import '../shared/shared';
 
 @mixin mat-table-columns($columns)
 {
