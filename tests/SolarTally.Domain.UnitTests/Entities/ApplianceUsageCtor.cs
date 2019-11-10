@@ -66,17 +66,5 @@ namespace SolarTally.Domain.UnitTests.Entities
                     builder.TestNumHoursOnSolar, builder.TestEnabled);
             });
         }
-
-        [Fact]
-        void ThrowsForNumHoursOnSolarGreaterThanNumHours()
-        {
-            var builder = new ApplianceUsageBuilder();
-            Assert.Throws<ArgumentOutOfRangeException>(() => {
-                new ApplianceUsage(builder.TestConsumptionCalculator,
-                    builder.TestAppliance, builder.TestQuantity,
-                    builder.TestPowerConsumption, builder.TestNumHours,
-                    builder.TestNumHours + 1, builder.TestEnabled);
-            });
-        }
     }
 }
