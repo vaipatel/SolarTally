@@ -35,7 +35,7 @@
             <p>Energy: {{site.consumptionTotal.totalEnergyConsumption}} Wh</p>
         </mat-card-content>
         <mat-card-actions>
-            <a mat-raised-button [routerLink]="['/consumption']" color="accent">
+            <a mat-raised-button [routerLink]="['/consumption', {id: site.id}]" color="accent">
                 Edit Consumption
             </a>
         </mat-card-actions>
