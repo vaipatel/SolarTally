@@ -19,7 +19,8 @@ import {
   MatListModule,
   MatMenuModule,
   MatTableModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatTooltipModule
 } from '@angular/material';
 import { SiteDetailComponent } from './sites/site-detail/site-detail.component';
 
@@ -45,7 +46,8 @@ import { SiteDetailComponent } from './sites/site-detail/site-detail.component';
     MatListModule,
     MatMenuModule,
     MatTableModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]
