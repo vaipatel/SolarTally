@@ -7,6 +7,7 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SolarTally.Application.Common.Interfaces;
+using SolarTally.Application.Appliances.Queries.Dtos;
 using SolarTally.Application.ApplianceUsages.Queries.Dtos;
 
 namespace
@@ -47,23 +48,29 @@ SolarTally.Application.ApplianceUsages.Queries.GetApplianceUsagesById
             GetApplianceUsagesByIdQuery request,
             CancellationToken cancellationToken)
         {
-            var applianceUsages = await _context.ApplianceUsages
-                .Where(s => s.ConsumptionId == request.ConsumptionId)
-                .ToListAsync(cancellationToken);
+            var query =
+                from au in _context.ApplianceUsages
+                where au.ConsumptionId == request.ConsumptionId
+                join appliance in _context.Appliances on au.Appliance.Id equals appliance.Id
+                select new { ApplianceUsage = au, Appliance = appliance };
+            
+            var queryOut = await 
+                query.AsNoTracking().ToListAsync(cancellationToken);
             
             var auDtos = new List<ApplianceUsageDto>();
-
-            foreach(var au in applianceUsages)
+            foreach( var o in queryOut)
             {
-                auDtos.Add(_mapper.Map<ApplianceUsageDto>(au));
+                var auDto = _mapper.Map<ApplianceUsageDto>(o.ApplianceUsage);
+                auDto.ApplianceDto = _mapper.Map<ApplianceDto>(o.Appliance);
+                auDtos.Add(auDto);
             }
-
-            var auListDto = new ApplianceUsagesListDto()
+            
+            var result = new ApplianceUsagesListDto
             {
-                Items = auDtos
+                Items = auDtos,
             };
 
-            return auListDto;
+            return result;
         }
     }
 }
