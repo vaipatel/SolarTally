@@ -24,6 +24,22 @@
 </mat-toolbar>
 
 <div *ngIf="site" class="padding-10">
+    <h2>Consumption</h2>
+    <mat-card class="summary-card">
+        <mat-card-title>
+            Energy: {{site.consumptionTotal.totalEnergyConsumption}} Wh
+        </mat-card-title>
+        <br>
+        <mat-card-content>
+            <p>Power: {{site.consumptionTotal.totalPowerConsumption}} W</p>
+            <p>Energy: {{site.consumptionTotal.totalEnergyConsumption}} Wh</p>
+        </mat-card-content>
+        <mat-card-actions>
+            <a mat-raised-button [routerLink]="['/sites']" color="accent">
+                Edit Consumption
+            </a>
+        </mat-card-actions>
+    </mat-card>
     <h2>Site Details</h2>
     <mat-expansion-panel>
         <mat-expansion-panel-header>
