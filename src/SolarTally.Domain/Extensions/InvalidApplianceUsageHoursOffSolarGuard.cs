@@ -6,9 +6,9 @@ using SolarTally.Domain.Exceptions;
 // extensions no matter where they are in your codebase.
 namespace Ardalis.GuardClauses
 {
-    public static class InvalidApplianceUsageHoursOnBackupGuard
+    public static class InvalidApplianceUsageHoursOffSolarGuard
     {
-        public static void InvalidApplianceUsageHoursOnBackup(
+        public static void InvalidApplianceUsageHoursOffSolar(
             this IGuardClause guardClause, int numHoursOnBackup,
             string parameterName, int numHoursOnSolar)
         {

@@ -12,7 +12,7 @@ namespace SolarTally.Domain.ValueObjects
 {
     public decimal TotalPowerConsumption { get; private set; }
     public decimal TotalEnergyConsumption { get; private set; }
-    public decimal TotalNonSolarEnergyConsumption { get; private set; }
+    public decimal TotalOffSolarEnergyConsumption { get; private set; }
 
     private ApplianceUsageTotal() { }
 
@@ -24,7 +24,7 @@ namespace SolarTally.Domain.ValueObjects
         var numHoursOnSolar = applianceUsageInfo.GetNumHoursOnSolar();
         TotalPowerConsumption = quantity * powerConsumption;
         TotalEnergyConsumption = TotalPowerConsumption * numHours;
-        TotalNonSolarEnergyConsumption = TotalPowerConsumption * 
+        TotalOffSolarEnergyConsumption = TotalPowerConsumption * 
             (numHours - numHoursOnSolar);
     }
 
@@ -33,7 +33,7 @@ namespace SolarTally.Domain.ValueObjects
         // Using a yield return statement to return each element one at a time
         yield return TotalPowerConsumption;
         yield return TotalEnergyConsumption;
-        yield return TotalNonSolarEnergyConsumption;
+        yield return TotalOffSolarEnergyConsumption;
     }
 }
 }

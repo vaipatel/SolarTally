@@ -76,8 +76,8 @@ namespace SolarTally.Domain.Entities
         /// Number of hrs to run the appliance on backup
         /// (NumHoursOnSolar + NumHoursOnBackup < 24)
         /// </summary>
-        public int NumHoursOnBackup { get; private set; }
-        public int GetNumHoursOnBackup() => NumHoursOnBackup;
+        public int NumHoursOffSolar { get; private set; }
+        public int GetNumHoursOffSolar() => NumHoursOffSolar;
 
         /// <summary>
         /// Whether this ApplianceUsage should be considered in the Consumption.
@@ -165,13 +165,13 @@ namespace SolarTally.Domain.Entities
             this.Recalculate();
         }
 
-        public void SetNumHoursOnBackup(int numHoursOnBackup)
+        public void SetNumHoursOffSolar(int numHoursOffSolar)
         {
-            Guard.Against.LessThan(numHoursOnBackup, nameof(numHoursOnBackup),
+            Guard.Against.LessThan(numHoursOffSolar, nameof(numHoursOffSolar),
             0);
-            Guard.Against.InvalidApplianceUsageHoursOnBackup(numHoursOnBackup,
-            nameof(numHoursOnBackup), NumHoursOnSolar);
-            NumHoursOnBackup = numHoursOnBackup;
+            Guard.Against.InvalidApplianceUsageHoursOffSolar(numHoursOffSolar,
+            nameof(numHoursOffSolar), NumHoursOnSolar);
+            NumHoursOffSolar = numHoursOffSolar;
             this.Recalculate();
         }
 
