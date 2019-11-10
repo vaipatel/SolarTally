@@ -3,7 +3,7 @@
 
     <!-- This fills the remaining space of the current row -->
     <span class="spacer"></span>
-    
+
     <span>
         <mat-menu #appMenu="matMenu">
             <button mat-menu-item>Settings</button>
@@ -15,3 +15,42 @@
         </button>
     </span>
 </mat-toolbar>
+
+<div *ngIf="site" class="padding-10">
+    <h2>Site Details</h2>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{site.name}}
+            </mat-panel-title>
+            <mat-panel-description>
+                {{site.mainAddress.city}}
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+        
+        <h3>Site Id</h3>
+        <mat-form-field>
+            <input matInput placeholder="Site Name" value="{{site.name}}">
+        </mat-form-field>
+        <h3>Solar Info</h3>
+        <mat-form-field>
+            <input matInput placeholder="Solar Hours" value="{{site.numSolarHours}}">
+        </mat-form-field>
+        <h3>Site Address</h3>
+        <mat-form-field>
+            <input matInput placeholder="Street" value="{{site.mainAddress.street}}">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="City" value="{{site.mainAddress.city}}">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="State" value="{{site.mainAddress.state}}">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Country" value="{{site.mainAddress.country}}">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Zip Code" value="{{site.mainAddress.zipCode}}">
+        </mat-form-field>
+    </mat-expansion-panel>
+</div>
