@@ -1,8 +1,15 @@
 <mat-toolbar color="primary" class="sticky-toolbar">
-    <span>SolarTally</span>
+    <span>
+        <a [routerLink]="['/sites']" class="a-light-primary">SolarTally</a>
+    </span>
 
     <!-- This fills the remaining space of the current row -->
     <span class="spacer"></span>
+    <span>
+        <a mat-icon-button [routerLink]="['/sites']" matTooltip="Back to Sites">
+            <mat-icon>arrow_back</mat-icon>
+        </a>
+    </span>
 
     <span>
         <mat-menu #appMenu="matMenu">
