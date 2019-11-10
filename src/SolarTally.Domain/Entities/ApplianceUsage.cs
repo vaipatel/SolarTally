@@ -72,6 +72,13 @@ namespace SolarTally.Domain.Entities
         public decimal PercentHrsOnSolar { get; private set; }
 
         /// <summary>
+        /// Number of hrs of solar to run the appliance
+        /// (must be < SiteNumSolarHours)
+        /// </summary>
+        public int NumHoursOnSolar { get; private set; }
+        public int GetNumHoursOnSolar() => NumHoursOnSolar;
+
+        /// <summary>
         /// Whether this ApplianceUsage should be considered in the Consumption.
         /// </summary>
         public bool Enabled { get; private set; }
@@ -158,6 +165,14 @@ namespace SolarTally.Domain.Entities
                 percentHrsOnSolar, _consumptionCalculator.GetSiteNumSolarHours()
                 );
             PercentHrsOnSolar = percentHrsOnSolar;
+            this.Recalculate();
+        }
+
+        public void SetNumHoursOnSolar(int numHoursOnSolar)
+        {
+            Guard.Against.OutOfRange(numHoursOnSolar, nameof(numHoursOnSolar),
+                0, NumHours);
+            NumHoursOnSolar = numHoursOnSolar;
             this.Recalculate();
         }
 
