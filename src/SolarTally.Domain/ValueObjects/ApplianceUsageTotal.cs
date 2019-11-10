@@ -12,6 +12,7 @@ namespace SolarTally.Domain.ValueObjects
 {
     public decimal TotalPowerConsumption { get; private set; }
     public decimal TotalEnergyConsumption { get; private set; }
+    public decimal TotalNonSolarEnergyConsumption { get; private set; }
 
     private ApplianceUsageTotal() { }
 
@@ -20,8 +21,11 @@ namespace SolarTally.Domain.ValueObjects
         var quantity = applianceUsageInfo.GetQuantity();
         var powerConsumption = applianceUsageInfo.GetPowerConsumption();
         var numHours = applianceUsageInfo.GetNumHours();
+        var numHoursOnSolar = applianceUsageInfo.GetNumHoursOnSolar();
         TotalPowerConsumption = quantity * powerConsumption;
         TotalEnergyConsumption = TotalPowerConsumption * numHours;
+        TotalNonSolarEnergyConsumption = TotalPowerConsumption * 
+            (numHours - numHoursOnSolar);
     }
 
     protected override IEnumerable<object> GetAtomicValues()
@@ -29,6 +33,7 @@ namespace SolarTally.Domain.ValueObjects
         // Using a yield return statement to return each element one at a time
         yield return TotalPowerConsumption;
         yield return TotalEnergyConsumption;
+        yield return TotalNonSolarEnergyConsumption;
     }
 }
 }
