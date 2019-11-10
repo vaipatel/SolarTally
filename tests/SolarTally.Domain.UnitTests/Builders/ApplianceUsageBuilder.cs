@@ -23,7 +23,7 @@ namespace SolarTally.Domain.UnitTests.Builders
             TestConsumptionCalculator = new SiteBuilder().Build().Consumption;
             _applianceUsage = new ApplianceUsage(TestConsumptionCalculator,
                 TestAppliance, TestQuantity, TestPowerConsumption, TestNumHours,
-                TestPercentHrsOnSolar, TestEnabled);
+                TestPercentHrsOnSolar, TestNumHoursOnSolar, TestEnabled);
         }
 
         public ApplianceUsage Build()

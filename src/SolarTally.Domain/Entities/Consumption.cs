@@ -40,7 +40,8 @@ namespace SolarTally.Domain.Entities
             var applianceUsage = new ApplianceUsage(this, appliance,
                 ApplianceUsage.DefaultQuantity,
                 appliance.DefaultPowerConsumption, Site.NumSolarHours,
-                ApplianceUsage.DefaultPercentHrsOnSolar, true);
+                ApplianceUsage.DefaultPercentHrsOnSolar, Site.NumSolarHours,
+                true);
             _applianceUsages.Add(applianceUsage);
             this.Recalculate();
         }

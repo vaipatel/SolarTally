@@ -11,14 +11,15 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
         [Theory]
         [MemberData(nameof(TestData))]
         public void ShouldCalcTheCorrectTotals(int quantity,
-            decimal powerConsumption, int numHours,
+            decimal powerConsumption, int numHours, int numHoursOnSolar,
             decimal expTotalPowerConsumption, decimal expTotalEnergyConsumption)
         {
             var builder = new ApplianceUsageBuilder();
             var applianceUsage = new ApplianceUsage(
                 builder.TestConsumptionCalculator, builder.TestAppliance,
                 quantity, powerConsumption, numHours,
-                builder.TestPercentHrsOnSolar, builder.TestEnabled);
+                builder.TestPercentHrsOnSolar, numHoursOnSolar,
+                builder.TestEnabled);
             var applianceUsageTotal = new ApplianceUsageTotal(applianceUsage);
 
             Assert.Equal(expTotalPowerConsumption,
@@ -31,19 +32,19 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
             new List<object[]>
             {
                 // All zeros
-                new object[] {0, 0, 0, 0, 0},
+                new object[] {0, 0, 0, 0, 0, 0},
                 // Zero Quantity
-                new object[] {0, 20, 1, 0, 0},
+                new object[] {0, 20, 1, 1, 0, 0},
                 // Zero PowerConsumption
-                new object[] {1, 0, 1, 0, 0},
+                new object[] {1, 0, 1, 1, 0, 0},
                 // Zero NumHours
-                new object[] {1, 20, 0, 20, 0},
+                new object[] {1, 20, 0, 0, 20, 0},
                 // Quantity=NumHours=1
-                new object[] {1, 20, 1, 20, 20},
+                new object[] {1, 20, 1, 1, 20, 20},
                 // Quantity=NumHours=2
-                new object[] {2, 20, 2, 40, 80},
+                new object[] {2, 20, 2, 2, 40, 80},
                 // Quantity!=NumHours
-                new object[] {2, 20, 3, 40, 120}
+                new object[] {2, 20, 3, 3, 40, 120}
             };
 
     }
