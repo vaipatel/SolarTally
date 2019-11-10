@@ -6,7 +6,7 @@ export class ApplianceUsage {
     quantity: number;
     powerConsumption: number;
     numHours: number;
-    percentHrsOnSolar: number;
+    numHoursOnSolar: number;
     enabled: boolean;
     consumptionId: number;
 }
