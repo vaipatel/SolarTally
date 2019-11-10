@@ -12,6 +12,7 @@ namespace SolarTally.Domain.ValueObjects
 {
     public decimal TotalPowerConsumption { get; private set; }
     public decimal TotalEnergyConsumption { get; private set; }
+    public decimal TotalNonSolarEnergyConsumption { get; private set; }
 
     private ConsumptionTotal() { }
 
@@ -19,12 +20,15 @@ namespace SolarTally.Domain.ValueObjects
     {
         TotalPowerConsumption = 0;
         TotalEnergyConsumption = 0;
+        TotalNonSolarEnergyConsumption = 0;
         foreach(var au in consumption.ApplianceUsages)
         {
             TotalPowerConsumption += 
                 au.ApplianceUsageTotal.TotalPowerConsumption;
             TotalEnergyConsumption +=
                 au.ApplianceUsageTotal.TotalEnergyConsumption;
+            TotalNonSolarEnergyConsumption +=
+                au.ApplianceUsageTotal.TotalNonSolarEnergyConsumption;
         }
     }
 
@@ -33,6 +37,7 @@ namespace SolarTally.Domain.ValueObjects
         // Using a yield return statement to return each element one at a time
         yield return TotalPowerConsumption;
         yield return TotalEnergyConsumption;
+        yield return TotalNonSolarEnergyConsumption;
     }
 }
 }
