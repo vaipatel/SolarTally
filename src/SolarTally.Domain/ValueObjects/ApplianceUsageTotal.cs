@@ -11,8 +11,9 @@ namespace SolarTally.Domain.ValueObjects
     public class ApplianceUsageTotal : ValueObject
 {
     public decimal TotalPowerConsumption { get; private set; }
-    public decimal TotalEnergyConsumption { get; private set; }
+    public decimal TotalOnSolarEnergyConsumption { get; private set; }
     public decimal TotalOffSolarEnergyConsumption { get; private set; }
+    public decimal TotalEnergyConsumption { get; private set; }
 
     private ApplianceUsageTotal() { }
 
@@ -22,10 +23,13 @@ namespace SolarTally.Domain.ValueObjects
         var powerConsumption = applianceUsageInfo.GetPowerConsumption();
         var numHours = applianceUsageInfo.GetNumHours();
         var numHoursOnSolar = applianceUsageInfo.GetNumHoursOnSolar();
+        var numHoursOffSolar = applianceUsageInfo.GetNumHoursOffSolar();
         TotalPowerConsumption = quantity * powerConsumption;
+        TotalOnSolarEnergyConsumption = TotalPowerConsumption * numHoursOnSolar;
+        TotalOffSolarEnergyConsumption = TotalPowerConsumption *
+            numHoursOffSolar;
+        // TODO: Probably just add TotalOnSolarEnergy + TotalOffSolarEnergy
         TotalEnergyConsumption = TotalPowerConsumption * numHours;
-        TotalOffSolarEnergyConsumption = TotalPowerConsumption * 
-            (numHours - numHoursOnSolar);
     }
 
     protected override IEnumerable<object> GetAtomicValues()

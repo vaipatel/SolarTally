@@ -11,33 +11,37 @@ namespace SolarTally.Domain.ValueObjects
     public class ConsumptionTotal : ValueObject
 {
     public decimal TotalPowerConsumption { get; private set; }
-    public decimal TotalEnergyConsumption { get; private set; }
+    public decimal TotalOnSolarEnergyConsumption { get; private set; }
     public decimal TotalOffSolarEnergyConsumption { get; private set; }
+    public decimal TotalEnergyConsumption { get; private set; }
 
     private ConsumptionTotal() { }
 
     public ConsumptionTotal(Consumption consumption)
     {
         TotalPowerConsumption = 0;
-        TotalEnergyConsumption = 0;
+        TotalOnSolarEnergyConsumption = 0;
         TotalOffSolarEnergyConsumption = 0;
         foreach(var au in consumption.ApplianceUsages)
         {
             TotalPowerConsumption += 
                 au.ApplianceUsageTotal.TotalPowerConsumption;
-            TotalEnergyConsumption +=
-                au.ApplianceUsageTotal.TotalEnergyConsumption;
+            TotalOnSolarEnergyConsumption +=
+                au.ApplianceUsageTotal.TotalOnSolarEnergyConsumption;
             TotalOffSolarEnergyConsumption +=
                 au.ApplianceUsageTotal.TotalOffSolarEnergyConsumption;
         }
+        TotalEnergyConsumption = TotalOnSolarEnergyConsumption +
+            TotalOffSolarEnergyConsumption;
     }
 
     protected override IEnumerable<object> GetAtomicValues()
     {
         // Using a yield return statement to return each element one at a time
         yield return TotalPowerConsumption;
-        yield return TotalEnergyConsumption;
+        yield return TotalOnSolarEnergyConsumption;
         yield return TotalOffSolarEnergyConsumption;
+        yield return TotalEnergyConsumption;
     }
 }
 }
