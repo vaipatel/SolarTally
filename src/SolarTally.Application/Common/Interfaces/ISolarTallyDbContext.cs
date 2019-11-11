@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using SolarTally.Domain.Entities;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,5 +16,7 @@ namespace SolarTally.Application.Common.Interfaces
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 
         int SaveChanges(bool acceptAllChangesOnSuccess);
+
+        EntityEntry Entry(object entity);
     }
 }
