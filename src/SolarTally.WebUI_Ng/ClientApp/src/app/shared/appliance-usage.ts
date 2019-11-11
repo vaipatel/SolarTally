@@ -6,8 +6,9 @@ export class ApplianceUsage {
     applianceDto: Appliance;
     quantity: number;
     powerConsumption: number;
-    numHours: number;
     numHoursOnSolar: number;
+    numHoursOffSolar: number;
+    numHours: number;
     enabled: boolean;
     consumptionId: number;
     applianceUsageTotal: ApplianceUsageTotal;
