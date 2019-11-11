@@ -16,9 +16,11 @@ namespace SolarTally.Application.ApplianceUsages.Queries.Dtos
 
         public decimal PowerConsumption { get; set; }
 
-        public int NumHours { get; set; }
-
         public int NumHoursOnSolar { get; set; }
+
+        public int NumHoursOffSolar { get; set; }
+
+        public int NumHours { get; set; }
 
         public bool Enabled { get; set; }
 
