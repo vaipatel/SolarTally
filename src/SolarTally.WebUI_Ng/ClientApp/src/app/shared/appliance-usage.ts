@@ -1,4 +1,5 @@
 import { Appliance } from './appliance';
+import { ApplianceUsageTotal } from './appliance-usage-total';
 
 export class ApplianceUsage {
     id: number;
@@ -9,6 +10,7 @@ export class ApplianceUsage {
     numHoursOnSolar: number;
     enabled: boolean;
     consumptionId: number;
+    applianceUsageTotal: ApplianceUsageTotal;
 }
 
 export class ApplianceUsageLst {
