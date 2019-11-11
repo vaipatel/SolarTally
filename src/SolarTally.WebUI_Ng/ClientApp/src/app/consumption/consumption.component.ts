@@ -14,6 +14,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ConsumptionComponent implements OnInit {
 
   private auList$: Observable<ApplianceUsageLst>;
+  idParam = { id: "" };
   auList: ApplianceUsage[];
 
   constructor(
@@ -23,10 +24,12 @@ export class ConsumptionComponent implements OnInit {
   ngOnInit() {
     // Read route params
     this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
+      switchMap((params: ParamMap) => {
+        this.idParam.id = params.get('id');
         this.auList$ = this.consumptionSrvc
-          .getApplianceUsagesForConsumption(params.get('id'))
-      )
+          .getApplianceUsagesForConsumption(this.idParam.id)
+        return this.auList$;
+      })
     ).subscribe((resp: ApplianceUsageLst) => {
       if (!resp) {
         console.log("No Appliance Usages founded.");

@@ -15,6 +15,11 @@
         </button>
     </span>
     <span>
+        <a mat-icon-button [routerLink]="['/site-detail', idParam]" matTooltip="Back to Site Details">
+            <mat-icon>arrow_back</mat-icon>
+        </a>
+    </span>
+    <span>
         <mat-menu #appMenu="matMenu">
             <button mat-menu-item>Settings</button>
             <button mat-menu-item>Logout</button>
