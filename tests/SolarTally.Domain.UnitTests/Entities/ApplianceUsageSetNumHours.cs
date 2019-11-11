@@ -8,44 +8,37 @@ namespace SolarTally.Domain.UnitTests.Entities
     public class ApplianceUsageSetNumHours
     {
         [Fact]
-        void ThrowsForNegativeNumHours()
+        void ThrowsForNegativeNumHoursOnSolar()
         {
             var applianceUsage = new ApplianceUsageBuilder().Build();
             Assert.Throws<ArgumentOutOfRangeException>(() => {
-                applianceUsage.SetNumHours(-1);
+                applianceUsage.SetNumHoursOnSolar(-1);
             });
         }
 
         [Fact]
-        void ThrowsForGreaterThan24NumHours()
-        {
-            var applianceUsage = new ApplianceUsageBuilder().Build();
-            Assert.Throws<ArgumentOutOfRangeException>(() => {
-                applianceUsage.SetNumHours(25);
-            });
-        }
-
-        [Fact]
-        void AllowsMoreThanSiteNumSolarHours()
+        void ThrowsForMoreThanSiteNumSolarHours()
         {
             var builder = new ApplianceUsageBuilder();
             var applianceUsage = builder.Build();
             var siteNumSolarHours =
                 builder.TestConsumptionCalculator.GetSiteNumSolarHours();
-            // Should be ok to set more than site solar hrs
-            applianceUsage.SetNumHours(siteNumSolarHours + 1);
+            Assert.Throws<ApplianceUsageHoursInvalidException>(() => {
+                applianceUsage.SetNumHoursOnSolar(siteNumSolarHours + 1);
+            });
             
         }
 
         [Fact]
-        void SetsTheNumHours()
+        void ThrowsIfNumHoursOnSolarTooMuchEvenIfLessThanNumSolarHours()
         {
             var applianceUsage = new ApplianceUsageBuilder().Build();
-            var prevNumHours = applianceUsage.NumHours;
-            var currNumHours = (prevNumHours < 24) ? prevNumHours + 1 :
-                prevNumHours - 1;
-            applianceUsage.SetNumHours(currNumHours);
-            Assert.Equal(currNumHours, applianceUsage.NumHours);
+            var currNumSolarHours = applianceUsage.NumHoursOnSolar;
+            applianceUsage.SetNumHoursOnSolar(0);
+            applianceUsage.SetNumHoursOffSolar(24);
+            Assert.Throws<ApplianceUsageHoursInvalidException>(() => {
+                applianceUsage.SetNumHoursOnSolar(1);
+            });
         }
     }
 }

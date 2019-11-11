@@ -161,9 +161,12 @@ namespace SolarTally.Domain.Entities
         public void SetNumHoursOnSolar(int numHoursOnSolar)
         {
             Guard.Against.LessThan(numHoursOnSolar, nameof(numHoursOnSolar), 0);
+            // Check that less than site solar hours, and sum with off solar
+            // less than 24.
             Guard.Against.InvalidApplianceUsageHoursOnSolar(numHoursOnSolar,
                 nameof(numHoursOnSolar),
-                this._consumptionCalculator.GetSiteNumSolarHours());
+                this._consumptionCalculator.GetSiteNumSolarHours(),
+                NumHoursOffSolar);
             NumHoursOnSolar = numHoursOnSolar;
             this.Recalculate();
         }
