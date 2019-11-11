@@ -89,7 +89,8 @@ namespace SolarTally.WebUI_Ng
 
             Consumptions[2].AddApplianceUsage(Appliances[2]);
             Consumptions[2].ApplianceUsages.Last().SetQuantity(10);
-            Consumptions[2].ApplianceUsages.Last().SetNumHours(5);
+            Consumptions[2].ApplianceUsages.Last().SetNumHoursOnSolar(5);
+            Consumptions[2].ApplianceUsages.Last().SetNumHoursOffSolar(3);
             Consumptions[2].AddApplianceUsage(Appliances[3]);
 
             Consumptions[3].AddApplianceUsage(Appliances[1]);

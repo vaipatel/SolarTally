@@ -37,9 +37,9 @@ namespace SolarTally.Domain.Entities
             // Cap appliance usage hours if needed
             foreach(var applianceUsage in Consumption.ApplianceUsages)
             {
-                if (applianceUsage.NumHours > numSolarHours)
+                if (applianceUsage.NumHoursOnSolar > numSolarHours)
                 {
-                    applianceUsage.SetNumHours(numSolarHours);
+                    applianceUsage.SetNumHoursOnSolar(numSolarHours);
                 }
             }
         }

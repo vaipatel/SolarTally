@@ -150,14 +150,6 @@ namespace SolarTally.Domain.Entities
             this.Recalculate();
         }
 
-        public void SetNumHours(int numHours)
-        {
-            Guard.Against.OutOfRange(numHours, 
-                nameof(numHours), 0, 24);
-            NumHours = numHours;
-            this.Recalculate();
-        }
-
         public void SetNumHoursOnSolar(int numHoursOnSolar)
         {
             Guard.Against.LessThan(numHoursOnSolar, nameof(numHoursOnSolar), 0);

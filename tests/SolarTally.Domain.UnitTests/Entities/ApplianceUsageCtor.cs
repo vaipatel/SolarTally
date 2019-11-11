@@ -1,6 +1,7 @@
 using System;
 using Xunit;
 using SolarTally.Domain.Entities;
+using SolarTally.Domain.Exceptions;
 using SolarTally.Domain.UnitTests.Builders;
 
 namespace SolarTally.Domain.UnitTests.Entities
@@ -44,26 +45,44 @@ namespace SolarTally.Domain.UnitTests.Entities
         }
 
         [Fact]
-        void ThrowsForNegativeNumHours()
+        void ThrowsForOutOfRangeNumHoursOnSolar()
         {
             var builder = new ApplianceUsageBuilder();
             Assert.Throws<ArgumentOutOfRangeException>(() => {
                 new ApplianceUsage(builder.TestConsumptionCalculator,
                     builder.TestAppliance, builder.TestQuantity,
-                    builder.TestPowerConsumption, -1,
-                    builder.TestNumHoursOnSolar, builder.TestEnabled);
+                    builder.TestPowerConsumption, builder.TestNumHours,
+                    -1, builder.TestNumHoursOffSolar, builder.TestEnabled);
+            });
+
+            Assert.Throws<ApplianceUsageHoursInvalidException>(() => {
+                new ApplianceUsage(builder.TestConsumptionCalculator,
+                    builder.TestAppliance, builder.TestQuantity,
+                    builder.TestPowerConsumption, builder.TestNumHours,
+                    25, builder.TestNumHoursOffSolar, builder.TestEnabled);
             });
         }
 
         [Fact]
-        void ThrowsForGreaterThan24NumHours()
+        void ThrowsForOutOfRangeNumHoursOffSolar()
         {
             var builder = new ApplianceUsageBuilder();
+            var testNumHoursOnSolar = builder.TestNumHoursOnSolar;
+            
             Assert.Throws<ArgumentOutOfRangeException>(() => {
                 new ApplianceUsage(builder.TestConsumptionCalculator,
                     builder.TestAppliance, builder.TestQuantity,
-                    builder.TestPowerConsumption, 25,
-                    builder.TestNumHoursOnSolar, builder.TestEnabled);
+                    builder.TestPowerConsumption, builder.TestNumHours,
+                    testNumHoursOnSolar, -1, builder.TestEnabled);
+            });
+
+            var excessOffSolarHours = 24 - testNumHoursOnSolar + 1;
+            Assert.Throws<ApplianceUsageHoursInvalidException>(() => {
+                new ApplianceUsage(builder.TestConsumptionCalculator,
+                    builder.TestAppliance, builder.TestQuantity,
+                    builder.TestPowerConsumption, builder.TestNumHours,
+                    testNumHoursOnSolar, excessOffSolarHours,
+                    builder.TestEnabled);
             });
         }
     }
