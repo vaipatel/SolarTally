@@ -27,12 +27,13 @@
     <h2>Consumption</h2>
     <mat-card class="summary-card">
         <mat-card-title>
-            Energy: {{site.consumptionTotal.totalEnergyConsumption}} Wh
+            Energy: {{site.consumptionTotal.totalEnergyConsumption | number: '1.0-2'}} kWh
         </mat-card-title>
         <br>
         <mat-card-content>
-            <p>Power: {{site.consumptionTotal.totalPowerConsumption}} W</p>
-            <p>Energy: {{site.consumptionTotal.totalEnergyConsumption}} Wh</p>
+            <h3>Power: {{site.consumptionTotal.totalPowerConsumption}} W</h3>
+            <h3>On Solar Energy: {{site.consumptionTotal.totalOnSolarEnergyConsumption}} Wh / {{site.consumptionTotal.totalEnergyConsumption}} Wh</h3>
+            <h3>Off Solar Energy: {{site.consumptionTotal.totalOffSolarEnergyConsumption}} Wh / {{site.consumptionTotal.totalEnergyConsumption}} Wh</h3>
         </mat-card-content>
         <mat-card-actions>
             <a mat-raised-button [routerLink]="['/consumption', {id: site.id}]" color="accent">
