@@ -15,7 +15,7 @@ namespace SolarTally.Domain.UnitTests.Entities
                 new ApplianceUsage(builder.TestConsumptionCalculator, null,
                     builder.TestQuantity, builder.TestPowerConsumption,
                     builder.TestNumHours, builder.TestNumHoursOnSolar,
-                    builder.TestEnabled);
+                    builder.TestNumHoursOffSolar, builder.TestEnabled);
             });
         }
 
@@ -27,7 +27,7 @@ namespace SolarTally.Domain.UnitTests.Entities
                 new ApplianceUsage(builder.TestConsumptionCalculator,
                     builder.TestAppliance, -1, builder.TestPowerConsumption, 
                     builder.TestNumHours, builder.TestNumHoursOnSolar,
-                    builder.TestEnabled);
+                    builder.TestNumHoursOffSolar, builder.TestEnabled);
             });
         }
 
@@ -39,7 +39,7 @@ namespace SolarTally.Domain.UnitTests.Entities
                 new ApplianceUsage(builder.TestConsumptionCalculator,
                     builder.TestAppliance, builder.TestQuantity,
                     -10.5m, builder.TestNumHours, builder.TestNumHoursOnSolar,
-                    builder.TestEnabled);
+                    builder.TestNumHoursOffSolar, builder.TestEnabled);
             });
         }
 

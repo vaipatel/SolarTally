@@ -48,9 +48,17 @@ namespace SolarTally.Domain.UnitTests.Entities
                 foundApplianceUsage.Quantity);
             Assert.Equal(appliance.DefaultPowerConsumption,
                 foundApplianceUsage.PowerConsumption);
-            Assert.Equal(consumption.Site.NumSolarHours,
-                foundApplianceUsage.NumHours);
-            Assert.Equal(foundApplianceUsage.NumHoursOnSolar, foundApplianceUsage.NumHours);
+            // Default num hours on solar should be the site num solar hours
+            Assert.Equal(consumption.GetSiteNumSolarHours(),
+                foundApplianceUsage.NumHoursOnSolar);
+            // Default num hours off solar should be one designated in AU
+            Assert.Equal(ApplianceUsage.DefaultNumHoursOffSolar,
+                foundApplianceUsage.NumHoursOffSolar);
+            // Total num hours = num hours on solar + num hours off solar
+            Assert.Equal(
+                foundApplianceUsage.NumHoursOnSolar +
+                foundApplianceUsage.NumHoursOffSolar,
+                foundApplianceUsage.GetNumHours());
         }
     }
 }

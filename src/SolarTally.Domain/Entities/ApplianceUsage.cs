@@ -27,6 +27,8 @@ namespace SolarTally.Domain.Entities
         // Some constants to reduce magic numbers
         public const int DefaultQuantity = 1;
 
+        public const int DefaultNumHoursOffSolar = 1;
+
         public int ApplianceId { get; private set; }
         public Appliance Appliance { get; private set; }
         private IConsumptionCalculator _consumptionCalculator { get; set; }
@@ -63,7 +65,7 @@ namespace SolarTally.Domain.Entities
         /// easier for the user to input this info.
         /// </remark>
         public int NumHours { get; private set; }
-        public int GetNumHours() => NumHours;
+        public int GetNumHours() => NumHoursOnSolar + NumHoursOffSolar;
 
         /// <summary>
         /// Number of hrs of solar to run the appliance
@@ -106,14 +108,15 @@ namespace SolarTally.Domain.Entities
         /// </remarks>
         public ApplianceUsage(IConsumptionCalculator consumptionCalculator,
             Appliance appliance, int quantity, decimal powerConsumption,
-            int numHours, int numHoursOnSolar, bool enabled)
+            int numHours, int numHoursOnSolar, int numHoursOffSolar,
+            bool enabled)
         {
             _consumptionCalculator = consumptionCalculator;
             this.SetAppliance(appliance);
             this.SetQuantity(quantity);
             this.SetPowerConsumption(powerConsumption);
-            this.SetNumHours(numHours);
             this.SetNumHoursOnSolar(numHoursOnSolar);
+            this.SetNumHoursOffSolar(numHoursOffSolar);
             this.SetEnabled(enabled);
             // Recalculate
             this.Recalculate();
