@@ -108,8 +108,7 @@ namespace SolarTally.Domain.Entities
         /// </remarks>
         public ApplianceUsage(IConsumptionCalculator consumptionCalculator,
             Appliance appliance, int quantity, decimal powerConsumption,
-            int numHours, int numHoursOnSolar, int numHoursOffSolar,
-            bool enabled)
+            int numHoursOnSolar, int numHoursOffSolar, bool enabled)
         {
             _consumptionCalculator = consumptionCalculator;
             this.SetAppliance(appliance);
