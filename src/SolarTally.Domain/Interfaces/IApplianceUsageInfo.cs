@@ -9,5 +9,6 @@ namespace SolarTally.Domain.Interfaces
         public decimal GetPowerConsumption();
         public int GetNumHours();
         public int GetNumHoursOnSolar();
+        public int GetNumHoursOffSolar();
     }   
 }
