@@ -8,7 +8,7 @@ namespace SolarTally.Domain.UnitTests.Entities
     public class ApplianceUsageSetNumHours
     {
         [Fact]
-        void ThrowsForNegativeNumHoursOnSolar()
+        void ThrowsIfNumHoursOnSolarNegative()
         {
             var applianceUsage = new ApplianceUsageBuilder().Build();
             Assert.Throws<ArgumentOutOfRangeException>(() => {
@@ -33,11 +33,30 @@ namespace SolarTally.Domain.UnitTests.Entities
         void ThrowsIfNumHoursOnSolarTooMuchEvenIfLessThanNumSolarHours()
         {
             var applianceUsage = new ApplianceUsageBuilder().Build();
-            var currNumSolarHours = applianceUsage.NumHoursOnSolar;
             applianceUsage.SetNumHoursOnSolar(0);
             applianceUsage.SetNumHoursOffSolar(24);
             Assert.Throws<ApplianceUsageHoursInvalidException>(() => {
                 applianceUsage.SetNumHoursOnSolar(1);
+            });
+        }
+
+        [Fact]
+        void ThrowsIfNumHoursOffSolarNegative()
+        {
+            var applianceUsage = new ApplianceUsageBuilder().Build();
+            Assert.Throws<ArgumentOutOfRangeException>(() => {
+                applianceUsage.SetNumHoursOffSolar(-1);
+            });
+        }
+
+        [Fact]
+        void ThrowsIfNumHoursOffSolarTooMuch()
+        {
+            var applianceUsage = new ApplianceUsageBuilder().Build();
+            var currHoursOnSolar = applianceUsage.NumHoursOnSolar;
+            var excessHoursOffSolar = 24 - currHoursOnSolar + 1;
+            Assert.Throws<ApplianceUsageHoursInvalidException>(() => {
+                applianceUsage.SetNumHoursOffSolar(excessHoursOffSolar);
             });
         }
     }
