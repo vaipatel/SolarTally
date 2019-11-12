@@ -34,7 +34,9 @@
 @media only screen and (max-width: 960px)
 {
     @include mat-table-columns((
-        totalEnergyConsumption: (width: 2rem),
+        name: (width: 1rem, 'max-width': 1rem),
+        totalPowerConsumption: (width: 1rem, 'max-width': 1rem),
+        totalEnergyConsumption: (width: 1rem, 'max-width': 1.2rem),
         city: (width: 1rem, 'max-width': 1rem),
         to_detail_arrow: (width: 0.01rem, 'max-width': 0.01rem)
     ));

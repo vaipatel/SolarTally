@@ -14,7 +14,7 @@ export class SitesComponent implements OnInit {
   siteBriefs: SiteBrief[];
   dataSource: MatTableDataSource<SiteBrief>;
   displayedColumns: string[] = [
-    "name", "totalEnergyConsumption", "city", "to_detail_arrow"
+    "name", "totalPowerConsumption", "totalEnergyConsumption", "city", "to_detail_arrow"
   ];
 
   constructor(public siteSrvc: SiteService) { }

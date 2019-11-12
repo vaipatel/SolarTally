@@ -46,9 +46,15 @@
     </ng-container>
 
     <!-- Consumption Column -->
+    <ng-container matColumnDef="totalPowerConsumption">
+        <th mat-header-cell *matHeaderCellDef> kW </th>
+        <td mat-cell *matCellDef="let site"> {{site.consumptionTotal.totalPowerConsumption | kilo: '1.0-2'}} </td>
+    </ng-container>
+
+    <!-- Consumption Column -->
     <ng-container matColumnDef="totalEnergyConsumption">
-        <th mat-header-cell *matHeaderCellDef> Wh </th>
-        <td mat-cell *matCellDef="let site"> {{site.consumptionTotal.totalEnergyConsumption}} </td>
+        <th mat-header-cell *matHeaderCellDef> kWh </th>
+        <td mat-cell *matCellDef="let site"> {{site.consumptionTotal.totalEnergyConsumption | kilo: '1.0-2'}} </td>
     </ng-container>
 
     <!-- City Column -->
