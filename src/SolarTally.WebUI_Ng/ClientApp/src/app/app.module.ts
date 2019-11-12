@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { SitesComponent } from './sites/sites.component';
 import { SiteDetailComponent } from './site-detail/site-detail.component';
 import { ConsumptionComponent } from './consumption/consumption.component';
+import { ApplianceUsageComponent } from './appliance-usage/appliance-usage.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -35,7 +36,8 @@ import { KiloPipe } from './shared/pipes/kilo.pipe';
     NavMenuComponent,
     SiteDetailComponent,
     ConsumptionComponent,
-    KiloPipe
+    KiloPipe,
+    ApplianceUsageComponent
   ],
   imports: [
     BrowserModule,
