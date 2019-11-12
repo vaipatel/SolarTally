@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule }    from '@angular/common/http';
+import { DecimalPipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -25,13 +26,16 @@ import {
   MatTooltipModule
 } from '@angular/material';
 
+import { KiloPipe } from './shared/pipes/kilo.pipe';
+
 @NgModule({
   declarations: [
     AppComponent,
     SitesComponent,
     NavMenuComponent,
     SiteDetailComponent,
-    ConsumptionComponent
+    ConsumptionComponent,
+    KiloPipe
   ],
   imports: [
     BrowserModule,
@@ -51,7 +55,7 @@ import {
     MatToolbarModule,
     MatTooltipModule
   ],
-  providers: [],
+  providers: [DecimalPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
