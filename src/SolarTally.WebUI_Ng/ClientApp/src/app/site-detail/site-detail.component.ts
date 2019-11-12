@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Site } from '../shared/dtos/site';
-import { SiteService } from '../shared/services/site.service';
+import { ApiService } from '../shared/services/api.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
@@ -19,14 +19,14 @@ export class SiteDetailComponent implements OnInit {
   constructor(
     public route: ActivatedRoute,
     private router: Router,
-    private siteSrvc: SiteService
+    private api: ApiService
   ) { }
 
   ngOnInit() {
     // Read route params
     this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
-        this.site$ = this.siteSrvc.getSiteDetail(params.get('id')))
+        this.site$ = this.api.getSiteDetail(params.get('id')))
     ).subscribe((resp: Site) => {
       if (!resp) {
         console.log("Site not found.");

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ConsumptionService } from './shared/consumption.service';
+import { ApiService } from '../shared/services/api.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -19,15 +19,15 @@ export class ConsumptionComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private consumptionSrvc: ConsumptionService) { }
+    private api: ApiService) { }
 
   ngOnInit() {
     // Read route params
     this.route.paramMap.pipe(
       switchMap((params: ParamMap) => {
         this.idParam.id = params.get('id');
-        this.auList$ = this.consumptionSrvc
-          .getApplianceUsagesForConsumption(this.idParam.id)
+        this.auList$ =
+          this.api.getApplianceUsagesForConsumption(this.idParam.id);
         return this.auList$;
       })
     ).subscribe((resp: ApplianceUsageLst) => {
@@ -42,7 +42,7 @@ export class ConsumptionComponent implements OnInit {
 
   addAppliance() {
     console.log("Will add appliance");
-    this.consumptionSrvc.mockAddToConsumption(this.idParam.id)
+    this.api.mockAddToConsumption(this.idParam.id)
     .subscribe(response => {
       console.log("Response is:");
       console.log(response);

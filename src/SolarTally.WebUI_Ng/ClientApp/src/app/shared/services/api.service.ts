@@ -1,17 +1,28 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { ApplianceUsageLst } from 'src/app/shared/dtos/appliance-usage';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Site, SiteBriefsLst } from '../dtos/site';
+import { ApplianceUsageLst } from '../dtos/appliance-usage';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ConsumptionService {
-  
+export class ApiService {
+
+  private sitesUrl = "api/sites/getall";
+  private siteDetailUrl = "api/sites/getdetail/";
   private auByIdUrl = "api/applianceusages/getforconsumption/";
   private addAUByIdUrl = "api/applianceusages/addtoconsumption/";
 
   constructor(private http: HttpClient) { }
+
+  getSites(): Observable<SiteBriefsLst> {
+    return this.http.get<SiteBriefsLst>(this.sitesUrl);
+  }
+
+  getSiteDetail(id: string): Observable<Site> {
+    return this.http.get<Site>(this.siteDetailUrl + id);
+  }
 
   getApplianceUsagesForConsumption(id: string): Observable<ApplianceUsageLst>{
     return this.http.get<ApplianceUsageLst>(this.auByIdUrl + id);
