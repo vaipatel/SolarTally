@@ -6,11 +6,7 @@
     <span class="spacer"></span>
 
     <span>
-        <mat-menu #addMenu="matMenu">
-            <button mat-menu-item>Appliance</button>
-        </mat-menu>
-
-        <button mat-icon-button [matMenuTriggerFor]="addMenu">
+        <button mat-icon-button (click)="addAppliance()" matTooltip="Add Appliance">
             <mat-icon>add</mat-icon>
         </button>
     </span>
@@ -32,6 +28,7 @@
 </mat-toolbar>
 
 <div>
+    <h2 class="padding-10">Appliances</h2>
     <mat-card *ngFor="let au of auList" class="margin-10">
         <div style="position: absolute; top: 0; right: 0;">
             <button mat-icon-button>

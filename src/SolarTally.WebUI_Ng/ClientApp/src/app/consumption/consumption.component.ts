@@ -40,4 +40,13 @@ export class ConsumptionComponent implements OnInit {
     ));
   }
 
+  addAppliance() {
+    console.log("Will add appliance");
+    this.consumptionSrvc.mockAddToConsumption(this.idParam.id)
+    .subscribe(response => {
+      console.log("Response is:");
+      console.log(response);
+    });
+  }
+
 }
