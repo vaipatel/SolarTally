@@ -22,6 +22,7 @@ import {
   MatInputModule,
   MatListModule,
   MatMenuModule,
+  MatTabsModule,
   MatTableModule,
   MatToolbarModule,
   MatTooltipModule
@@ -54,6 +55,7 @@ import { KiloPipe } from './shared/pipes/kilo.pipe';
     MatListModule,
     MatMenuModule,
     MatTableModule,
+    MatTabsModule,
     MatToolbarModule,
     MatTooltipModule
   ],
