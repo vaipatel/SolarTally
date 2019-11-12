@@ -56,9 +56,12 @@ namespace SolarTally.WebUI_Ng
 
         public void MakeAppliances()
         {
-            Appliances.Add(1, new Appliance("LED", "An LED bulb", 20));
-            Appliances.Add(2, new Appliance("TV", "A 32 inch LCD TV", 80));
-            Appliances.Add(3, new Appliance("Heater", "", 300));
+            Appliances.Add(1, new Appliance("LED", "An LED bulb", 10));
+            Appliances.Add(2, new Appliance("TV", "55 inch 4K OLED TV", 350));
+            Appliances.Add(3, new Appliance("Heater", "Ceramic Heater", 1000));
+            Appliances.Add(4, new Appliance("Refrigerator", "", 200));
+            Appliances.Add(5, new Appliance("Furnace", "1/4 hp", 600));
+            Appliances.Add(6, new Appliance("Microwave", "FoodNukem", 1500));
         }
 
         public void MakeSites()
@@ -85,17 +88,22 @@ namespace SolarTally.WebUI_Ng
         public void MakeApplianceUsages()
         {
             Consumptions[1].AddApplianceUsage(Appliances[1]);
+            Consumptions[1].ApplianceUsages.Last().SetQuantity(20);
             Consumptions[1].AddApplianceUsage(Appliances[2]);
+            Consumptions[1].ApplianceUsages.Last().SetQuantity(2);
 
             Consumptions[2].AddApplianceUsage(Appliances[2]);
-            Consumptions[2].ApplianceUsages.Last().SetQuantity(10);
+            Consumptions[2].ApplianceUsages.Last().SetQuantity(5);
             Consumptions[2].ApplianceUsages.Last().SetNumHoursOnSolar(5);
             Consumptions[2].ApplianceUsages.Last().SetNumHoursOffSolar(3);
             Consumptions[2].AddApplianceUsage(Appliances[3]);
 
             Consumptions[3].AddApplianceUsage(Appliances[1]);
+            Consumptions[3].ApplianceUsages.Last().SetQuantity(30);
             Consumptions[3].AddApplianceUsage(Appliances[2]);
+            Consumptions[3].ApplianceUsages.Last().SetQuantity(4);
             Consumptions[3].AddApplianceUsage(Appliances[3]);
+            Consumptions[3].ApplianceUsages.Last().SetQuantity(10);
         }
 
     }
