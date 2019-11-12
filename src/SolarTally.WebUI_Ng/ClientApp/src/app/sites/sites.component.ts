@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Site, SiteBrief, SiteBriefsLst } from '../shared/dtos/site';
-import { SITES } from './shared/mock-sites';
-import { SiteService } from './shared/site.service';
+import { SITES } from '../shared/services/mock-sites';
+import { SiteService } from '../shared/services/site.service';
 import { MatTableDataSource, MatTab } from '@angular/material';
 
 @Component({

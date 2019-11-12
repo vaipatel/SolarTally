@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Site } from '../shared/dtos/site';
-import { SiteService } from '../sites/shared/site.service';
+import { SiteService } from '../shared/services/site.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
