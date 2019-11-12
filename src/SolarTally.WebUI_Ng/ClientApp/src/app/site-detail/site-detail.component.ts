@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { Site } from '../shared/site';
-import { SiteService } from '../shared/site.service';
+import { Site } from '../sites/shared/site';
+import { SiteService } from '../sites/shared/site.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
