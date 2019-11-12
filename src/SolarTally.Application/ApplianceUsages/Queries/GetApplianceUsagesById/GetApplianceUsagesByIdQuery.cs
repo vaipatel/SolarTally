@@ -52,6 +52,7 @@ SolarTally.Application.ApplianceUsages.Queries.GetApplianceUsagesById
                 from au in _context.ApplianceUsages
                 where au.ConsumptionId == request.ConsumptionId
                 join appliance in _context.Appliances on au.Appliance.Id equals appliance.Id
+                orderby au.Id
                 select new { ApplianceUsage = au, Appliance = appliance };
             
             var queryOut = await 
