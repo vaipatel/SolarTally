@@ -18,14 +18,13 @@ namespace SolarTally.WebUI_Ng.Controllers
         }
 
         [HttpPut("{id}")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> AddToConsumption([FromBody] 
-            AddApplianceUsageCommand command)
+        // [ProducesResponseType(StatusCodes.Status204NoContent)]
+        // [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<ActionResult<ApplianceUsageDto>> AddToConsumption([FromBody] AddApplianceUsageCommand command)
         {
-            await Mediator.Send(command);
+            var resp = await Mediator.Send(command);
 
-            return NoContent();
+            return Ok(resp);
         }
     }
 }

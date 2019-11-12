@@ -46,6 +46,7 @@ export class ConsumptionComponent implements OnInit {
     .subscribe(response => {
       console.log("Response is:");
       console.log(response);
+      this.auList.push(response);
     });
   }
 

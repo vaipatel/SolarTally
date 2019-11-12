@@ -7,10 +7,12 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SolarTally.Application.Common.Interfaces;
 using SolarTally.Domain.Entities;
+using SolarTally.Application.ApplianceUsages.Queries.Dtos;
+using AutoMapper;
 
 namespace SolarTally.Application.ApplianceUsages.Commands.AddApplianceUsage
 {
-    public class AddApplianceUsageCommand : IRequest
+    public class AddApplianceUsageCommand : IRequest<ApplianceUsageDto>
     {
         public int ConsumptionId { get; set; }
         public int ApplianceId { get; set; }
@@ -22,20 +24,23 @@ namespace SolarTally.Application.ApplianceUsages.Commands.AddApplianceUsage
     }
 
     public class AddApplianceUsageCommandHandler :
-        IRequestHandler<AddApplianceUsageCommand, Unit>
+        IRequestHandler<AddApplianceUsageCommand, ApplianceUsageDto>
     {
         private readonly ISolarTallyDbContext _context;
         // private readonly IMapper _mapper;
         private readonly IMediator _mediator;
+        private readonly IMapper _mapper;
 
         public AddApplianceUsageCommandHandler(ISolarTallyDbContext context,
-            IMediator mediator)
+            IMediator mediator, IMapper mapper)
         {
             _context = context;
             _mediator = mediator;
+            _mapper = mapper;
         }
 
-        public async Task<Unit> Handle(AddApplianceUsageCommand command,
+        public async Task<ApplianceUsageDto> Handle(
+            AddApplianceUsageCommand command,
             CancellationToken cancellationToken)
         {
             var applianceQuery = from a in _context.Appliances
@@ -69,7 +74,9 @@ namespace SolarTally.Application.ApplianceUsages.Commands.AddApplianceUsage
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return Unit.Value;
+            var auDto = _mapper.Map<ApplianceUsageDto>(au);
+
+            return auDto;
         }
     }
 }

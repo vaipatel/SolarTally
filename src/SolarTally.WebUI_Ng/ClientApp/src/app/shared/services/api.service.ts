@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Site, SiteBriefsLst } from '../dtos/site';
-import { ApplianceUsageLst } from '../dtos/appliance-usage';
+import { ApplianceUsageLst, ApplianceUsage } from '../dtos/appliance-usage';
 
 @Injectable({
   providedIn: 'root'
@@ -28,8 +28,8 @@ export class ApiService {
     return this.http.get<ApplianceUsageLst>(this.auByIdUrl + id);
   }
 
-  mockAddToConsumption(id: string) {
-    return this.http.put(this.addAUByIdUrl + id, {
+  mockAddToConsumption(id: string): Observable<ApplianceUsage> {
+    return this.http.put<ApplianceUsage>(this.addAUByIdUrl + id, {
       consumptionId: +id,
       applianceId: 2,
       quantity: 2,
