@@ -13,7 +13,17 @@ namespace SolarTally.Domain.UnitTests.Entities
             var builder = new ApplianceBuilder();
             Assert.Throws<ArgumentOutOfRangeException>(() => {
                 new Appliance(builder.TestName, builder.TestDescription,
-                -10.5m);
+                -10.5m, 10);
+            });
+        }
+
+        [Fact]
+        void ThrowsForNegativeDefaultStartupPowerConsumption()
+        {
+            var builder = new ApplianceBuilder();
+            Assert.Throws<ArgumentOutOfRangeException>(() => {
+                new Appliance(builder.TestName, builder.TestDescription,
+                10.5m, -10);
             });
         }
 
@@ -23,7 +33,8 @@ namespace SolarTally.Domain.UnitTests.Entities
             var builder = new ApplianceBuilder();
             Assert.Throws<ArgumentNullException>(() => {
                 new Appliance(null, builder.TestDescription,
-                    builder.TestDefaultPowerConsumption);
+                    builder.TestDefaultPowerConsumption,
+                    builder.TestDefaultStartupPowerConsumption);
             });
         }
 
@@ -33,7 +44,8 @@ namespace SolarTally.Domain.UnitTests.Entities
             var builder = new ApplianceBuilder();
             Assert.Throws<ArgumentException>(() => {
                 new Appliance("", builder.TestDescription,
-                    builder.TestDefaultPowerConsumption);
+                    builder.TestDefaultPowerConsumption,
+                    builder.TestDefaultStartupPowerConsumption);
             });
         }
 

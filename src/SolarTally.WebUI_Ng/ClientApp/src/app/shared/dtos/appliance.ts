@@ -3,4 +3,5 @@ export class Appliance {
     name: string;
     description: string;
     defaultPowerConsumption: number;
+    defaultStartupPowerConsumption: number;
 }

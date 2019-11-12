@@ -25,6 +25,12 @@ namespace SolarTally.Persistence.Configurations
                 .HasColumnType("decimal(18,2)")
                 .HasDefaultValue<decimal>(30.00)
                 .IsRequired();
+
+            applianceConfiguration
+                .Property(a => a.DefaultStartupPowerConsumption)
+                .HasColumnType("decimal(18,2)")
+                .HasDefaultValue<decimal>(60.00)
+                .IsRequired();
         }
     }
 }

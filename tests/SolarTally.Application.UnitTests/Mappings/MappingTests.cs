@@ -59,8 +59,10 @@ namespace SolarTally.Application.UnitTests.Mappings
         {
             var site = new Site("A Site", 9);
             decimal totalPowerConsumption = 500;
+            decimal totalStartupPowerConsumption = 700;
             site.Consumption.AddApplianceUsage(
-                new Appliance("TV", "Television", totalPowerConsumption));
+                new Appliance("TV", "Television", totalPowerConsumption,
+                    totalStartupPowerConsumption));
 
             var result = _mapper.Map<ConsumptionDto>(site.Consumption);
 
@@ -76,7 +78,7 @@ namespace SolarTally.Application.UnitTests.Mappings
         {
             var site = new Site("A Site", 9);
             site.Consumption.AddApplianceUsage(
-                new Appliance("TV", "Television", 500));
+                new Appliance("TV", "Television", 500, 700));
             var au = site.Consumption.ApplianceUsages.Last();
 
             var result = _mapper.Map<ApplianceUsageDto>(au);

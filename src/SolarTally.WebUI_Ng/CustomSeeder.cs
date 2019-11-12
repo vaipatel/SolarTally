@@ -56,12 +56,15 @@ namespace SolarTally.WebUI_Ng
 
         public void MakeAppliances()
         {
-            Appliances.Add(1, new Appliance("LED", "An LED bulb", 10));
-            Appliances.Add(2, new Appliance("TV", "55 inch 4K OLED TV", 350));
-            Appliances.Add(3, new Appliance("Heater", "Ceramic Heater", 1000));
-            Appliances.Add(4, new Appliance("Refrigerator", "", 200));
-            Appliances.Add(5, new Appliance("Furnace", "1/4 hp", 600));
-            Appliances.Add(6, new Appliance("Microwave", "FoodNukem", 1500));
+            Appliances.Add(1, new Appliance("LED", "An LED bulb", 10, 10));
+            Appliances.Add(2, new Appliance("TV", "55 inch 4K OLED TV", 350,
+                350));
+            Appliances.Add(3, new Appliance("Heater", "Ceramic Heater", 1000,
+                1500));
+            Appliances.Add(4, new Appliance("Refrigerator", "", 200, 300));
+            Appliances.Add(5, new Appliance("Furnace", "1/4 hp", 600, 1000));
+            Appliances.Add(6, new Appliance("Microwave", "FoodNukem", 1500,
+                1500));
         }
 
         public void MakeSites()

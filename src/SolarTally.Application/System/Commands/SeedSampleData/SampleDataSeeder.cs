@@ -58,9 +58,9 @@ namespace SolarTally.Application.System.Commands.SeedSampleData
 
         public void MakeAppliances()
         {
-            Appliances.Add(1, new Appliance("LED", "An LED bulb", 20));
-            Appliances.Add(2, new Appliance("TV", "A 32 inch LCD TV", 80));
-            Appliances.Add(3, new Appliance("Heater", "", 300));
+            Appliances.Add(1, new Appliance("LED", "An LED bulb", 20, 20));
+            Appliances.Add(2, new Appliance("TV", "A 32 inch LCD TV", 80, 80));
+            Appliances.Add(3, new Appliance("Heater", "", 300, 500));
         }
 
         public void MakeSites()
