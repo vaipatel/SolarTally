@@ -27,9 +27,11 @@
     </span>
 </mat-toolbar>
 
-<div>
-    <h2 class="padding-10">Appliances</h2>
-    <mat-card *ngFor="let au of auList" class="margin-10">
+<div class="padding-10">
+    <h2>Appliances</h2>
+    <app-appliance-usage *ngFor="let au of auList" [au]="au" (remove)="removeApplianceUsage(au)"></app-appliance-usage>
+    
+    <!-- <mat-card *ngFor="let au of auList" class="margin-10">
         <div style="position: absolute; top: 0; right: 0;">
             <button mat-icon-button>
                 <mat-icon>edit</mat-icon>
@@ -49,5 +51,5 @@
             <p>Hours Off Solar: {{au.numHoursOffSolar}} hrs</p>
             <p>Description: {{au.applianceDto.description}}</p>
         </mat-card-content>
-    </mat-card>
+    </mat-card> -->
 </div>
