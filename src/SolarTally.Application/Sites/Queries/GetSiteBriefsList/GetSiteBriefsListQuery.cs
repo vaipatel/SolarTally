@@ -45,6 +45,7 @@ namespace SolarTally.Application.Sites.Queries.GetSiteBriefsList
             var query =
                 from site in _context.Sites
                 join consumption in _context.Consumptions on site.Id equals consumption.Id
+                orderby site.Id
                 select new { Site = site, ConsumptionTotal = consumption.ConsumptionTotal };
             
             var queryOut = await 
