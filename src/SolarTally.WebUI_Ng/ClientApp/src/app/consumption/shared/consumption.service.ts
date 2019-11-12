@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { ApplianceUsageLst } from 'src/app/shared/appliance-usage';
+import { ApplianceUsageLst } from 'src/app/shared/dtos/appliance-usage';
 
 @Injectable({
   providedIn: 'root'

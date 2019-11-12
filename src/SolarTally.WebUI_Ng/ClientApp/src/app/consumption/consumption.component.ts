@@ -3,7 +3,7 @@ import { ConsumptionService } from './shared/consumption.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { ApplianceUsageLst, ApplianceUsage } from '../shared/appliance-usage';
+import { ApplianceUsageLst, ApplianceUsage } from '../shared/dtos/appliance-usage';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({

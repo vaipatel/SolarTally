@@ -1,4 +1,4 @@
-import { Site } from './site';
+import { Site } from '../../shared/dtos/site';
 
 export const SITES: Site[] = [
     { 

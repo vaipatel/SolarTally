@@ -1,5 +1,5 @@
-import { ConsumptionTotal } from 'src/app/shared/consumption-total';
-import { Address } from 'src/app/shared/address';
+import { ConsumptionTotal } from 'src/app/shared/dtos/consumption-total';
+import { Address } from 'src/app/shared/dtos/address';
 
 export class Site {
     id: number;

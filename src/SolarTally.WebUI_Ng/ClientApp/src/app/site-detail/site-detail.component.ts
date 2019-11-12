@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { Site } from '../sites/shared/site';
+import { Site } from '../shared/dtos/site';
 import { SiteService } from '../sites/shared/site.service';
 import { HttpErrorResponse } from '@angular/common/http';
 
