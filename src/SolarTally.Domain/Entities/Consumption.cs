@@ -50,6 +50,11 @@ namespace SolarTally.Domain.Entities
             return Site.NumSolarHours;
         }
 
+        public TimeInterval GetPeakSolarInterval()
+        {
+            return Site.PeakSolarInterval;
+        }
+
         public void Recalculate()
         {
             ConsumptionTotal = new ConsumptionTotal(this);
