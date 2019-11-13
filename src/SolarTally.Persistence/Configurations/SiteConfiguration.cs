@@ -22,6 +22,20 @@ namespace SolarTally.Persistence.Configurations
                 .HasDefaultValue<int>(8)
                 .IsRequired();
 
+            siteConfiguration.OwnsOne(s => s.PeakSolarInterval, 
+                psiConfiguration => 
+                {
+                    psiConfiguration
+                        .Property(p => p.Start)
+                        .HasColumnType("time(0)");
+                    psiConfiguration
+                        .Property(p => p.End)
+                        .HasColumnType("time(0)");
+                    psiConfiguration
+                        .Property(p => p.Difference)
+                        .HasColumnType("time(0)");
+                });
+
             // Previous (summarized)
             // --------------------------------------------------------------
             // I needed to configure HasForeignKey<Consumption>(c => c.SiteId)

@@ -37,5 +37,13 @@ namespace SolarTally.Domain.UnitTests.Entities
             var site = new Site(_siteName, _siteNumSolarHours);
             Assert.Equal(site.Name, site.Consumption.Site.Name);
         }
+
+        [Fact]
+        public void SetsDefaultSolarInterval()
+        {
+            var site = new Site(_siteName, _siteNumSolarHours);
+            Assert.Equal(new TimeSpan(8, 0, 0),
+                site.PeakSolarInterval.Difference);
+        }
     }
 }
