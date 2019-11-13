@@ -16,6 +16,8 @@ namespace SolarTally.Domain.Entities
         public Address MainAddress { get; set; }
 
         public int NumSolarHours { get; private set; }
+        
+        public TimeInterval PeakSolarInterval { get; private set; }
 
         // Consumption Nav prop
         public Consumption Consumption { get; private set; }
