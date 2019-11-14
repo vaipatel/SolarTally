@@ -56,6 +56,7 @@ namespace SolarTally.Domain.Entities
             foreach(var applianceUsage in Consumption.ApplianceUsages)
             {
                 // Restrict solar intervals to lie within peakSolarInterval
+                applianceUsage.SetPeakSolarInterval(PeakSolarInterval);
             }
         }
 
