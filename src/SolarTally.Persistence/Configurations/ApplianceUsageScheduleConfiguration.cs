@@ -12,21 +12,21 @@ namespace SolarTally.Persistence.Configurations
         {
             ausConfiguration.Ignore(b => b.DomainEvents);
             
-            ausConfiguration.OwnsMany(aus => aus.TimeIntervalsWithKind,
-            tiwkConfig => {
+            ausConfiguration.OwnsMany(aus => aus.UsageTimeIntervals,
+            utiConfig => {
                 // Stole the bottom 3 lines from https://docs.microsoft.com/en-us/ef/core/modeling/owned-entities#collections-of-owned-types
-                // tiwkConfig.WithOwner().HasForeignKey("ApplianceUsageId");
-                // tiwkConfig.Property<int>("Id");
-                // tiwkConfig.HasKey("Id");
+                // utiConfig.WithOwner().HasForeignKey("ApplianceUsageId");
+                // utiConfig.Property<int>("Id");
+                // utiConfig.HasKey("Id");
 
-                tiwkConfig.OwnsOne(tiwk => tiwk.TimeInterval, tiConfig => {
+                utiConfig.OwnsOne(uti => uti.TimeInterval, tiConfig => {
                     tiConfig.Property(ti => ti.Start).HasColumnType("time(0)");
                     tiConfig.Property(ti => ti.End).HasColumnType("time(0)");
                     tiConfig.Property(ti => ti.Difference)
                         .HasColumnType("time(0)");
                 });
 
-                tiwkConfig.ToTable("TimeIntervalsWithKind");
+                utiConfig.ToTable("UsageTimeIntervals");
             });
         }
     }

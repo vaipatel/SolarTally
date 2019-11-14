@@ -11,24 +11,23 @@ a collection.
 
 ## Don't Share ValueObjects
 
-You have a `TimeInterval` value object that is used in `Site` called
-`PeakSolarInterval`, and also in `TimeIntervalWithKind` which appear in the
-collection `ApplianceUsageSchedule.TimeIntervalsWithKind`.
+You have a `TimeInterval` value object that is used in `Site` as
+`PeakSolarInterval`, and also in `UsageTimeInterval` as just `TimeInterval`.
 
-You want to inform each `TimeIntervalWithKind` in 
-`ApplianceUsageSchedule.TimeIntervalsWithKind` that the `Site`'s
+You want to inform each `UsageTimeInterval` in the
+`ApplianceUsageSchedule.UsageTimeIntervals` collection that the `Site`'s
 `PeakSolarInterval` has changed.
 
 You just pass the `PeakSolarInterval` from `Site` down to
 `ApplianceUsageSchedule`.
 
-You then erroneously use it directly inside a new `TimeIntervalWithKind`, so 
-that it is now shared between two entities, and you then append to the
-`TimeIntervalsWithKind` collection.
+You then erroneously use it directly inside a new `UsageTimeInterval`, so 
+that it is now shared between two entities. You then obliviously append to the
+`UsageTimeIntervals` collection.
 
 Because of the erroneous sharing, you'll first see the warning:
 ```
-The same entity is being tracked as different weak entity types 'Site.PeakSolarInterval#TimeInterval' and 'TimeIntervalWithKind.TimeInterval#TimeInterval'. If a property value changes it will result in two store changes, which might not be the desired outcome.
+The same entity is being tracked as different weak entity types 'Site.PeakSolarInterval#TimeInterval' and 'UsageTimeInterval.TimeInterval#TimeInterval'. If a property value changes it will result in two store changes, which might not be the desired outcome.
 ```
 
 It'll be followed by the `Microsoft.EntityFrameworkCore.Update` `fail` message:

@@ -1,6 +1,6 @@
 namespace SolarTally.Domain.Enumerations
 {
-    public enum TimeIntervalKind
+    public enum UsageKind
     {
         UsingSolar,
         UsingMains,
