@@ -10,8 +10,7 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
         [Fact]
         void ShouldDefaultToUsingSolarKind()
         {
-            var ti = new TimeInterval(new DateTime(1,1,1,1,0,0),
-                new DateTime(1,1,1,2,0,0));
+            var ti = new TimeInterval(1,0,2,0);
             var tiwk = new TimeIntervalWithKind(ti);
             Assert.Equal(TimeIntervalKind.UsingSolar, tiwk.TimeIntervalKind);
         }

@@ -7,21 +7,21 @@ namespace SolarTally.Domain.ValueObjects
 {
     public class TimeInterval : ValueObject
 {
-    public DateTime Start { get; private set; }
+    public TimeSpan Start { get; private set; }
 
-    public DateTime End { get; private set; }
+    public TimeSpan End { get; private set; }
 
     public TimeSpan Difference { get; private set; }
 
     private TimeInterval() { }
 
-    public TimeInterval(DateTime start, DateTime end)
+    public TimeInterval(int startHr, int startMin, int endHr, int endMin)
     {
-        Guard.Against.InvalidTimeInterval(start, end);
-        Start = 
-            new DateTime(2001, 1, 1, start.Hour, start.Minute, start.Second);
-        End = 
-            new DateTime(2001, 1, 1, end.Hour, end.Minute, end.Second);
+        Guard.Against.InvalidTimeInterval(startHr, startMin, endHr, endMin);
+        var start = new TimeSpan(startHr, startMin, 0);
+        var end = new TimeSpan(endHr, endMin, 0);
+        Start = start;
+        End = end;
         Difference = End - Start;
     }
 

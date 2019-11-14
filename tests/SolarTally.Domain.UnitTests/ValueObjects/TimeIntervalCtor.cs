@@ -9,143 +9,88 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
     public class TimeIntervalCtor
     {
         [Theory]
-        [ClassData(typeof(StartMoreThanEndData))]
-        public void ShouldThrowForStartMoreThanEnd(DateTime start, DateTime end)
+        [InlineData(-1, 50, 3, 1)]
+        [InlineData(24, 50, 25, 1)]
+        [InlineData(1, -1, 3, 1)]
+        [InlineData(1, 60, 3, 1)]
+        [InlineData(1, 50, -1, 1)]
+        [InlineData(1, 50, 24, 1)]
+        [InlineData(1, 50, 3, -1)]
+        [InlineData(1, 50, 3, 60)]
+        public void ShouldThrowForOutOfBounds(int startHr, int startMin,
+            int endHr, int endMin)
         {
             Assert.Throws<TimeIntervalArgumentInvalidException>(() => {
-                var ti = new TimeInterval(start, end);
+                var ti = new TimeInterval(startHr, startMin, endHr, endMin);
+            });
+        }
+
+        [Theory]
+        [InlineData(1,0,0,1)]
+        [InlineData(23,59,23,58)]
+        public void ShouldThrowForStartMoreThanEnd(int startHr, int startMin,
+            int endHr, int endMin)
+        {
+            Assert.Throws<TimeIntervalArgumentInvalidException>(() => {
+                var ti = new TimeInterval(startHr, startMin, endHr, endMin);
             });
         }
 
         [Theory]
         [ClassData(typeof(ValidTimeIntervalData))]
-        public void ShouldMakeValidTimeInterval(DateTime start, DateTime end,
-            DateTime expStart, DateTime expEnd, TimeSpan expDiff)
+        public void ShouldMakeValidTimeInterval(int startHr, int startMin,
+            int endHr, int endMin, TimeSpan expStart, TimeSpan expEnd,
+            TimeSpan expDiff)
         {
-            var ti = new TimeInterval(start, end);
+            var ti = new TimeInterval(startHr, startMin, endHr, endMin);
             Assert.Equal(expStart, ti.Start);
             Assert.Equal(expEnd, ti.End);
             Assert.Equal(expDiff, ti.Difference);
         }
 
-        public class StartMoreThanEndData : TheoryData<DateTime, DateTime>
-        {
-            public struct StartEndItem
-            {
-                public DateTime Start { get; set; }
-                public DateTime End { get; set; }
-            }
-
-            public IEnumerable<StartEndItem> TestData =>
-                new List<StartEndItem>()
-            {
-                // Same Date, Start Time More
-                new StartEndItem()
-                {
-                    Start = new DateTime(2001, 1, 1, 1, 0, 0),
-                    End   = new DateTime(2001, 1, 1, 0, 1, 0),
-                },
-                // Start Date and Time More
-                new StartEndItem()
-                {
-                    Start = new DateTime(2002, 1, 1, 1, 0, 0),
-                    End   = new DateTime(2001, 1, 1, 0, 1, 0),
-                },
-                // Start Date Less, Time More
-                new StartEndItem() {
-                    Start = new DateTime(2001, 1, 1, 1, 0, 0),
-                    End   = new DateTime(2002, 1, 1, 0, 1, 0),
-                },
-                // Valid Time, but different DateTimeKinds
-                new StartEndItem() {
-                    Start = new DateTime(2001, 1, 1, 0, 1, 0, DateTimeKind.Local),
-                    End   = new DateTime(2001, 1, 1, 1, 0, 0, DateTimeKind.Unspecified)
-                }
-            };
-
-            public StartMoreThanEndData()
-            {
-                foreach(var ti in TestData)
-                {
-                    Add(
-                        ti.Start,
-                        ti.End
-                    );
-                }
-            }
-        }
-
-        public class ValidTimeIntervalData : TheoryData<DateTime, DateTime,
-            DateTime, DateTime, TimeSpan>
+        public class ValidTimeIntervalData : TheoryData<int, int, int, int,
+            TimeSpan, TimeSpan, TimeSpan>
         {
             public class ValidTimeIntervalItem
             {
-                public DateTime Start { get; set; }
-                public DateTime End { get; set; }
-                public DateTime ExpStart { get; set; }
-                public DateTime ExpEnd { get; set; }
+                public int StartHr { get; set; }
+                public int StartMin { get; set; }
+                public int EndHr { get; set; }
+                public int EndMin { get; set; }
+                public TimeSpan ExpStart { get; set; }
+                public TimeSpan ExpEnd { get; set; }
                 public TimeSpan ExpDiff{ get; set; }
             }
 
             public IEnumerable<ValidTimeIntervalItem> TestData =>
                 new List<ValidTimeIntervalItem>()
             {
-                // Same Date, Start Time Less
-                // Date will be reset to 2001, 1, 1
-                // DateTimeKind will be reset to Unspecified
-                // Year, Month, Day are ignored during comparison
                 // 1. Hours are both 0
                 new ValidTimeIntervalItem()
                 {
-                    Start    = new DateTime(2002, 3, 14, 0, 0, 0),
-                    End      = new DateTime(2002, 3, 14, 0, 1, 0),
-                    ExpStart = new DateTime(2001, 1,  1, 0, 0, 0),
-                    ExpEnd   = new DateTime(2001, 1,  1, 0, 1, 0),
-                    ExpDiff  = new TimeSpan(0, 1, 0)
+                    StartHr    = 0, StartMin = 0,
+                    EndHr      = 1, EndMin   = 0,
+                    ExpStart = new TimeSpan(0, 0, 0),
+                    ExpEnd   = new TimeSpan(1, 0, 0),
+                    ExpDiff  = new TimeSpan(1, 0, 0)
                 },
                 // 2. Hours are both 23
                 new ValidTimeIntervalItem()
                 {
-                    Start    = new DateTime(2002, 3, 14, 23, 0, 0),
-                    End      = new DateTime(2002, 3, 14, 23, 1, 0),
-                    ExpStart = new DateTime(2001, 1,  1, 23, 0, 0),
-                    ExpEnd   = new DateTime(2001, 1,  1, 23, 1, 0),
+                    StartHr    = 23, StartMin = 0,
+                    EndHr      = 23, EndMin   = 1,
+                    ExpStart = new TimeSpan(23, 0, 0),
+                    ExpEnd   = new TimeSpan(23, 1, 0),
                     ExpDiff  = new TimeSpan(0, 1, 0)
                 },
-                // 3. Start Date is more, but Time is less by a second
+                // 3. General
                 new ValidTimeIntervalItem()
                 {
-                    Start    = new DateTime(2001, 3, 14, 23, 0, 59),
-                    End      = new DateTime(2002, 3, 14, 23, 1,  0),
-                    ExpStart = new DateTime(2001, 1,  1, 23, 0, 59),
-                    ExpEnd   = new DateTime(2001, 1,  1, 23, 1,  0),
-                    ExpDiff  = new TimeSpan(0, 0, 1)
-                },
-                // 4. DateTimeKind are same but not Unspecified
-                new ValidTimeIntervalItem()
-                {
-                    Start    = new DateTime(2002, 3, 14, 23, 0, 0, DateTimeKind.Local),
-                    End      = new DateTime(2002, 3, 14, 23, 1, 0, DateTimeKind.Local),
-                    ExpStart = new DateTime(2001, 1,  1, 23, 0, 0),
-                    ExpEnd   = new DateTime(2001, 1,  1, 23, 1, 0),
-                    ExpDiff  = new TimeSpan(0, 1, 0)
-                },
-                new ValidTimeIntervalItem()
-                {
-                    Start    = new DateTime(2002, 3, 14, 23, 0, 0, DateTimeKind.Utc),
-                    End      = new DateTime(2002, 3, 14, 23, 1, 0, DateTimeKind.Utc),
-                    ExpStart = new DateTime(2001, 1,  1, 23, 0, 0),
-                    ExpEnd   = new DateTime(2001, 1,  1, 23, 1, 0),
-                    ExpDiff  = new TimeSpan(0, 1, 0)
-                },
-                // 5. General 1
-                new ValidTimeIntervalItem()
-                {
-                    Start    = new DateTime(2002, 3, 14,  8, 3, 59, DateTimeKind.Utc),
-                    End      = new DateTime(2015, 2, 17, 15, 1,  0, DateTimeKind.Utc),
-                    ExpStart = new DateTime(2001, 1,  1,  8, 3, 59),
-                    ExpEnd   = new DateTime(2001, 1,  1, 15, 1,  0),
-                    ExpDiff  = new TimeSpan(6, 57, 1)
+                    StartHr    =  8, StartMin = 3,
+                    EndHr      = 15, EndMin   = 1,
+                    ExpStart = new TimeSpan(8, 3, 0),
+                    ExpEnd   = new TimeSpan(15, 1,  0),
+                    ExpDiff  = new TimeSpan(6, 58, 0)
                 }
             };
 
@@ -154,8 +99,10 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
                 foreach(var ti in TestData)
                 {
                     Add(
-                        ti.Start,
-                        ti.End,
+                        ti.StartHr,
+                        ti.StartMin,
+                        ti.EndHr,
+                        ti.EndMin,
                         ti.ExpStart,
                         ti.ExpEnd,
                         ti.ExpDiff

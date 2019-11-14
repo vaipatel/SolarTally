@@ -8,18 +8,29 @@ namespace Ardalis.GuardClauses
     public static class InvalidTimeIntervalGuard
     {
         public static void InvalidTimeInterval(
-            this IGuardClause guardClause, DateTime start, DateTime end)
+            this IGuardClause guardClause, int startHr, int startMin, int endHr,
+            int endMin
+        )
         {
-            // DateTimeKind must be Unspecified
-            if (start.Kind != end.Kind)
+            // hr must be in [0,23], min must be in [0,59]
+            int hrLB = 0, hrUB = 23, minLB = 0, minUB = 59;
+            if (startHr < hrLB || startHr > hrUB ||
+                endHr   < hrLB || endHr   > hrUB)
             {
-                throw new TimeIntervalArgumentInvalidException("In TimeInterval, the Start and End must have the same DateTimeKind.");
+                throw new TimeIntervalArgumentInvalidException($"In TimeInterval, the hour value must be between {hrLB} and {hrUB} (inclusive).");
+            }
+            if (startMin < minLB || startMin > minUB ||
+                endMin   < minLB || endMin   > minUB)
+            {
+                throw new TimeIntervalArgumentInvalidException($"In TimeInterval, the minute value must be between {minLB} and {minUB} (inclusive).");
             }
 
-            // Start time of day must be <= End time of day
-            if (start.TimeOfDay > end.TimeOfDay)
+            var start = new TimeSpan(startHr, startMin, 0);
+            var end   = new TimeSpan(endHr,   endMin,   0);
+            // Start timespan must be <= End timespan
+            if (start > end)
             {
-                throw new TimeIntervalArgumentInvalidException("In TimeInterval, the Start time of day cannot happen after the End time of day.");
+                throw new TimeIntervalArgumentInvalidException("In TimeInterval, the start time must not come after the end time.");
             }
         }
     }

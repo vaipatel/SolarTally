@@ -26,6 +26,7 @@ namespace SolarTally.Domain.Entities
         public Site(string name, int numSolarHours)
         {   
             Name = name;
+
             Consumption = new Consumption(this);
             
             this.SetNumSolarHours(numSolarHours);
@@ -58,9 +59,8 @@ namespace SolarTally.Domain.Entities
             }
         }
 
-        public TimeInterval GetDefaultTimeInterval() => new TimeInterval(
-            new DateTime(1,1,1,8,0,0),
-            new DateTime(1,1,1,16,0,0)
+        private TimeInterval GetDefaultTimeInterval() => new TimeInterval(
+            8,0,16,0
         );
     }
 }
