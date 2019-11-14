@@ -34,6 +34,9 @@ namespace SolarTally.Persistence
 
         public DbSet<ApplianceUsage> ApplianceUsages { get; set; }
 
+        public DbSet<ApplianceUsageSchedule> ApplianceUsageSchedules 
+        { get; set; }
+
         public DbSet<Appliance> Appliances { get; set; }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -72,6 +75,8 @@ namespace SolarTally.Persistence
 
             modelBuilder.ApplyConfiguration(new ApplianceConfiguration());
             modelBuilder.ApplyConfiguration(new ApplianceUsageConfiguration());
+            modelBuilder.ApplyConfiguration(
+                new ApplianceUsageScheduleConfiguration());
             modelBuilder.ApplyConfiguration(new SiteConfiguration());
             modelBuilder.ApplyConfiguration(new ConsumptionConfiguration());
         }
