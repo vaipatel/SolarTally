@@ -12,12 +12,12 @@ namespace SolarTally.Persistence.Configurations
         {
             ausConfiguration.Ignore(b => b.DomainEvents);
             
-            ausConfiguration.OwnsMany(aus => aus.UsageTimeIntervals,
+            ausConfiguration.OwnsMany(aus => aus.UsageIntervals,
             utiConfig => {
                 // Stole the bottom 3 lines from https://docs.microsoft.com/en-us/ef/core/modeling/owned-entities#collections-of-owned-types
-                // utiConfig.WithOwner().HasForeignKey("ApplianceUsageId");
-                // utiConfig.Property<int>("Id");
-                // utiConfig.HasKey("Id");
+                utiConfig.WithOwner().HasForeignKey("ApplianceUsageScheduleId");
+                utiConfig.Property<int>("Id");
+                utiConfig.HasKey("Id");
 
                 utiConfig.OwnsOne(uti => uti.TimeInterval, tiConfig => {
                     tiConfig.Property(ti => ti.Start).HasColumnType("time(0)");
@@ -26,7 +26,7 @@ namespace SolarTally.Persistence.Configurations
                         .HasColumnType("time(0)");
                 });
 
-                utiConfig.ToTable("UsageTimeIntervals");
+                utiConfig.ToTable("UsageIntervals");
             });
         }
     }

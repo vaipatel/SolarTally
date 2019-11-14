@@ -15,13 +15,13 @@ namespace SolarTally.Domain.Entities
         public int ApplianceUsageId { get; private set; }
         public ApplianceUsage ApplianceUsage { get; private set; }
 
-        private readonly List<UsageTimeInterval> _usageTimeIntervals;
-        public IReadOnlyCollection<UsageTimeInterval> UsageTimeIntervals
-            => _usageTimeIntervals;
+        private readonly List<UsageTimeInterval> _usageIntervals;
+        public IReadOnlyCollection<UsageTimeInterval> UsageIntervals
+            => _usageIntervals;
 
         public ApplianceUsageSchedule()
         {
-            _usageTimeIntervals = new List<UsageTimeInterval>();
+            _usageIntervals = new List<UsageTimeInterval>();
         }
 
         public void SetPeakSolarInterval(TimeInterval ti)
@@ -29,7 +29,7 @@ namespace SolarTally.Domain.Entities
             var newTI = new TimeInterval(ti.Start.Hours, ti.Start.Minutes,
                 ti.End.Hours, ti.End.Minutes);
             var uTI = new UsageTimeInterval(newTI, UsageKind.UsingSolar);
-            _usageTimeIntervals.Add(uTI);
+            _usageIntervals.Add(uTI);
         }
     }
 }
