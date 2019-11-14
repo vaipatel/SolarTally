@@ -178,6 +178,12 @@ namespace SolarTally.Domain.Entities
             this.Recalculate();
         }
 
+        public void SetPeakSolarInterval(TimeInterval ti)
+        {
+            ApplianceUsageSchedule.SetPeakSolarInterval(ti);
+            this.Recalculate();
+        }
+
         public void SetEnabled(bool enabled)
         {
             Enabled = enabled;
