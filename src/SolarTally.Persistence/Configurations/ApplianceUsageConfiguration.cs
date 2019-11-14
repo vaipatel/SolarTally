@@ -41,7 +41,14 @@ namespace SolarTally.Persistence.Configurations
                 .HasDefaultValue<bool>(true)
                 .IsRequired();
 
-            auConfiguration.OwnsOne(s => s.ApplianceUsageTotal);
+            auConfiguration.OwnsOne(au => au.ApplianceUsageTotal);
+
+            auConfiguration.HasOne(au => au.ApplianceUsageSchedule)
+                .WithOne(aus => aus.ApplianceUsage)
+                .HasPrincipalKey<ApplianceUsage>(au => au.Id)
+                .HasForeignKey<ApplianceUsageSchedule>(aus => aus.ApplianceUsageId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .IsRequired(true);
         }
     }
 }
