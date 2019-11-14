@@ -3,6 +3,7 @@ using Ardalis.GuardClauses;
 using System.Collections.Generic;
 using SolarTally.Domain.ValueObjects;
 using SolarTally.Domain.Interfaces;
+using SolarTally.Domain.Enumerations;
 
 namespace SolarTally.Domain.Entities
 {
@@ -14,19 +15,21 @@ namespace SolarTally.Domain.Entities
         public int ApplianceUsageId { get; private set; }
         public ApplianceUsage ApplianceUsage { get; private set; }
 
-        private readonly List<TimeInterval> _timeIntervals;
-        public IReadOnlyCollection<TimeInterval> TimeIntervals => _timeIntervals;
+        private readonly List<TimeIntervalWithKind> _timeIntervalsWithKind;
+        public IReadOnlyCollection<TimeIntervalWithKind> TimeIntervalsWithKind
+            => _timeIntervalsWithKind;
 
-        private IConsumptionCalculator _consumptionCalculator { get; set; }
-
-        private ApplianceUsageSchedule()
+        public ApplianceUsageSchedule()
         {
+            _timeIntervalsWithKind = new List<TimeIntervalWithKind>();
         }
 
-        public ApplianceUsageSchedule(
-            IConsumptionCalculator consumptionCalculator)
+        public void SetPeakSolarInterval(TimeInterval ti)
         {
-            _consumptionCalculator = consumptionCalculator;
+            var t = new TimeInterval(ti.Start.Hours, ti.Start.Minutes,
+                ti.End.Hours, ti.End.Minutes);
+            var tiwk = new TimeIntervalWithKind(t, TimeIntervalKind.UsingSolar);
+            _timeIntervalsWithKind.Add(tiwk);
         }
     }
 }
