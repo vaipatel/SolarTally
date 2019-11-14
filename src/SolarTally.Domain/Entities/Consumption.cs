@@ -41,6 +41,7 @@ namespace SolarTally.Domain.Entities
                 ApplianceUsage.DefaultQuantity,
                 appliance.DefaultPowerConsumption, Site.NumSolarHours,
                 ApplianceUsage.DefaultNumHoursOffSolar, true);
+            applianceUsage.SetPeakSolarInterval(GetPeakSolarInterval());
             _applianceUsages.Add(applianceUsage);
             this.Recalculate();
         }
