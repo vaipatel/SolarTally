@@ -31,6 +31,11 @@ namespace SolarTally.Domain.Entities
 
         public int ApplianceId { get; private set; }
         public Appliance Appliance { get; private set; }
+
+        public int ApplianceUsageScheduleId { get; private set; }
+        public ApplianceUsageSchedule ApplianceUsageSchedule
+        { get; private set; }
+
         private IConsumptionCalculator _consumptionCalculator { get; set; }
 
         /// <summary>
@@ -111,6 +116,7 @@ namespace SolarTally.Domain.Entities
             int numHoursOnSolar, int numHoursOffSolar, bool enabled)
         {
             _consumptionCalculator = consumptionCalculator;
+            ApplianceUsageSchedule = new ApplianceUsageSchedule();
             this.SetAppliance(appliance);
             this.SetQuantity(quantity);
             this.SetPowerConsumption(powerConsumption);
