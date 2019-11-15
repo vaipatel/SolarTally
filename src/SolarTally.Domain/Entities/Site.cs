@@ -10,7 +10,7 @@ namespace SolarTally.Domain.Entities
     /// <summary>
     /// A site encapsulates the consumption and costing estimates at a location
     /// </summary>
-    public class Site : BaseEntity<int>, IAggregateRoot
+    public class Site : BaseEntity<int>, IAggregateRoot, IReadOnlySiteSettings
     {
         public string Name { get; set; }
 
