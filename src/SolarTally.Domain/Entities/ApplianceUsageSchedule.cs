@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using SolarTally.Domain.ValueObjects;
 using SolarTally.Domain.Interfaces;
 using SolarTally.Domain.Enumerations;
+using SolarTally.Domain.Exceptions;
 
 namespace SolarTally.Domain.Entities
 {
@@ -32,6 +33,66 @@ namespace SolarTally.Domain.Entities
         {
             ReadOnlySiteSettings = readOnlySiteSettings;
             _usageIntervals = new List<UsageTimeInterval>();
+        }
+
+        public void AddUsageInterval(
+            int startHr, int startMin, int endHr, int endMin,
+            UsageKind usageKind
+        )
+        {
+            var ti = new TimeInterval(startHr, startMin, endHr, endMin);
+            
+            // If we're trying to add a UsageInterval that's UsingSolar
+            if (usageKind == UsageKind.UsingSolar)
+            {
+                // but it starts before the PeakSolarInterval start
+                // or ends after the PeakSolarInterval end
+                if (ti.Start < 
+                    ReadOnlySiteSettings.PeakSolarInterval.Start ||
+                    ti.End >
+                    ReadOnlySiteSettings.PeakSolarInterval.Start)
+                {
+                    // bad
+                    throw new TimeIntervalArgumentInvalidException("When adding a UsageTimeInterval that is UsingSolar, the start/end cannot be before the Site's PeakSolarInterval start/end, respectively.");
+                }
+            }
+
+            var newUTI = new UsageTimeInterval(ti, usageKind);
+            
+            for (int i = 0; i < _usageIntervals.Count; ++i)
+            {
+                var currTI = _usageIntervals[i].TimeInterval;
+
+                // So now we know that either
+                // * We have a UsingSolar interval but it's within the 
+                //   PeakSolarInterval, or
+                // * We have an arbitrarily shaped Non-UsingSolar interval
+
+                // If our new time interval starts before the current interval,
+                if (ti.Start < currTI.Start)
+                {
+                    // and it also ends before the current interval
+                    if (ti.End <= currTI.Start)
+                    {
+                        // Just insert it and return
+                        _usageIntervals.Insert(i, newUTI);
+                        return;
+                    }
+                    else // it ends after the current interval
+                    {
+                        throw new TimeIntervalArgumentInvalidException("It is not possible to add a new UsageTimeInterval that overlaps with an existing UsageTimeInterval.");
+                    }
+                }
+                // Else if our new time intervals starts in the middle of an
+                // existing interval
+                else if (ti.Start <= currTI.End)
+                {
+                    // bad
+                    throw new TimeIntervalArgumentInvalidException("It is not possible to add a new UsageTimeInterval that overlaps with an existing UsageTimeInterval.");
+                }
+            }
+            // If we're here then we're past all the intervals. So OK to Add.
+            _usageIntervals.Add(newUTI);
         }
 
         public void SetPeakSolarInterval(
