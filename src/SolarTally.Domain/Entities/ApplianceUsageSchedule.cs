@@ -57,7 +57,7 @@ namespace SolarTally.Domain.Entities
 
                 // If we have a solar usage interval that is completely outside
                 // the new peak solar interval, then convert it to mains usage.
-                if (uTI.Start > ti.End)
+                if (uTI.End < ti.Start || uTI.Start > ti.End)
                 {
                     var newTI = new TimeInterval(
                         uTI.Start.Hours, uTI.Start.Minutes,
