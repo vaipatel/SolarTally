@@ -21,6 +21,12 @@ namespace SolarTally.Domain.Entities
             => _usageIntervals;
 
         public IReadOnlySiteSettings ReadOnlySiteSettings { get; private set; }
+
+        private ApplianceUsageSchedule()
+        {
+            // Needed for EF core. Fcuk.
+        }
+
         public ApplianceUsageSchedule(
             IReadOnlySiteSettings readOnlySiteSettings)
         {
