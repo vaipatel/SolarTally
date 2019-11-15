@@ -9,9 +9,15 @@ namespace SolarTally.Domain.UnitTests.Entities
     public class ApplianceUsageSchedule_SetPeakSolarInterval
     {
         [Theory]
-        [InlineData(8,0,16,0,9,0,15,0,9,0,15,0)]
+        // New PeakSolarInterval completely outside old, nothing should happen
+        [InlineData(8,0,16,0,7,0,17,0,8,0,16,0)]
+        // New PeakSolarInterval start outside start, start should not change
+        [InlineData(8,0,16,0,7,0,15,0,8,0,15,0)]
+        // New PeakSolarInterval end outside old, end should not change
         [InlineData(8,0,16,0,9,0,17,0,9,0,16,0)]
-        public void ShouldNotAddIfNotEmptyButInsteadReset(
+        // New PeakSolarInterval completely inside old, should trim start n end
+        [InlineData(8,0,16,0,9,0,15,0,9,0,15,0)]
+        public void ShouldNotAddIfNotEmptyButInsteadTrimWhenNeeded(
             int startHr1, int startMin1, int endHr1, int endMin1,
             int startHr2, int startMin2, int endHr2, int endMin2,
             int startHrExp, int startMinExp, int endHrExp, int endMinExp)
