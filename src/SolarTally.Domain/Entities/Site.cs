@@ -31,7 +31,7 @@ namespace SolarTally.Domain.Entities
             
             this.SetNumSolarHours(numSolarHours);
 
-            this.SetPeakSolarInterval(GetDefaultTimeInterval());
+            this.SetPeakSolarInterval(GetDefaultTimeInterval(), true);
         }
 
         public void SetNumSolarHours(int numSolarHours)
@@ -50,13 +50,16 @@ namespace SolarTally.Domain.Entities
             }
         }
 
-        public void SetPeakSolarInterval(TimeInterval peakSolarInterval)
+        public void SetPeakSolarInterval(
+            TimeInterval peakSolarInterval, bool addIfEmpty = false
+        )
         {
             PeakSolarInterval = peakSolarInterval;
             foreach(var applianceUsage in Consumption.ApplianceUsages)
             {
                 // Restrict solar intervals to lie within peakSolarInterval
-                applianceUsage.SetPeakSolarInterval(PeakSolarInterval);
+                applianceUsage.SetPeakSolarInterval(PeakSolarInterval, 
+                    addIfEmpty);
             }
         }
 
