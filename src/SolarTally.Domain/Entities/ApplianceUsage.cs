@@ -116,7 +116,9 @@ namespace SolarTally.Domain.Entities
             int numHoursOnSolar, int numHoursOffSolar, bool enabled)
         {
             _consumptionCalculator = consumptionCalculator;
-            ApplianceUsageSchedule = new ApplianceUsageSchedule();
+            ApplianceUsageSchedule = 
+                new ApplianceUsageSchedule(
+                    consumptionCalculator.ReadOnlySiteSettings);
             this.SetAppliance(appliance);
             this.SetQuantity(quantity);
             this.SetPowerConsumption(powerConsumption);

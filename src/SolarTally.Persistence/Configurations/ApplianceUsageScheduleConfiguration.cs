@@ -11,6 +11,8 @@ namespace SolarTally.Persistence.Configurations
             EntityTypeBuilder<ApplianceUsageSchedule> ausConfiguration)
         {
             ausConfiguration.Ignore(b => b.DomainEvents);
+
+            ausConfiguration.Ignore(aus => aus.ReadOnlySiteSettings);
             
             ausConfiguration.OwnsMany(aus => aus.UsageIntervals,
             utiConfig => {

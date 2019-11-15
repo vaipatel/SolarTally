@@ -3,11 +3,25 @@ using Xunit;
 using SolarTally.Domain.Entities;
 using SolarTally.Domain.Exceptions;
 using SolarTally.Domain.ValueObjects;
+using SolarTally.Domain.Interfaces;
 
 namespace SolarTally.Domain.UnitTests.Entities
 {
     public class ApplianceUsageSchedule_SetPeakSolarInterval
     {
+        public class MockReadOnlySiteSettings : IReadOnlySiteSettings
+        {
+            private TimeInterval _peakSolarInterval;
+            public string Name => "A Site Name";
+            public int NumSolarHours => 8;
+            public TimeInterval PeakSolarInterval => _peakSolarInterval;
+
+            public MockReadOnlySiteSettings()
+            {
+                _peakSolarInterval = new TimeInterval(8,0,16,0);
+            }
+        }
+        
         [Theory]
         // New PeakSolarInterval completely outside old, nothing should happen
         [InlineData(8,0,16,0,7,0,17,0,8,0,16,0)]
@@ -22,7 +36,7 @@ namespace SolarTally.Domain.UnitTests.Entities
             int startHr2, int startMin2, int endHr2, int endMin2,
             int startHrExp, int startMinExp, int endHrExp, int endMinExp)
         {
-            var aus = new ApplianceUsageSchedule();
+            var aus = new ApplianceUsageSchedule(new MockReadOnlySiteSettings());
             var ti = new TimeInterval(startHr1,startMin1,endHr1,endMin1);
             var ti2 = new TimeInterval(startHr2,startMin2,endHr2,endMin2);
             var tiExp = new TimeInterval(startHrExp,startMinExp,
@@ -37,7 +51,7 @@ namespace SolarTally.Domain.UnitTests.Entities
         [Fact]
         public void ShouldAddIfEmpty()
         {
-            var aus = new ApplianceUsageSchedule();
+            var aus = new ApplianceUsageSchedule(new MockReadOnlySiteSettings());
             var ti = new TimeInterval(8,0,16,0);
             aus.SetPeakSolarInterval(ti, addIfEmpty: true);
             Assert.Single(aus.UsageIntervals);

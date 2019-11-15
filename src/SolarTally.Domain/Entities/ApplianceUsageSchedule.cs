@@ -20,8 +20,11 @@ namespace SolarTally.Domain.Entities
         public IReadOnlyCollection<UsageTimeInterval> UsageIntervals
             => _usageIntervals;
 
-        public ApplianceUsageSchedule()
+        public IReadOnlySiteSettings ReadOnlySiteSettings { get; private set; }
+        public ApplianceUsageSchedule(
+            IReadOnlySiteSettings readOnlySiteSettings)
         {
+            ReadOnlySiteSettings = readOnlySiteSettings;
             _usageIntervals = new List<UsageTimeInterval>();
         }
 
