@@ -1,13 +1,10 @@
-using SolarTally.Domain.ValueObjects;
+using SolarTally.Domain.Entities;
 
 namespace SolarTally.Domain.Interfaces
 {
     public interface IConsumptionCalculator
     {
-        int GetSiteNumSolarHours();
-
-        TimeInterval GetPeakSolarInterval();
-        
+        IReadOnlySiteSettings ReadOnlySiteSettings { get; }
         void Recalculate();
     }
 }

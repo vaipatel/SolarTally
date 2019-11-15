@@ -22,7 +22,8 @@ namespace SolarTally.Domain.UnitTests.Entities
             var builder = new ApplianceUsageBuilder();
             var applianceUsage = builder.Build();
             var siteNumSolarHours =
-                builder.TestConsumptionCalculator.GetSiteNumSolarHours();
+                builder.TestConsumptionCalculator.ReadOnlySiteSettings
+                .NumSolarHours;
             Assert.Throws<ApplianceUsageHoursInvalidException>(() => {
                 applianceUsage.SetNumHoursOnSolar(siteNumSolarHours + 1);
             });

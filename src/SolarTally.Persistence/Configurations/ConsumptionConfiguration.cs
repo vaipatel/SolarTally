@@ -12,6 +12,8 @@ namespace SolarTally.Persistence.Configurations
         {   
             consumptionConfiguration.Ignore(b => b.DomainEvents);
 
+            consumptionConfiguration.Ignore(c => c.ReadOnlySiteSettings);
+
             // I don't have a reference back to our Consumption, should be ok.
             // See https://docs.microsoft.com/en-us/ef/core/modeling/relationships#single-navigation-property
             // Here I'm declaring (I think) that when the Consumption is

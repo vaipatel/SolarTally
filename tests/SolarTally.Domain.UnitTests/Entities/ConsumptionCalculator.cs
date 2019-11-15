@@ -14,7 +14,8 @@ namespace SolarTally.Domain.UnitTests.Entities
             var site = new SiteBuilder().Build();
             var consumption = new Consumption(site);
             var expectedHrs = site.NumSolarHours;
-            Assert.Equal(expectedHrs, consumption.GetSiteNumSolarHours());
+            Assert.Equal(expectedHrs, 
+                consumption.ReadOnlySiteSettings.NumSolarHours);
         }
 
         [Fact]
@@ -24,7 +25,8 @@ namespace SolarTally.Domain.UnitTests.Entities
             var consumption = new Consumption(site);
             var hrs = site.NumSolarHours + 1; // add an hour
             site.SetNumSolarHours(hrs);
-            Assert.Equal(hrs, consumption.GetSiteNumSolarHours());
+            Assert.Equal(hrs, 
+                consumption.ReadOnlySiteSettings.NumSolarHours);
         }
     }
 }

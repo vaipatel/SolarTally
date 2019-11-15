@@ -15,6 +15,7 @@ namespace SolarTally.Domain.Entities
     {
         // Site Nav prop
         public Site Site { get; private set; }
+        public IReadOnlySiteSettings ReadOnlySiteSettings => Site;
 
         private readonly List<ApplianceUsage> _applianceUsages;
         public IReadOnlyCollection<ApplianceUsage> ApplianceUsages =>
@@ -44,16 +45,6 @@ namespace SolarTally.Domain.Entities
             applianceUsage.SetPeakSolarInterval(GetPeakSolarInterval(), true);
             _applianceUsages.Add(applianceUsage);
             this.Recalculate();
-        }
-
-        public int GetSiteNumSolarHours()
-        {
-            return Site.NumSolarHours;
-        }
-
-        public TimeInterval GetPeakSolarInterval()
-        {
-            return Site.PeakSolarInterval;
         }
 
         public void Recalculate()
