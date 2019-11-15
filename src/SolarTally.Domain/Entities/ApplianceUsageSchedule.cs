@@ -1,3 +1,4 @@
+using System;
 using SolarTally.Domain.Common;
 using Ardalis.GuardClauses;
 using System.Collections.Generic;
@@ -79,6 +80,9 @@ namespace SolarTally.Domain.Entities
                             startHr, startMin, uTI.End.Hours, uTI.End.Minutes
                         );
                         _usageIntervals[i] = new UsageTimeInterval(newTI);
+                        // Make sure to update uTI in case the same interval is
+                        // also a candidate for upper bound trimming.
+                        uTI = newTI;
                         // since we're storing intervals in temporal order,
                         // we won't need to do this again.
                         lowerDone = true;
