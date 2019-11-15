@@ -162,7 +162,7 @@ namespace SolarTally.Domain.Entities
             // less than 24.
             Guard.Against.InvalidApplianceUsageHoursOnSolar(numHoursOnSolar,
                 nameof(numHoursOnSolar),
-                this._consumptionCalculator.GetSiteNumSolarHours(),
+                this._consumptionCalculator.ReadOnlySiteSettings.NumSolarHours,
                 NumHoursOffSolar);
             NumHoursOnSolar = numHoursOnSolar;
             this.Recalculate();
@@ -178,11 +178,11 @@ namespace SolarTally.Domain.Entities
             this.Recalculate();
         }
 
-        public void SetPeakSolarInterval(
-            TimeInterval ti, bool addIfEmpty = false
-        )
+        public void HandleSolarIntervalUpdated(bool addIfEmpty = false)
         {
-           ApplianceUsageSchedule.SetPeakSolarInterval(ti, addIfEmpty);
+           ApplianceUsageSchedule.SetPeakSolarInterval(
+               _consumptionCalculator.ReadOnlySiteSettings.PeakSolarInterval,
+                addIfEmpty);
             this.Recalculate();
         }
 
