@@ -50,10 +50,10 @@ namespace SolarTally.Domain.Entities
                 if (ti.Start < 
                     ReadOnlySiteSettings.PeakSolarInterval.Start ||
                     ti.End >
-                    ReadOnlySiteSettings.PeakSolarInterval.Start)
+                    ReadOnlySiteSettings.PeakSolarInterval.End)
                 {
                     // bad
-                    throw new TimeIntervalArgumentInvalidException("When adding a UsageTimeInterval that is UsingSolar, the start/end cannot be before the Site's PeakSolarInterval start/end, respectively.");
+                    throw new TimeIntervalArgumentInvalidException("When adding a UsageTimeInterval that is UsingSolar, the start/end cannot be before/after the Site's PeakSolarInterval start/end, respectively.");
                 }
             }
 
