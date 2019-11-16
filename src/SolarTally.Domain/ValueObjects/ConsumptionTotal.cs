@@ -116,7 +116,7 @@ namespace SolarTally.Domain.ValueObjects
                             currEarliest = utiAtIdx;
                             currPowerSum = 
                                 auAtIdx.ApplianceUsageTotal
-                                .TotalPowerConsumption;
+                                .TotalPowerConsumption; // TODO: Make it StartupPowerConsumption
                             // 2. Advance 
                             ++idxes[auIdx];
                             // 2.1. Retreat lastAdvancedIdx cuz its uti is later
