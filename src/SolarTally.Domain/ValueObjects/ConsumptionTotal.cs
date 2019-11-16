@@ -135,13 +135,27 @@ namespace SolarTally.Domain.ValueObjects
                             ++idxes[auIdx];
                             lastAdvancedIdx = auIdx;
                         }
-                        else
+                        // Else if this uti comes later but isn't the first for
+                        // this AU schedule
+                        else if (idx > 0)
                         {
+                            // Go back to the prev UTI..
                             var prevIdx = idx - 1;
                             var utiAtPrevIdx = auAtIdx
                                 .ApplianceUsageSchedule.UsageIntervals
                                 .ElementAt(prevIdx); // Note: ElementAt inefficient
-                            
+                            // and if it's solar
+                            if (utiAtPrevIdx.UsageKind != UsageKind.UsingSolar)
+                            {
+                                continue;
+                            }
+                            // and if its interval covers the current uti
+                            if (currEarliest.TimeInterval.Start < utiAtPrevIdx.TimeInterval.End)
+                            {
+                                currPowerSum += 
+                                    auAtIdx.ApplianceUsageTotal
+                                    .TotalPowerConsumption; // this is correct
+                            }
                         }
                     }
                 }
