@@ -46,7 +46,7 @@ namespace SolarTally.Domain.ValueObjects
             yield return TotalEnergyConsumption;
         }
 
-        private decimal GetMaxPowerConsumption(ref Consumption consumption)
+        private decimal GetMaxPowerConsumption(Consumption consumption)
         {
             // First get the total number of usage intervals
             var idxes = new List<int>();
