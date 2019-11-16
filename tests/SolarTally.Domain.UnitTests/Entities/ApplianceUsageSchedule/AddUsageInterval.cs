@@ -225,6 +225,49 @@ namespace SolarTally.Domain.UnitTests.Entities
                     new UsageTimeInterval(new TimeInterval(08,00,10,00)),
                     0
                 );
+                // Adds non-solar to start, before peak
+                Add(
+                    8,0,16,0,
+                    new List<UsageTimeInterval>() {
+                        new UsageTimeInterval(new TimeInterval(10,00,12,00)),
+                        new UsageTimeInterval(new TimeInterval(12,00,15,00),
+                        UsageKind.UsingGenerator),
+                    },
+                    new UsageTimeInterval(new TimeInterval(07,00,10,00),
+                    UsageKind.UsingMains),
+                    0
+                );
+                // Adds solar in the middle
+                Add(
+                    8,0,16,0,
+                    new List<UsageTimeInterval>() {
+                        new UsageTimeInterval(new TimeInterval(08,00,10,00)),
+                        new UsageTimeInterval(new TimeInterval(10,00,10,30),
+                        UsageKind.UsingMains),
+                        new UsageTimeInterval(new TimeInterval(12,00,15,00),
+                        UsageKind.UsingGenerator),
+                        new UsageTimeInterval(new TimeInterval(15,30,21,00),
+                        UsageKind.UsingBattery)
+                    },
+                    new UsageTimeInterval(new TimeInterval(10,30,12,00)),
+                    2
+                );
+                // Adds non-solar in the middle, straddling peak end
+                Add(
+                    8,0,16,0,
+                    new List<UsageTimeInterval>() {
+                        new UsageTimeInterval(new TimeInterval(08,00,10,00)),
+                        new UsageTimeInterval(new TimeInterval(10,00,10,30),
+                        UsageKind.UsingMains),
+                        new UsageTimeInterval(new TimeInterval(12,00,15,00),
+                        UsageKind.UsingGenerator),
+                        new UsageTimeInterval(new TimeInterval(18,30,21,00),
+                        UsageKind.UsingBattery)
+                    },
+                    new UsageTimeInterval(new TimeInterval(15,30,17,30),
+                    UsageKind.UsingGenerator),
+                    3
+                );
             }
         }
     }
