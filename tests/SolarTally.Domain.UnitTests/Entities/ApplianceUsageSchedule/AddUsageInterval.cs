@@ -1,10 +1,10 @@
-using System;
+using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 using SolarTally.Domain.Entities;
 using SolarTally.Domain.Enumerations;
 using SolarTally.Domain.Exceptions;
 using SolarTally.Domain.ValueObjects;
-using System.Linq;
 
 namespace SolarTally.Domain.UnitTests.Entities
 {
@@ -60,6 +60,47 @@ namespace SolarTally.Domain.UnitTests.Entities
             Assert.Equal(new UsageTimeInterval(
                 new TimeInterval(startHr, startMin, endHr, endMin), usageKind),
                 aus.UsageIntervals.First());
+        }
+
+        [Theory]
+        [ClassData(typeof(OverlapThrowData))]
+        public void ShouldThrowForOverlappingInterval(
+            int peakStartHr, int peakStartMin, int peakEndHr, int peakEndMin, List<UsageTimeInterval> usageIntervals, UsageTimeInterval uTI)
+        {
+            var aus =
+                new ApplianceUsageSchedule(
+                    new MockReadOnlySiteSettings(
+                        peakStartHr, peakStartMin, peakEndHr, peakEndMin
+                    )
+                );
+            
+            foreach(var u in usageIntervals)
+            {
+                var ti = u.TimeInterval;
+                aus.AddUsageInterval(
+                    ti.Start.Hours, ti.Start.Minutes,
+                    ti.End.Hours, ti.End.Minutes,
+                    u.UsageKind);
+            }
+
+            Assert.Throws<TimeIntervalArgumentInvalidException>(() => {
+                var ti = uTI.TimeInterval;
+                aus.AddUsageInterval(
+                    ti.Start.Hours, ti.Start.Minutes,
+                    ti.End.Hours, ti.End.Minutes,
+                    uTI.UsageKind);
+            });
+        }
+
+        public class OverlapThrowData : TheoryData<int, int, int, int, List<UsageTimeInterval>, UsageTimeInterval>
+        {
+            public OverlapThrowData()
+            {
+                Add(8,0,16,0,
+                new List<UsageTimeInterval>() {
+                    new UsageTimeInterval(new TimeInterval(8,0,12,0))
+                }, new UsageTimeInterval(new TimeInterval(11,59,16,0)));
+            }
         }
     }
 }
