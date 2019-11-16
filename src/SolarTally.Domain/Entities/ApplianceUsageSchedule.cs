@@ -35,6 +35,11 @@ namespace SolarTally.Domain.Entities
             _usageIntervals = new List<UsageTimeInterval>();
         }
 
+        public void ClearUsageIntervals()
+        {
+            _usageIntervals.Clear();
+        }
+
         public void AddUsageInterval(
             int startHr, int startMin, int endHr, int endMin,
             UsageKind usageKind
