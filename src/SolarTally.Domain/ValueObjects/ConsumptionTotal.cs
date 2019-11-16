@@ -12,6 +12,7 @@ namespace SolarTally.Domain.ValueObjects
     /// </summary>
     public class ConsumptionTotal : ValueObject
     {
+        public decimal MaxPowerConsumption { get; private set; }
         public decimal TotalPowerConsumption { get; private set; }
         public decimal TotalOnSolarEnergyConsumption { get; private set; }
         public decimal TotalOffSolarEnergyConsumption { get; private set; }
@@ -35,11 +36,13 @@ namespace SolarTally.Domain.ValueObjects
             }
             TotalEnergyConsumption = TotalOnSolarEnergyConsumption +
                 TotalOffSolarEnergyConsumption;
+            MaxPowerConsumption = GetMaxPowerConsumption(consumption);
         }
 
         protected override IEnumerable<object> GetAtomicValues()
         {
             // Using a yield return statement to return each element one at a time
+            yield return MaxPowerConsumption;
             yield return TotalPowerConsumption;
             yield return TotalOnSolarEnergyConsumption;
             yield return TotalOffSolarEnergyConsumption;
