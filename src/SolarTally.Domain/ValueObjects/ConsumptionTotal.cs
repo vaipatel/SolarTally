@@ -108,20 +108,22 @@ namespace SolarTally.Domain.ValueObjects
                     }
                     else // Compare to prev
                     {
+                        // If this uti comes before the currEarliest
                         if (utiAtIdx.TimeInterval.Start < 
                             currEarliest.TimeInterval.Start)
                         {
+                            // then forget everything and respect this one
                             currEarliest = utiAtIdx;
                             currPowerSum = 
                                 auAtIdx.ApplianceUsageTotal
                                 .TotalPowerConsumption;
                             // 2. Advance 
                             ++idxes[auIdx];
-                            // 2.1. Retreat last advanced idx because its UTI
-                            // happens later compared to the UTI at this idx
+                            // 2.1. Retreat lastAdvancedIdx cuz its uti is later
                             --idxes[lastAdvancedIdx];
                             lastAdvancedIdx = auIdx;
                         }
+                        // Else if this uti is at the same as the last
                         else if (utiAtIdx.TimeInterval.Start == 
                             currEarliest.TimeInterval.Start)
                         {
