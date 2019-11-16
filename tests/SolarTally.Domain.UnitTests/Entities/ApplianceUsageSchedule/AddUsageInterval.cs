@@ -96,10 +96,56 @@ namespace SolarTally.Domain.UnitTests.Entities
         {
             public OverlapThrowData()
             {
-                Add(8,0,16,0,
-                new List<UsageTimeInterval>() {
-                    new UsageTimeInterval(new TimeInterval(8,0,12,0))
-                }, new UsageTimeInterval(new TimeInterval(11,59,16,0)));
+                // Overlaps with first and only solar interval
+                Add(
+                    8,0,16,0,
+                    new List<UsageTimeInterval>() {
+                        new UsageTimeInterval(new TimeInterval(08,00,12,00))
+                    },
+                    new UsageTimeInterval(new TimeInterval(11,59,16,00))
+                );
+                // Overlaps with first and only non-solar interval
+                Add(
+                    8,0,16,0,
+                    new List<UsageTimeInterval>() {
+                        new UsageTimeInterval(new TimeInterval(08,00,12,00),
+                            UsageKind.UsingBattery)
+                    },
+                    new UsageTimeInterval(new TimeInterval(11,59,16,00))
+                );
+                // Overlaps with second solar interval (back-to-back)
+                Add(
+                    8,0,16,0,
+                    new List<UsageTimeInterval>() {
+                        new UsageTimeInterval(new TimeInterval(08,00,12,00)),
+                        new UsageTimeInterval(new TimeInterval(12,00,16,00))
+                    },
+                    new UsageTimeInterval(new TimeInterval(12,01,16,00))
+                );
+                // Overlaps with second solar interval (not back-to-back)
+                Add(
+                    8,0,16,0,
+                    new List<UsageTimeInterval>() {
+                        new UsageTimeInterval(new TimeInterval(08,00,11,00)),
+                        new UsageTimeInterval(new TimeInterval(13,00,16,00))
+                    },
+                    new UsageTimeInterval(new TimeInterval(12,00,16,00))
+                );
+                // Overlaps with non-solar interval after peak
+                Add(
+                    8,0,16,0,
+                    new List<UsageTimeInterval>() {
+                        new UsageTimeInterval(new TimeInterval(06,00,08,00),
+                            UsageKind.UsingBattery),
+                        new UsageTimeInterval(new TimeInterval(08,00,12,00)),
+                        new UsageTimeInterval(new TimeInterval(12,00,16,00),
+                            UsageKind.UsingMains),
+                        new UsageTimeInterval(new TimeInterval(17,00,21,00),
+                            UsageKind.UsingBattery)
+                    },
+                    new UsageTimeInterval(new TimeInterval(18,00,20,00),
+                        UsageKind.UsingMains)
+                );
             }
         }
     }
