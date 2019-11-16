@@ -92,6 +92,54 @@ namespace SolarTally.Domain.UnitTests.Entities
             });
         }
 
+        [Theory]
+        [ClassData(typeof(NonEmptyAddData))]
+        public void ShouldAddUsageIntervalToNonEmpty(
+            int peakStartHr, int peakStartMin, int peakEndHr, int peakEndMin,
+            List<UsageTimeInterval> usageIntervals, UsageTimeInterval uTI,
+            int expIdx)
+        {
+            var aus =
+                new ApplianceUsageSchedule(
+                    new MockReadOnlySiteSettings(
+                        peakStartHr, peakStartMin, peakEndHr, peakEndMin
+                    )
+                );
+            
+            foreach(var u in usageIntervals)
+            {
+                var t = u.TimeInterval;
+                aus.AddUsageInterval(
+                    t.Start.Hours, t.Start.Minutes,
+                    t.End.Hours, t.End.Minutes,
+                    u.UsageKind);
+            }
+
+            var ti = uTI.TimeInterval;
+            int startHr = ti.Start.Hours, startMin = ti.Start.Minutes;
+            int endHr   = ti.End.Hours,   endMin   = ti.End.Minutes;
+            
+            aus.AddUsageInterval(startHr, startMin, endHr, endMin,
+                uTI.UsageKind);
+            // Check that list has grown by one
+            Assert.Equal(usageIntervals.Count + 1, aus.UsageIntervals.Count);
+            // Find added element
+            int uTI_Idx = 0;
+            var addedUTIs = aus.UsageIntervals.Where((u, id) => 
+            {
+                if (u.Equals(uTI)) 
+                {
+                    uTI_Idx = id; 
+                    return true;
+                }
+                return false;
+            });
+            // Check that added element is uTI
+            Assert.Single(addedUTIs);
+            // Check that uTI is added at expected idx
+            Assert.Equal(expIdx, uTI_Idx);
+        }
+
         public class OverlapThrowData : TheoryData<int, int, int, int, List<UsageTimeInterval>, UsageTimeInterval>
         {
             public OverlapThrowData()
@@ -160,6 +208,22 @@ namespace SolarTally.Domain.UnitTests.Entities
                     },
                     new UsageTimeInterval(new TimeInterval(08,00,20,00),
                         UsageKind.UsingMains)
+                );
+            }
+        }
+
+        public class NonEmptyAddData : TheoryData<int, int, int, int, List<UsageTimeInterval>, UsageTimeInterval, int>
+        {
+            public NonEmptyAddData()
+            {
+                // Adds to start
+                Add(
+                    8,0,16,0,
+                    new List<UsageTimeInterval>() {
+                        new UsageTimeInterval(new TimeInterval(10,00,12,00))
+                    },
+                    new UsageTimeInterval(new TimeInterval(08,00,10,00)),
+                    0
                 );
             }
         }
