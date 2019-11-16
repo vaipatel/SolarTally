@@ -27,11 +27,13 @@ namespace SolarTally.Domain.Entities
         {   
             Name = name;
 
+            // Add a new Consumption profile. This will not add any child
+            // ApplianceUsages by default.
             Consumption = new Consumption(this);
             
             this.SetNumSolarHours(numSolarHours);
 
-            this.SetPeakSolarInterval(GetDefaultTimeInterval(), true);
+            this.SetPeakSolarInterval(GetDefaultTimeInterval());
         }
 
         public void SetNumSolarHours(int numSolarHours)
@@ -50,15 +52,13 @@ namespace SolarTally.Domain.Entities
             }
         }
 
-        public void SetPeakSolarInterval(
-            TimeInterval peakSolarInterval, bool addIfEmpty = false
-        )
+        public void SetPeakSolarInterval(TimeInterval peakSolarInterval)
         {
             PeakSolarInterval = peakSolarInterval;
             foreach(var applianceUsage in Consumption.ApplianceUsages)
             {
                 // Restrict solar intervals to lie within peakSolarInterval
-                applianceUsage.HandleSolarIntervalUpdated(addIfEmpty);
+                applianceUsage.HandleSolarIntervalUpdated();
             }
         }
 

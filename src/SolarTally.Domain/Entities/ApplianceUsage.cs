@@ -180,11 +180,11 @@ namespace SolarTally.Domain.Entities
             this.Recalculate();
         }
 
-        public void HandleSolarIntervalUpdated(bool addIfEmpty = false)
+        public void HandleSolarIntervalUpdated()
         {
            ApplianceUsageSchedule.SetPeakSolarInterval(
-               _consumptionCalculator.ReadOnlySiteSettings.PeakSolarInterval,
-                addIfEmpty);
+               _consumptionCalculator.ReadOnlySiteSettings.PeakSolarInterval
+            );
             this.Recalculate();
         }
 

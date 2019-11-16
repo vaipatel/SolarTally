@@ -4,6 +4,7 @@ using SolarTally.Domain.Entities;
 using SolarTally.Domain.Exceptions;
 using SolarTally.Domain.ValueObjects;
 using SolarTally.Domain.Interfaces;
+using SolarTally.Domain.Enumerations;
 
 namespace SolarTally.Domain.UnitTests.Entities
 {
@@ -18,7 +19,7 @@ namespace SolarTally.Domain.UnitTests.Entities
         [InlineData(8,0,16,0,9,0,17,0,9,0,16,0)]
         // New PeakSolarInterval completely inside old, should trim start n end
         [InlineData(8,0,16,0,9,0,15,0,9,0,15,0)]
-        public void ShouldNotAddIfNotEmptyButInsteadTrimWhenNeeded(
+        public void ShouldTrimSingleWhenNeeded(
             int startHr1, int startMin1, int endHr1, int endMin1,
             int startHr2, int startMin2, int endHr2, int endMin2,
             int startHrExp, int startMinExp, int endHrExp, int endMinExp)
@@ -28,21 +29,20 @@ namespace SolarTally.Domain.UnitTests.Entities
             var ti2 = new TimeInterval(startHr2,startMin2,endHr2,endMin2);
             var tiExp = new TimeInterval(startHrExp,startMinExp,
                 endHrExp,endMinExp);
-            aus.SetPeakSolarInterval(ti, addIfEmpty: true);
-            aus.SetPeakSolarInterval(ti2, addIfEmpty: true);
+            aus.AddUsageInterval(startHr1, startMin1, endHr1, endMin1,
+                UsageKind.UsingSolar);
+            aus.SetPeakSolarInterval(ti2);
             Assert.Single(aus.UsageIntervals);
             Assert.Equal(tiExp, aus.UsageIntervals.First().TimeInterval);
-            // TODO: Also test with AddUsageInterval() once complete.
         }
 
         [Fact]
-        public void ShouldAddIfEmpty()
+        public void ShouldNotAddIfEmpty()
         {
             var aus = new ApplianceUsageSchedule(new MockReadOnlySiteSettings());
-            var ti = new TimeInterval(8,0,16,0);
-            aus.SetPeakSolarInterval(ti, addIfEmpty: true);
-            Assert.Single(aus.UsageIntervals);
-            Assert.Equal(ti, aus.UsageIntervals.First().TimeInterval);
+            var ti = new TimeInterval(7,0,15,0);
+            aus.SetPeakSolarInterval(ti);
+            Assert.Empty(aus.UsageIntervals);
         }
     }
 }

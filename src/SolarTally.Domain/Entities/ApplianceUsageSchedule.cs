@@ -95,23 +95,10 @@ namespace SolarTally.Domain.Entities
             _usageIntervals.Add(newUTI);
         }
 
-        public void SetPeakSolarInterval(
-            TimeInterval ti, bool addIfEmpty = false
-        )
+        public void SetPeakSolarInterval(TimeInterval ti)
         {
             int startHr = ti.Start.Hours, startMin = ti.Start.Minutes;
             int endHr   = ti.End.Hours,   endMin   = ti.End.Minutes;
-
-            if (addIfEmpty)
-            {
-                if (_usageIntervals.Count == 0)
-                {
-                    var newTI = new TimeInterval(startHr, startMin, endHr, endMin);
-                    var uTI = new UsageTimeInterval(newTI, UsageKind.UsingSolar);
-                    _usageIntervals.Add(uTI);
-                    return;
-                }
-            }
 
             bool lowerDone = false;
             bool upperDone = false;
