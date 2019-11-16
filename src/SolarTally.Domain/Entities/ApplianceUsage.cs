@@ -1,4 +1,5 @@
 using SolarTally.Domain.Common;
+using SolarTally.Domain.Enumerations;
 using SolarTally.Domain.ValueObjects;
 using SolarTally.Domain.Interfaces;
 using Ardalis.GuardClauses;
@@ -119,6 +120,7 @@ namespace SolarTally.Domain.Entities
             ApplianceUsageSchedule = 
                 new ApplianceUsageSchedule(
                     consumptionCalculator.ReadOnlySiteSettings);
+            this.AddPeakSolarIntervalToSchedule();
             this.SetAppliance(appliance);
             this.SetQuantity(quantity);
             this.SetPowerConsumption(powerConsumption);
@@ -202,6 +204,19 @@ namespace SolarTally.Domain.Entities
         {
             ApplianceUsageTotal = new ApplianceUsageTotal(this);
             _consumptionCalculator.Recalculate();
+        }
+
+        private void AddPeakSolarIntervalToSchedule()
+        {
+            var ti = _consumptionCalculator
+                .ReadOnlySiteSettings
+                .PeakSolarInterval;
+            int peakStartHr = ti.Start.Hours, peakStartMin = ti.Start.Minutes;
+            int peakEndHr   = ti.End.Hours,   peakEndMin   = ti.End.Minutes;
+            
+            ApplianceUsageSchedule.AddUsageInterval(
+                peakStartHr, peakStartMin, peakEndHr, peakEndMin,
+                UsageKind.UsingSolar);
         }
     }
 }
