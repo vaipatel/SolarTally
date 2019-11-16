@@ -85,7 +85,7 @@ namespace SolarTally.Domain.Entities
                 }
                 // Else if our new time intervals starts in the middle of an
                 // existing interval
-                else if (ti.Start <= currTI.End)
+                else if (ti.Start < currTI.End)
                 {
                     // bad
                     throw new TimeIntervalArgumentInvalidException("It is not possible to add a new UsageTimeInterval that overlaps with an existing UsageTimeInterval.");
