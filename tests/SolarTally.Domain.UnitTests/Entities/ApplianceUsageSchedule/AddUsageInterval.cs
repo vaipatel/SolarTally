@@ -146,6 +146,21 @@ namespace SolarTally.Domain.UnitTests.Entities
                     new UsageTimeInterval(new TimeInterval(18,00,20,00),
                         UsageKind.UsingMains)
                 );
+                // Overlaps with multiple intervals
+                Add(
+                    8,0,16,0,
+                    new List<UsageTimeInterval>() {
+                        new UsageTimeInterval(new TimeInterval(06,00,08,00),
+                            UsageKind.UsingBattery),
+                        new UsageTimeInterval(new TimeInterval(10,00,12,00)),
+                        new UsageTimeInterval(new TimeInterval(12,00,16,00),
+                            UsageKind.UsingMains),
+                        new UsageTimeInterval(new TimeInterval(17,00,21,00),
+                            UsageKind.UsingBattery)
+                    },
+                    new UsageTimeInterval(new TimeInterval(08,00,20,00),
+                        UsageKind.UsingMains)
+                );
             }
         }
     }
