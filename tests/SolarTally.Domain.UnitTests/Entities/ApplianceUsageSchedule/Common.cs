@@ -13,6 +13,12 @@ namespace SolarTally.Domain.UnitTests.Entities
         public MockReadOnlySiteSettings(
             int startHr = 8, int startMin = 0, int endHr = 16, int endMin = 0)
         {
+            this.SetPeakSolarInterval(startHr,startMin,endHr,endMin);
+        }
+
+        public void SetPeakSolarInterval(
+            int startHr, int startMin, int endHr, int endMin)
+        {
             _peakSolarInterval =
                 new TimeInterval(startHr,startMin,endHr,endMin);
         }

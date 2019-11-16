@@ -24,24 +24,40 @@ namespace SolarTally.Domain.UnitTests.Entities
             int startHr2, int startMin2, int endHr2, int endMin2,
             int startHrExp, int startMinExp, int endHrExp, int endMinExp)
         {
-            var aus = new ApplianceUsageSchedule(new MockReadOnlySiteSettings());
+            var mockSite = new MockReadOnlySiteSettings();
+            var aus = new ApplianceUsageSchedule(mockSite);
             var ti = new TimeInterval(startHr1,startMin1,endHr1,endMin1);
             var ti2 = new TimeInterval(startHr2,startMin2,endHr2,endMin2);
             var tiExp = new TimeInterval(startHrExp,startMinExp,
                 endHrExp,endMinExp);
             aus.AddUsageInterval(startHr1, startMin1, endHr1, endMin1,
                 UsageKind.UsingSolar);
-            aus.SetPeakSolarInterval(ti2);
+            
+            // HandlePeakSolarIntervalUpdated would be called inside
+            // SetPeakSolarInterval in the actual Site. Here we call manually.
+            mockSite.SetPeakSolarInterval(
+                startHr2, startMin2, endHr2, endMin2
+            );
+            aus.HandlePeakSolarIntervalUpdated();
+            
+            // Check that there's still just the one UTI
             Assert.Single(aus.UsageIntervals);
+            // Check that it's appropriately trimmed.
             Assert.Equal(tiExp, aus.UsageIntervals.First().TimeInterval);
         }
 
         [Fact]
         public void ShouldNotAddIfEmpty()
         {
-            var aus = new ApplianceUsageSchedule(new MockReadOnlySiteSettings());
-            var ti = new TimeInterval(7,0,15,0);
-            aus.SetPeakSolarInterval(ti);
+            var mockSite = new MockReadOnlySiteSettings();
+            var aus = new ApplianceUsageSchedule(mockSite);
+
+            // HandlePeakSolarIntervalUpdated would be called inside
+            // SetPeakSolarInterval in the actual Site. Here we call manually.
+            mockSite.SetPeakSolarInterval(7,0,15,0);
+            aus.HandlePeakSolarIntervalUpdated();
+            
+            // Check that there's still no UTI.
             Assert.Empty(aus.UsageIntervals);
         }
     }

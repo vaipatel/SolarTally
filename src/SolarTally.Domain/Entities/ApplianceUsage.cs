@@ -184,10 +184,8 @@ namespace SolarTally.Domain.Entities
 
         public void HandleSolarIntervalUpdated()
         {
-           ApplianceUsageSchedule.SetPeakSolarInterval(
-               _consumptionCalculator.ReadOnlySiteSettings.PeakSolarInterval
-            );
-            this.Recalculate();
+           ApplianceUsageSchedule.HandlePeakSolarIntervalUpdated();
+           this.Recalculate();
         }
 
         public void SetEnabled(bool enabled)

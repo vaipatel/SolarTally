@@ -95,8 +95,9 @@ namespace SolarTally.Domain.Entities
             _usageIntervals.Add(newUTI);
         }
 
-        public void SetPeakSolarInterval(TimeInterval ti)
+        public void HandlePeakSolarIntervalUpdated()
         {
+            var ti = ReadOnlySiteSettings.PeakSolarInterval;
             int startHr = ti.Start.Hours, startMin = ti.Start.Minutes;
             int endHr   = ti.End.Hours,   endMin   = ti.End.Minutes;
 
