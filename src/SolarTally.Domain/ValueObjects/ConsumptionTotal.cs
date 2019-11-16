@@ -98,7 +98,9 @@ namespace SolarTally.Domain.ValueObjects
                     {
                         // Make this the currEarliest and compare back from next
                         currEarliest = utiAtIdx;
-                        currPowerSum = auAtIdx.PowerConsumption; // TODO: Make it StartupPowerConsumption
+                        currPowerSum = 
+                            auAtIdx.ApplianceUsageTotal
+                            .TotalPowerConsumption; // TODO: Make it StartupPowerConsumption
                         // 2. Advance 
                         ++idxes[auIdx];
                         lastAdvancedIdx = auIdx;
@@ -110,7 +112,9 @@ namespace SolarTally.Domain.ValueObjects
                             currEarliest.TimeInterval.Start)
                         {
                             currEarliest = utiAtIdx;
-                            currPowerSum = auAtIdx.PowerConsumption;
+                            currPowerSum = 
+                                auAtIdx.ApplianceUsageTotal
+                                .TotalPowerConsumption;
                             // 2. Advance 
                             ++idxes[auIdx];
                             // 2.1. Retreat last advanced idx because its UTI
@@ -121,7 +125,10 @@ namespace SolarTally.Domain.ValueObjects
                         else if (utiAtIdx.TimeInterval.Start == 
                             currEarliest.TimeInterval.Start)
                         {
-                            currPowerSum += auAtIdx.PowerConsumption; // TODO: Make it StartupPowerConsumption
+                            // Do a union
+                            currPowerSum += 
+                                auAtIdx.ApplianceUsageTotal
+                                .TotalPowerConsumption; // TODO: Make it StartupPowerConsumption
                             // 2. Advance
                             ++idxes[auIdx];
                             lastAdvancedIdx = auIdx;
