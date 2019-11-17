@@ -71,7 +71,7 @@ namespace SolarTally.Domain.ValueObjects
                 // 1. Compare UsageTimeIntervals at idxes to get earliest
                 UsageTimeInterval currEarliest = null;
                 decimal currPowerSum = 0;
-                int lastAdvancedIdx = -1;
+                var advancedAUIdxes = new List<int>();
                 for (int auIdx = 0; auIdx < numAUs; ++auIdx)
                 {
                     var idx = idxes[auIdx];
@@ -92,7 +92,7 @@ namespace SolarTally.Domain.ValueObjects
                     {
                         // 2. Advance 
                         ++idxes[auIdx];
-                        lastAdvancedIdx = auIdx;
+                        advancedAUIdxes.Add(auIdx);
                         continue;
                     }
 
@@ -106,7 +106,7 @@ namespace SolarTally.Domain.ValueObjects
                             .TotalPowerConsumption; // TODO: Make it StartupPowerConsumption
                         // 2. Advance 
                         ++idxes[auIdx];
-                        lastAdvancedIdx = auIdx;
+                        advancedAUIdxes.Add(auIdx);
                         continue;
                     }
                     else // Compare to prev
@@ -122,9 +122,14 @@ namespace SolarTally.Domain.ValueObjects
                                 .TotalPowerConsumption; // TODO: Make it StartupPowerConsumption
                             // 2. Advance 
                             ++idxes[auIdx];
-                            // 2.1. Retreat lastAdvancedIdx cuz its uti is later
-                            --idxes[lastAdvancedIdx];
-                            lastAdvancedIdx = auIdx;
+                            // 2.1. Retreat all advancedAUIdxes cuz their 
+                            // uti comes later
+                            foreach(var advancedAUIdx in advancedAUIdxes)
+                            {
+                                --idxes[advancedAUIdx];
+                            }
+                            advancedAUIdxes.Clear();
+                            advancedAUIdxes.Add(auIdx);
                         }
                         // Else if this uti is at the same as the last
                         else if (utiAtIdx.TimeInterval.Start == 
@@ -136,7 +141,7 @@ namespace SolarTally.Domain.ValueObjects
                                 .TotalPowerConsumption; // TODO: Make it StartupPowerConsumption
                             // 2. Advance
                             ++idxes[auIdx];
-                            lastAdvancedIdx = auIdx;
+                            advancedAUIdxes.Add(auIdx);
                         }
                         // Else if this uti comes later but isn't the first for
                         // this AU schedule
