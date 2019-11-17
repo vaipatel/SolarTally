@@ -102,22 +102,32 @@ namespace SolarTally.Domain.ValueObjects
                                 b_trimmed, bPower);
                             return;
                         }
-                        // else
+                        // else (b_start >= uti_prev_end)
                         {
-                            var uBefore = new UsageTimeInterval(
-                                new TimeInterval(b_start.Hours, b_start.Minutes,
-                                    uti_curr_start.Hours, 
-                                    uti_curr_start.Minutes));
-                            A.Insert(i, uBefore);
-                            APowers.Insert(i, APowers_curr + bPower); //startup
-                            var b_trimmed = new UsageTimeInterval(
-                                new TimeInterval(
-                                    uti_curr_start.Hours,
-                                    uti_curr_start.Minutes,
-                                    b_end.Hours, b_end.Minutes));
-                            CombineSolarIntervals(A, APowers,
-                                b_trimmed, bPower);
+                            if (b_end <= uti_curr_start)
+                            {
+                                A.Insert(i, b);
+                                APowers.Insert(i, bPower); //startup
                                 return;
+                            }
+                            // else (b_end > uti_curr_start)
+                            {
+                                var uBefore = new UsageTimeInterval(
+                                    new TimeInterval(
+                                        b_start.Hours, b_start.Minutes,
+                                        uti_curr_start.Hours,
+                                        uti_curr_start.Minutes));
+                                A.Insert(i, uBefore);
+                                APowers.Insert(i, bPower); //startup
+                                var b_trimmed = new UsageTimeInterval(
+                                    new TimeInterval(
+                                        uti_curr_start.Hours,
+                                        uti_curr_start.Minutes,
+                                        b_end.Hours, b_end.Minutes));
+                                CombineSolarIntervals(A, APowers,
+                                    b_trimmed, bPower);
+                                    return;
+                            }
                         }
                     }
                     else // i==0
