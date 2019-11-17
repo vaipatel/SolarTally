@@ -49,7 +49,33 @@ namespace SolarTally.Domain.ValueObjects
             yield return TotalEnergyConsumption;
         }
 
-        public static void CombineSolarIntervals(
+        private decimal GetMaxPowerConsumption(Consumption consumption)
+        {
+            var mergedUTIs = new List<UsageTimeInterval>();
+            var mergedPowers = new List<decimal>();
+
+            var numAUs = consumption.ApplianceUsages.Count;
+            for (int auIdx = 0; auIdx < numAUs; ++auIdx)
+            {
+                var au = consumption.ApplianceUsages.ElementAt(auIdx);
+                var auPower = au.ApplianceUsageTotal.TotalPowerConsumption;
+                // TODO: Also get the startup consumption
+                var utisForAU = au.ApplianceUsageSchedule.UsageIntervals;
+                var numUtisForAU = utisForAU.Count;
+                for (int utiIdx = 0; utiIdx < numUtisForAU; ++utiIdx)
+                {
+                    var uti = utisForAU.ElementAt(utiIdx);
+                    if (uti.UsageKind != UsageKind.UsingSolar) continue;
+                    CombineSolarIntervals(mergedUTIs, mergedPowers, uti,
+                        auPower);
+                }
+            }
+
+            var maxPower = (mergedPowers.Count == 0) ? 0 : mergedPowers.Max();
+            return maxPower;
+        }
+
+        private static void CombineSolarIntervals(
             List<UsageTimeInterval> A, 
             List<decimal> APowers,
             UsageTimeInterval b, decimal bPower)
@@ -238,32 +264,6 @@ namespace SolarTally.Domain.ValueObjects
                 A.Add(b);
                 APowers.Add(bPower);
             }
-        }
-
-        private decimal GetMaxPowerConsumption(Consumption consumption)
-        {
-            var mergedUTIs = new List<UsageTimeInterval>();
-            var mergedPowers = new List<decimal>();
-
-            var numAUs = consumption.ApplianceUsages.Count;
-            for (int auIdx = 0; auIdx < numAUs; ++auIdx)
-            {
-                var au = consumption.ApplianceUsages.ElementAt(auIdx);
-                var auPower = au.ApplianceUsageTotal.TotalPowerConsumption;
-                // TODO: Also get the startup consumption
-                var utisForAU = au.ApplianceUsageSchedule.UsageIntervals;
-                var numUtisForAU = utisForAU.Count;
-                for (int utiIdx = 0; utiIdx < numUtisForAU; ++utiIdx)
-                {
-                    var uti = utisForAU.ElementAt(utiIdx);
-                    if (uti.UsageKind != UsageKind.UsingSolar) continue;
-                    CombineSolarIntervals(mergedUTIs, mergedPowers, uti,
-                        auPower);
-                }
-            }
-
-            var maxPower = (mergedPowers.Count == 0) ? 0 : mergedPowers.Max();
-            return maxPower;
         }
     }
 }
