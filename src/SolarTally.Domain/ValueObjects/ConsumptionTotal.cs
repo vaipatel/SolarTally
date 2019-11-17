@@ -184,6 +184,10 @@ namespace SolarTally.Domain.ValueObjects
                         APowers.Insert(i+1, APowers_curr);
                         return;
                     }
+                    else
+                    {
+                        return;
+                    }
                 }
             } //end for
 
