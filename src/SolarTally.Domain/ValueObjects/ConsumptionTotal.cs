@@ -49,6 +49,168 @@ namespace SolarTally.Domain.ValueObjects
             yield return TotalEnergyConsumption;
         }
 
+        public static void CombineSolarIntervals(
+            List<UsageTimeInterval> A, 
+            List<decimal> APowers,
+            UsageTimeInterval b, decimal bPower)
+        {
+            // Assume A.length == APowers.length
+            // Assume all UsageTimeIntervals in A, and b, are UsingSolars
+            var b_start = b.TimeInterval.Start;
+            var b_end = b.TimeInterval.End;
+            var b_diff = b.TimeInterval.Difference;
+            for (int i = 0; i < A.Count; ++i)
+            {
+                var uti_curr = A[i];
+                var uti_curr_start = uti_curr.TimeInterval.Start;
+                var uti_curr_end = uti_curr.TimeInterval.End;
+                var APowers_curr = APowers[i];
+                if (b_start < uti_curr_start)
+                {
+                    if (i > 0)
+                    {
+                        var uti_prev = A[i-1];
+                        var uti_prev_start = uti_prev.TimeInterval.Start;
+                        var uti_prev_end = uti_prev.TimeInterval.End;
+                        var APowers_prev = APowers[i-1];
+                        if (b_start < uti_prev_end)
+                        {
+                            var uBefore = new UsageTimeInterval(
+                                new TimeInterval(
+                                    uti_prev_start.Hours,uti_prev_start.Minutes,
+                                    b_start.Hours, b_start.Minutes)
+                            );
+                            A.Insert(i-1, uBefore);
+                            A.RemoveAt(i);
+                            var uAfter = new UsageTimeInterval(
+                                new TimeInterval(b_start.Hours, b_start.Minutes,
+                                    uti_prev_end.Hours, uti_prev_end.Minutes)
+                            );
+                            A.Insert(i, uAfter);
+                            APowers.Insert(i, APowers_prev + bPower); //startup
+                            var b_trimmed = new UsageTimeInterval(
+                                new TimeInterval(
+                                    uti_prev_end.Hours, uti_prev_end.Minutes,
+                                    b_end.Hours, b_end.Minutes));
+                            CombineSolarIntervals(A, APowers,
+                                b_trimmed, bPower);
+                            return;
+                        }
+                        // else
+                        {
+                            var uBefore = new UsageTimeInterval(
+                                new TimeInterval(b_start.Hours, b_start.Minutes,
+                                    uti_curr_start.Hours, 
+                                    uti_curr_start.Minutes));
+                            A.Insert(i, uBefore);
+                            APowers.Insert(i, APowers_curr + bPower); //startup
+                            var b_trimmed = new UsageTimeInterval(
+                                new TimeInterval(
+                                    uti_curr_start.Hours,
+                                    uti_curr_start.Minutes,
+                                    b_end.Hours, b_end.Minutes));
+                            CombineSolarIntervals(A, APowers,
+                                b_trimmed, bPower);
+                                return;
+                        }
+                    }
+                    else // i==0
+                    {
+                        APowers.Insert(0, bPower); //startup
+                        if (b_end <= uti_curr_start)
+                        {
+                            A.Insert(0, b);
+                            return;
+                        }
+                        var uBefore = new UsageTimeInterval(
+                            new TimeInterval(b_start.Hours, b_start.Minutes,
+                                uti_curr_start.Hours, uti_curr_start.Minutes));
+                        A.Insert(0, uBefore);
+                        var b_trimmed = new UsageTimeInterval(
+                            new TimeInterval(
+                                uti_curr_start.Hours, uti_curr_start.Minutes,
+                                b_end.Hours, b_end.Minutes));
+                        CombineSolarIntervals(A, APowers,
+                            b_trimmed, bPower);
+                        return;
+                    }
+                }
+                else if (b_start == uti_curr_start)
+                {
+                    APowers[i] += bPower; //startup
+                    if (b_end > uti_curr_end)
+                    {
+                        var b_trimmed = new UsageTimeInterval(
+                            new TimeInterval(
+                                uti_curr_end.Hours, uti_curr_end.Minutes,
+                                b_end.Hours, b_end.Minutes));
+                        CombineSolarIntervals(A, APowers,
+                            b_trimmed, bPower);
+                        return;
+                    }
+                    else if (b_end < uti_curr_end)
+                    {
+                        A.Insert(i, b);
+                        A.RemoveAt(i+1);
+                        A.Insert(i+1, new UsageTimeInterval(
+                            new TimeInterval(b_end.Hours, b_end.Minutes,
+                                uti_curr_end.Hours, uti_curr_end.Minutes)
+                        ));
+                        APowers.Insert(i+1, APowers_curr);
+                        return;
+                    }
+                }
+            } //end for
+
+            var lenA = A.Count;
+            var uti_last = A.Last();
+            var uti_last_start = uti_last.TimeInterval.Start;
+            var uti_last_end = uti_last.TimeInterval.End;
+            var APowers_last = APowers[lenA-1];
+            if (b_start < uti_last_end)
+            {
+                var uBefore = new UsageTimeInterval(
+                    new TimeInterval(
+                        uti_last_start.Hours,uti_last_start.Minutes,
+                        b_start.Hours, b_start.Minutes)
+                );
+                A.Insert(lenA-1, uBefore);
+                A.RemoveAt(lenA);
+                if (b_end < uti_last_end)
+                {
+                    A.Add(b);
+                    APowers.Add(APowers_last + bPower); //startup
+                    var uAfter = new UsageTimeInterval(
+                        new TimeInterval(b_end.Hours, b_end.Minutes,
+                            uti_last_end.Hours, uti_last_end.Minutes));
+                    A.Add(uAfter);
+                    APowers.Add(APowers_last);
+                    return;
+                }
+                else
+                {
+                    var uAfter = new UsageTimeInterval(
+                        new TimeInterval(b_start.Hours, b_start.Minutes,
+                            uti_last_end.Hours, uti_last_end.Minutes)
+                    );
+                    A.Add(uAfter);
+                    APowers.Add(APowers_last + bPower); //startup
+                    var b_trimmed = new UsageTimeInterval(
+                        new TimeInterval(
+                            uti_last_end.Hours, uti_last_end.Minutes,
+                            b_end.Hours, b_end.Minutes));
+                    A.Add(b_trimmed);
+                    APowers.Add(bPower);
+                    return;
+                }
+            }
+            else
+            {
+                A.Add(b);
+                APowers.Add(bPower);
+            }
+        }
+
         private decimal GetMaxPowerConsumption(Consumption consumption)
         {
             // First get the total number of usage intervals
