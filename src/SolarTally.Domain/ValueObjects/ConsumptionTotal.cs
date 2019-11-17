@@ -54,6 +54,12 @@ namespace SolarTally.Domain.ValueObjects
             List<decimal> APowers,
             UsageTimeInterval b, decimal bPower)
         {
+            if (A.Count == 0)
+            {
+                A.Add(b);
+                APowers.Add(bPower);
+                return;
+            }
             // Assume A.length == APowers.length
             // Assume all UsageTimeIntervals in A, and b, are UsingSolars
             var b_start = b.TimeInterval.Start;
