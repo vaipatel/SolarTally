@@ -245,6 +245,60 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
                         )
                     },
                     1000,3000,6000,6000,12000
+                },
+                // Non overlapping Empty and non-empty
+                new object[] {
+                    new List<CompactApplianceUsage>() {
+                        new CompactApplianceUsage(1,1000,0,0,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(8,0,8,0)
+                                ),
+                            }
+                        ),
+                        new CompactApplianceUsage(1,1500,2,0,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(9,0,11,0)
+                                )
+                            }
+                        ),
+                    },
+                    1500, 2500, 3000, 0, 3000
+                },
+                // Overlapping empty, non-empty (should avoid infinite recurse)
+                new object[] {
+                    new List<CompactApplianceUsage>() {
+                        new CompactApplianceUsage(1,1001,0,0,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(8,0,8,0)
+                                ),
+                            }
+                        ),
+                        new CompactApplianceUsage(1,1000,2,0,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(8,0,10,0)
+                                )
+                            }
+                        ),
+                        new CompactApplianceUsage(1,1501,0,0,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(9,0,9,0)
+                                )
+                            }
+                        ),
+                        new CompactApplianceUsage(1,1500,2,0,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(9,0,11,0)
+                                )
+                            }
+                        ),
+                    },
+                    2500, 5002, 5000, 0, 5000
                 }
             };
         
