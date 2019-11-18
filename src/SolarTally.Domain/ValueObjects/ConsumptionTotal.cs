@@ -78,7 +78,7 @@ namespace SolarTally.Domain.ValueObjects
         private static void CombineSolarIntervals(
             List<UsageTimeInterval> A, 
             List<decimal> APowers,
-            UsageTimeInterval b, decimal bPower)
+            UsageTimeInterval b, decimal bPower, int startIdx = 0)
         {
             if (b.TimeInterval.Start == b.TimeInterval.End) return;
             if (A.Count == 0)
@@ -93,7 +93,7 @@ namespace SolarTally.Domain.ValueObjects
             var b_start = b.TimeInterval.Start;
             var b_end = b.TimeInterval.End;
             var b_diff = b.TimeInterval.Difference;
-            for (int i = 0; i < A.Count; ++i)
+            for (int i = startIdx; i < A.Count; ++i)
             {
                 var uti_curr = A[i];
                 var uti_curr_start = uti_curr.TimeInterval.Start;
@@ -142,7 +142,7 @@ namespace SolarTally.Domain.ValueObjects
                                         uti_prev_end.Hours, uti_prev_end.Minutes,
                                         b_end.Hours, b_end.Minutes));
                                 CombineSolarIntervals(A, APowers,
-                                    b_trimmed, bPower);
+                                    b_trimmed, bPower, i);
                                 return;
                             }
                         }
@@ -168,7 +168,7 @@ namespace SolarTally.Domain.ValueObjects
                                         uti_curr_start.Minutes,
                                         b_end.Hours, b_end.Minutes));
                                 CombineSolarIntervals(A, APowers,
-                                    b_trimmed, bPower);
+                                    b_trimmed, bPower, i);
                                     return;
                             }
                         }
@@ -204,7 +204,7 @@ namespace SolarTally.Domain.ValueObjects
                                 uti_curr_end.Hours, uti_curr_end.Minutes,
                                 b_end.Hours, b_end.Minutes));
                         CombineSolarIntervals(A, APowers,
-                            b_trimmed, bPower);
+                            b_trimmed, bPower, i);
                         return;
                     
                     }
