@@ -117,19 +117,34 @@ namespace SolarTally.Domain.ValueObjects
                             );
                             A.Insert(i-1, uBefore);
                             A.RemoveAt(i);
-                            var uAfter = new UsageTimeInterval(
-                                new TimeInterval(b_start.Hours, b_start.Minutes,
-                                    uti_prev_end.Hours, uti_prev_end.Minutes)
-                            );
-                            A.Insert(i, uAfter);
-                            APowers.Insert(i, APowers_prev + bPower); //startup
-                            var b_trimmed = new UsageTimeInterval(
-                                new TimeInterval(
-                                    uti_prev_end.Hours, uti_prev_end.Minutes,
-                                    b_end.Hours, b_end.Minutes));
-                            CombineSolarIntervals(A, APowers,
-                                b_trimmed, bPower);
-                            return;
+                            if (b_end < uti_prev_end)
+                            {
+                                A.Insert(i, b);
+                                APowers.Insert(i, APowers_prev + bPower); //startup
+                                var uAfter = new UsageTimeInterval(
+                                    new TimeInterval(b_end.Hours, b_end.Minutes,
+                                        uti_prev_end.Hours,
+                                        uti_prev_end.Minutes));
+                                A.Insert(i+1, uAfter);
+                                APowers.Insert(i+1, APowers_prev);
+                                return;
+                            }
+                            else
+                            {
+                                var uAfter = new UsageTimeInterval(
+                                    new TimeInterval(b_start.Hours, b_start.Minutes,
+                                        uti_prev_end.Hours, uti_prev_end.Minutes)
+                                );
+                                A.Insert(i, uAfter);
+                                APowers.Insert(i, APowers_prev + bPower); //startup
+                                var b_trimmed = new UsageTimeInterval(
+                                    new TimeInterval(
+                                        uti_prev_end.Hours, uti_prev_end.Minutes,
+                                        b_end.Hours, b_end.Minutes));
+                                CombineSolarIntervals(A, APowers,
+                                    b_trimmed, bPower);
+                                return;
+                            }
                         }
                         // else (b_start >= uti_prev_end)
                         {
