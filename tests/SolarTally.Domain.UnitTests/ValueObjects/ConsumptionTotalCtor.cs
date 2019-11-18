@@ -299,6 +299,36 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
                         ),
                     },
                     2500, 5002, 5000, 0, 5000
+                },
+                // Combine([A,B],C) where C fully within A.
+                new object[] {
+                    new List<CompactApplianceUsage>() {
+                        new CompactApplianceUsage(1,1000,6,0,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(8,0,13,0)
+                                ),
+                                new UsageTimeInterval(
+                                    new TimeInterval(14,0,15,0)
+                                )
+                            }
+                        ),
+                        new CompactApplianceUsage(1,1500,1,0,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(9,0,10,0)
+                                )
+                            }
+                        ),
+                        new CompactApplianceUsage(1,1500,1,0,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(11,0,12,0)
+                                )
+                            }
+                        ),
+                    },
+                    2500, 4000, 9000, 0, 9000
                 }
             };
         
