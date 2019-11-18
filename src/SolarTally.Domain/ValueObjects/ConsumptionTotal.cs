@@ -82,8 +82,11 @@ namespace SolarTally.Domain.ValueObjects
         {
             if (A.Count == 0)
             {
-                A.Add(b);
-                APowers.Add(bPower);
+                if (b.TimeInterval.Start < b.TimeInterval.End)
+                {
+                    A.Add(b);
+                    APowers.Add(bPower);
+                }
                 return;
             }
             // Assume A.length == APowers.length
