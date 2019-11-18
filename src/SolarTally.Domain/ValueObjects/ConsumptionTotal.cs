@@ -131,10 +131,10 @@ namespace SolarTally.Domain.ValueObjects
                         }
                         // else (b_start >= uti_prev_end)
                         {
+                            APowers.Insert(i, bPower); //startup
                             if (b_end <= uti_curr_start)
                             {
                                 A.Insert(i, b);
-                                APowers.Insert(i, bPower); //startup
                                 return;
                             }
                             // else (b_end > uti_curr_start)
@@ -145,7 +145,6 @@ namespace SolarTally.Domain.ValueObjects
                                         uti_curr_start.Hours,
                                         uti_curr_start.Minutes));
                                 A.Insert(i, uBefore);
-                                APowers.Insert(i, bPower); //startup
                                 var b_trimmed = new UsageTimeInterval(
                                     new TimeInterval(
                                         uti_curr_start.Hours,
