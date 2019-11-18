@@ -80,15 +80,14 @@ namespace SolarTally.Domain.ValueObjects
             List<decimal> APowers,
             UsageTimeInterval b, decimal bPower)
         {
+            if (b.TimeInterval.Start == b.TimeInterval.End) return;
             if (A.Count == 0)
             {
-                if (b.TimeInterval.Start < b.TimeInterval.End)
-                {
-                    A.Add(b);
-                    APowers.Add(bPower);
-                }
+                A.Add(b);
+                APowers.Add(bPower);
                 return;
             }
+
             // Assume A.length == APowers.length
             // Assume all UsageTimeIntervals in A, and b, are UsingSolars
             var b_start = b.TimeInterval.Start;
@@ -185,21 +184,14 @@ namespace SolarTally.Domain.ValueObjects
                     APowers[i] += bPower; //startup
                     if (b_end > uti_curr_end)
                     {
-                        if (uti_curr_start == uti_curr_end)
-                        {
-                            // avoid infinite loop
-                            return;
-                        }
-                        // else
-                        {
-                            var b_trimmed = new UsageTimeInterval(
-                                new TimeInterval(
-                                    uti_curr_end.Hours, uti_curr_end.Minutes,
-                                    b_end.Hours, b_end.Minutes));
-                            CombineSolarIntervals(A, APowers,
-                                b_trimmed, bPower);
-                            return;
-                        }
+                        var b_trimmed = new UsageTimeInterval(
+                            new TimeInterval(
+                                uti_curr_end.Hours, uti_curr_end.Minutes,
+                                b_end.Hours, b_end.Minutes));
+                        CombineSolarIntervals(A, APowers,
+                            b_trimmed, bPower);
+                        return;
+                    
                     }
                     else if (b_end < uti_curr_end)
                     {
