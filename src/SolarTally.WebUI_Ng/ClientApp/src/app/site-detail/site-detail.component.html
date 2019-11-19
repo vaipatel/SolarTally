@@ -31,7 +31,8 @@
         </mat-card-title>
         <br>
         <mat-card-content>
-            <h3>Power: {{site.consumptionTotal.totalPowerConsumption | kilo: '1.0-2'}} W</h3>
+            <h3>Max Power: {{site.consumptionTotal.maxPowerConsumption | kilo: '1.0-2'}} kW</h3>
+            <h3>Total Power: {{site.consumptionTotal.totalPowerConsumption | kilo: '1.0-2'}} kW</h3>
             <h3>On Solar Energy: {{site.consumptionTotal.totalOnSolarEnergyConsumption | kilo: '1.0-2'}} of {{site.consumptionTotal.totalEnergyConsumption | kilo: '1.0-2'}} kWh</h3>
             <h3>Off Solar Energy: {{site.consumptionTotal.totalOffSolarEnergyConsumption | kilo: '1.0-2'}} of {{site.consumptionTotal.totalEnergyConsumption | kilo: '1.0-2'}} kWh</h3>
         </mat-card-content>
