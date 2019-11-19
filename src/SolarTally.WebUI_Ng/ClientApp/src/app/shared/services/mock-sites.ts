@@ -8,7 +8,8 @@ export const SITES: Site[] = [
             state: "ON", 
             country: "CAN", 
             zipCode: "L6N8P0" },
-        consumptionTotal: { 
+        consumptionTotal: {
+            maxPowerConsumption: 100,
             totalPowerConsumption: 100, 
             totalEnergyConsumption: 500
         }
@@ -20,7 +21,8 @@ export const SITES: Site[] = [
             state: "ON", 
             country: "CAN", 
             zipCode: "M6N8O0" },
-        consumptionTotal: { 
+        consumptionTotal: {
+            maxPowerConsumption: 300,
             totalPowerConsumption: 320, 
             totalEnergyConsumption: 1600
         }
@@ -32,7 +34,8 @@ export const SITES: Site[] = [
             state: "ON", 
             country: "CAN", 
             zipCode: "N0O1P2" },
-        consumptionTotal: { 
+        consumptionTotal: {
+            maxPowerConsumption: 1000,
             totalPowerConsumption: 1040, 
             totalEnergyConsumption: 4160
         }
