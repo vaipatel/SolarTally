@@ -1,5 +1,6 @@
 using SolarTally.Application.Common.Interfaces;
 using SolarTally.Domain.Entities;
+using SolarTally.Domain.Enumerations;
 using SolarTally.Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
@@ -90,10 +91,34 @@ namespace SolarTally.WebUI_Ng
 
         public void MakeApplianceUsages()
         {
-            Consumptions[1].AddApplianceUsage(Appliances[1]);
-            Consumptions[1].ApplianceUsages.Last().SetQuantity(20);
-            Consumptions[1].AddApplianceUsage(Appliances[2]);
-            Consumptions[1].ApplianceUsages.Last().SetQuantity(2);
+            {
+                Consumptions[1].AddApplianceUsage(Appliances[1]);
+                var au = Consumptions[1].ApplianceUsages.Last();
+                au.SetQuantity(20);
+                au.SetNumHoursOnSolar(6);
+                au.SetNumHoursOffSolar(2);
+                au.SetPowerConsumption(50);
+                au.ApplianceUsageSchedule.ClearUsageIntervals();
+                au.ApplianceUsageSchedule.AddUsageInterval(10,0,16,0,
+                    UsageKind.UsingSolar);
+                au.ApplianceUsageSchedule.AddUsageInterval(17,0,19,0,
+                    UsageKind.UsingMains);
+            }
+            
+            {
+                Consumptions[1].AddApplianceUsage(Appliances[2]);
+                var au = Consumptions[1].ApplianceUsages.Last();
+                au.SetQuantity(2);
+                au.SetNumHoursOnSolar(2);
+                au.SetNumHoursOffSolar(2);
+                au.SetPowerConsumption(450);
+                au.ApplianceUsageSchedule.ClearUsageIntervals();
+                au.ApplianceUsageSchedule.AddUsageInterval(8,0,10,0,
+                    UsageKind.UsingSolar);
+                au.ApplianceUsageSchedule.AddUsageInterval(17,0,19,0,
+                    UsageKind.UsingBattery);
+            }
+            Consumptions[1].Recalculate();
 
             Consumptions[2].AddApplianceUsage(Appliances[2]);
             Consumptions[2].ApplianceUsages.Last().SetQuantity(5);
