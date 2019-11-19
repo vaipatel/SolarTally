@@ -246,6 +246,45 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
                     },
                     1000,3000,6000,6000,12000
                 },
+                // Terraced reverse
+                new object[] {
+                    new List<CompactApplianceUsage>() {
+                        new CompactApplianceUsage(2,500,2,2,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(12,0,14,0)
+                                ),
+                                new UsageTimeInterval(
+                                    new TimeInterval(14,0,16,0),
+                                    UsageKind.UsingMains
+                                )
+                            }
+                        ),
+                        new CompactApplianceUsage(2,500,2,2,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(10,0,12,0)
+                                ),
+                                new UsageTimeInterval(
+                                    new TimeInterval(14,0,16,0),
+                                    UsageKind.UsingMains
+                                )
+                            }
+                        ),
+                        new CompactApplianceUsage(2,500,2,2,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(8,0,10,0)
+                                ),
+                                new UsageTimeInterval(
+                                    new TimeInterval(14,0,16,0),
+                                    UsageKind.UsingMains
+                                )
+                            }
+                        )
+                    },
+                    1000,3000,6000,6000,12000
+                },
                 // Non overlapping Empty and non-empty
                 new object[] {
                     new List<CompactApplianceUsage>() {
