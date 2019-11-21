@@ -29,7 +29,7 @@ namespace SolarTally.Application.UnitTests.Mappings
         [Fact]
         public void ShouldMapSiteToSiteDto()
         {
-            var entity = new Site("A Site", 9);
+            var entity = new Site("A Site");
             entity.MainAddress = new Address("0 Bloor St.", "Toronto",
                 "Ontario", "Canada", "M1N2O3");
 
@@ -43,7 +43,7 @@ namespace SolarTally.Application.UnitTests.Mappings
         [Fact]
         public void ShouldMapSiteToSiteBriefDto()
         {
-            var entity = new Site("A Site", 9);
+            var entity = new Site("A Site");
             entity.MainAddress = new Address("0 Bloor St.", "Toronto",
                 "Ontario", "Canada", "M1N2O3");
             
@@ -57,7 +57,7 @@ namespace SolarTally.Application.UnitTests.Mappings
         [Fact]
         public void ShouldMapConsumptionToConsumptionDTO()
         {
-            var site = new Site("A Site", 9);
+            var site = new Site("A Site");
             decimal totalPowerConsumption = 500;
             decimal totalStartupPowerConsumption = 700;
             site.Consumption.AddApplianceUsage(
@@ -76,7 +76,7 @@ namespace SolarTally.Application.UnitTests.Mappings
         [Fact]
         public void ShouldMapApplianceUsageToApplianceUsageDto()
         {
-            var site = new Site("A Site", 9);
+            var site = new Site("A Site");
             site.Consumption.AddApplianceUsage(
                 new Appliance("TV", "Television", 500, 700));
             var au = site.Consumption.ApplianceUsages.Last();

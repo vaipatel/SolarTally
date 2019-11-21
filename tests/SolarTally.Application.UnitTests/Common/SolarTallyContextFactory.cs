@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using SolarTally.Domain.Entities;
+using SolarTally.Domain.ValueObjects;
 using SolarTally.Persistence;
 
 namespace SolarTally.Application.UnitTests.Common
@@ -38,9 +39,10 @@ namespace SolarTally.Application.UnitTests.Common
             // TODO: Is this okay to do?
             // context.SaveChanges();
 
-            var site = new Site("PetroCanada Station", 7);
-            site.MainAddress = new Domain.ValueObjects.Address("0 Yonge St.",
-            "Toronto", "Ontario", "Canada", "M1N2O3");
+            var site = new Site("PetroCanada Station");
+            site.MainAddress = new Address("0 Yonge St.", "Toronto", "Ontario",
+                "Canada", "M1N2O3");
+            site.SetPeakSolarInterval(new TimeInterval(8,0,15,0));
 
             foreach(var appliance in appliances)
             {

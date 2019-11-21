@@ -11,7 +11,7 @@ namespace SolarTally.Domain.UnitTests.Builders
 
         public SiteBuilder()
         {
-            _site = new Site(TestName, TestNumSolarHours);
+            _site = new Site(TestName);
         }
 
         public Site Build()
@@ -21,7 +21,7 @@ namespace SolarTally.Domain.UnitTests.Builders
 
         public Site WithoutName()
         {
-            _site = new Site("", TestNumSolarHours);
+            _site = new Site("");
             return _site;
         }
     }

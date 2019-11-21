@@ -171,5 +171,31 @@ namespace SolarTally.Domain.Entities
                 }
             }
         }
+    
+        public decimal GetNumHoursOnSolar()
+        {
+            TimeSpan totalDiff = new TimeSpan(0,0,0);
+            foreach(var ui in _usageIntervals)
+            {
+                if (ui.UsageKind == UsageKind.UsingSolar)
+                {
+                    totalDiff += ui.TimeInterval.Difference;
+                }
+            }
+            return (decimal) totalDiff.TotalHours;
+        }
+
+        public decimal GetNumHoursOffSolar()
+        {
+            TimeSpan totalDiff = new TimeSpan(0,0,0);
+            foreach(var ui in _usageIntervals)
+            {
+                if (ui.UsageKind != UsageKind.UsingSolar)
+                {
+                    totalDiff += ui.TimeInterval.Difference;
+                }
+            }
+            return (decimal) totalDiff.TotalHours;
+        }
     }
 }

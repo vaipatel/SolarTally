@@ -70,13 +70,15 @@ namespace SolarTally.WebUI_Ng
 
         public void MakeSites()
         {
-            Sites.Add(1, new Site("Campbell Residence", 7));
+            Sites.Add(1, new Site("Campbell Residence"));
             Sites[1].MainAddress = new Address("0 Bloor St.",
             "Toronto", "Ontario", "Canada", "M1N2O3");
-            Sites.Add(2, new Site("St. Mary School", 9));
+            Sites[1].SetPeakSolarInterval(new TimeInterval(8,0,15,0));
+            Sites.Add(2, new Site("St. Mary School"));
             Sites[2].MainAddress = new Address("0 Major Mackenzie St.",
             "Richmond Hill", "Ontario", "Canada", "L3M4N5");
-            Sites.Add(3, new Site("OTI Imaging Center", 8));
+            Sites[2].SetPeakSolarInterval(new TimeInterval(7,0,16,0));
+            Sites.Add(3, new Site("OTI Imaging Center"));
             Sites[3].MainAddress = new Address("0 Sandalwood St.",
             "Brampton", "Ontario", "Canada", "L6M7N8");
         }

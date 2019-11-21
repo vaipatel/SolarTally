@@ -114,7 +114,7 @@ namespace SolarTally.Domain.Entities
         /// </remarks>
         public ApplianceUsage(IConsumptionCalculator consumptionCalculator,
             Appliance appliance, int quantity, decimal powerConsumption,
-            int numHoursOnSolar, int numHoursOffSolar, bool enabled)
+            bool enabled)
         {
             _consumptionCalculator = consumptionCalculator;
             ApplianceUsageSchedule = 
@@ -124,8 +124,6 @@ namespace SolarTally.Domain.Entities
             this.SetAppliance(appliance);
             this.SetQuantity(quantity);
             this.SetPowerConsumption(powerConsumption);
-            this.SetNumHoursOnSolar(numHoursOnSolar);
-            this.SetNumHoursOffSolar(numHoursOffSolar);
             this.SetEnabled(enabled);
             // Recalculate
             this.Recalculate();
@@ -198,8 +196,10 @@ namespace SolarTally.Domain.Entities
         /// Recalcs the ApplianceUsageTotal for this and then asks Consumption
         /// to recalc overall totals.
         /// </summary>
-        private void Recalculate()
+        public void Recalculate()
         {
+            NumHoursOnSolar = ApplianceUsageSchedule.GetNumHoursOnSolar();
+            NumHoursOffSolar = ApplianceUsageSchedule.GetNumHoursOffSolar();
             ApplianceUsageTotal = new ApplianceUsageTotal(this);
             _consumptionCalculator.Recalculate();
         }

@@ -65,9 +65,9 @@ namespace SolarTally.Application.System.Commands.SeedSampleData
 
         public void MakeSites()
         {
-            Sites.Add(1, new Site("Campbell Residence", 7));
-            Sites.Add(2, new Site("St. Mary School", 9));
-            Sites.Add(3, new Site("OTI Imaging Center", 8));
+            Sites.Add(1, new Site("Campbell Residence"));
+            Sites.Add(2, new Site("St. Mary School"));
+            Sites.Add(3, new Site("OTI Imaging Center"));
         }
 
         public void MakeConsumptions()

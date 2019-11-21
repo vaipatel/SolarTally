@@ -1,5 +1,6 @@
 using System;
 using SolarTally.Domain.Entities;
+using SolarTally.Domain.Enumerations;
 using SolarTally.Domain.Interfaces;
 
 namespace SolarTally.Domain.UnitTests.Builders
@@ -21,8 +22,12 @@ namespace SolarTally.Domain.UnitTests.Builders
             _appliance = new ApplianceBuilder().Build();
             TestConsumptionCalculator = new SiteBuilder().Build().Consumption;
             _applianceUsage = new ApplianceUsage(TestConsumptionCalculator,
-                TestAppliance, TestQuantity, TestPowerConsumption,
-                TestNumHoursOnSolar, TestNumHoursOffSolar, TestEnabled);
+                TestAppliance, TestQuantity, TestPowerConsumption, TestEnabled);
+            _applianceUsage.ApplianceUsageSchedule.ClearUsageIntervals();
+            _applianceUsage.ApplianceUsageSchedule.AddUsageInterval(8,0,10,0,
+                UsageKind.UsingSolar);
+            _applianceUsage.ApplianceUsageSchedule.AddUsageInterval(18,0,19,0,
+                UsageKind.UsingMains);
         }
 
         public ApplianceUsage Build()
