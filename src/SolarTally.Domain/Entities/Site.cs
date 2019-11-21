@@ -23,15 +23,13 @@ namespace SolarTally.Domain.Entities
         // Consumption Nav prop
         public Consumption Consumption { get; private set; }
 
-        public Site(string name, int numSolarHours)
+        public Site(string name)
         {   
             Name = name;
 
             // Add a new Consumption profile. This will not add any child
             // ApplianceUsages by default.
             Consumption = new Consumption(this);
-            
-            this.SetNumSolarHours(numSolarHours);
 
             this.SetPeakSolarInterval(GetDefaultTimeInterval());
         }
