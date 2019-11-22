@@ -23,6 +23,12 @@ namespace SolarTally.Domain.Entities
 
         public IReadOnlySiteSettings ReadOnlySiteSettings { get; private set; }
 
+        private decimal _totalHoursOnSolar;
+        public decimal TotalHoursOnSolar => _totalHoursOnSolar;
+
+        private decimal _totalHoursOffSolar;
+        public decimal TotalHoursOffSolar => _totalHoursOffSolar;
+
         private ApplianceUsageSchedule()
         {
             // Needed for EF core. Fcuk.
@@ -33,11 +39,15 @@ namespace SolarTally.Domain.Entities
         {
             ReadOnlySiteSettings = readOnlySiteSettings;
             _usageIntervals = new List<UsageTimeInterval>();
+            _totalHoursOnSolar = 0;
+            _totalHoursOffSolar = 0;
         }
 
         public void ClearUsageIntervals()
         {
             _usageIntervals.Clear();
+            _totalHoursOnSolar = 0;
+            _totalHoursOffSolar = 0;
         }
 
         public void AddUsageInterval(
@@ -172,6 +182,11 @@ namespace SolarTally.Domain.Entities
             }
         }
     
+        public void RecalculateTotalHours()
+        {
+
+        }
+
         public decimal GetNumHoursOnSolar()
         {
             TimeSpan totalDiff = new TimeSpan(0,0,0);
