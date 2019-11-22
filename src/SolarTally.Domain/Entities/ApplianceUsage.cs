@@ -76,14 +76,16 @@ namespace SolarTally.Domain.Entities
         /// (must be < SiteNumSolarHours)
         /// </summary>
         public decimal NumHoursOnSolar { get; private set; }
-        public decimal GetNumHoursOnSolar() => NumHoursOnSolar;
+        public decimal GetNumHoursOnSolar() =>
+            ApplianceUsageSchedule.GetNumHoursOnSolar();
 
         /// <summary>
         /// Number of hrs to run the appliance on backup
         /// (NumHoursOnSolar + NumHoursOnBackup < 24)
         /// </summary>
         public decimal NumHoursOffSolar { get; private set; }
-        public decimal GetNumHoursOffSolar() => NumHoursOffSolar;
+        public decimal GetNumHoursOffSolar() =>
+            ApplianceUsageSchedule.GetNumHoursOffSolar();
 
         /// <summary>
         /// Whether this ApplianceUsage should be considered in the Consumption.
@@ -173,8 +175,6 @@ namespace SolarTally.Domain.Entities
         /// </summary>
         public void Recalculate()
         {
-            NumHoursOnSolar = ApplianceUsageSchedule.GetNumHoursOnSolar();
-            NumHoursOffSolar = ApplianceUsageSchedule.GetNumHoursOffSolar();
             ApplianceUsageTotal = new ApplianceUsageTotal(this);
             _consumptionCalculator.Recalculate();
         }

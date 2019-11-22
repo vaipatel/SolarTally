@@ -34,7 +34,6 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
                     startHr, startMin, endHr, endMin, u.UsageKind
                 );
             }
-            applianceUsage.Recalculate();
             var applianceUsageTotal = new ApplianceUsageTotal(applianceUsage);
 
             Assert.Equal(expTotalPowerConsumption,
