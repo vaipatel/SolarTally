@@ -52,7 +52,7 @@ namespace SolarTally.Domain.UnitTests.Entities
             Assert.Equal(consumption.ReadOnlySiteSettings.NumSolarHours,
                 foundApplianceUsage.NumHoursOnSolar);
             // Default num hours off solar should be one designated in AU
-            Assert.Equal(ApplianceUsage.DefaultNumHoursOffSolar,
+            Assert.Equal(0,
                 foundApplianceUsage.NumHoursOffSolar);
             // Total num hours = num hours on solar + num hours off solar
             Assert.Equal(
