@@ -34,10 +34,6 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
                 applianceUsage.SetQuantity(inApplianceUsage.Quantity);
                 applianceUsage.SetPowerConsumption(
                     inApplianceUsage.PowerConsumption);
-                applianceUsage.SetNumHoursOnSolar(
-                    inApplianceUsage.NumHoursOnSolar);
-                applianceUsage.SetNumHoursOffSolar(
-                    inApplianceUsage.NumHoursOffSolar);
                 foreach(var uti in inApplianceUsage.UsageIntervals)
                 {
                     var ti = uti.TimeInterval;
@@ -47,6 +43,7 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
                         startHr, startMin, endHr, endMin, uti.UsageKind
                     );
                 }
+                applianceUsage.Recalculate();
             }
             site.Consumption.Recalculate();
 

@@ -34,22 +34,6 @@ namespace SolarTally.Domain.Entities
             this.SetPeakSolarInterval(GetDefaultTimeInterval());
         }
 
-        public void SetNumSolarHours(int numSolarHours)
-        {
-            Guard.Against.OutOfRange(numSolarHours, nameof(numSolarHours),
-                0, 24);
-            NumSolarHours = numSolarHours;
-
-            // Cap appliance usage hours if needed
-            foreach(var applianceUsage in Consumption.ApplianceUsages)
-            {
-                if (applianceUsage.NumHoursOnSolar > numSolarHours)
-                {
-                    applianceUsage.SetNumHoursOnSolar(numSolarHours);
-                }
-            }
-        }
-
         public void SetPeakSolarInterval(TimeInterval peakSolarInterval)
         {
             PeakSolarInterval = peakSolarInterval;

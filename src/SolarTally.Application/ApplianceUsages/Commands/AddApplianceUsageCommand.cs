@@ -67,8 +67,6 @@ namespace SolarTally.Application.ApplianceUsages.Commands.AddApplianceUsage
             var au = site.Consumption.ApplianceUsages.Last();
             au.SetQuantity(command.Quantity);
             au.SetPowerConsumption(command.PowerConsumption);
-            au.SetNumHoursOnSolar(command.NumHoursOnSolar);
-            au.SetNumHoursOffSolar(command.NumHoursOffSolar);
 
             _context.ApplianceUsages.Add(au);
 
