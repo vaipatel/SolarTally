@@ -23,11 +23,11 @@ namespace SolarTally.Domain.Entities
 
         public IReadOnlySiteSettings ReadOnlySiteSettings { get; private set; }
 
-        private decimal _totalHoursOnSolar;
-        public decimal TotalHoursOnSolar => _totalHoursOnSolar;
+        private TimeSpan _totalTimeOnSolar;
+        public TimeSpan TotalTimeOnSolar => _totalTimeOnSolar;
 
-        private decimal _totalHoursOffSolar;
-        public decimal TotalHoursOffSolar => _totalHoursOffSolar;
+        private TimeSpan _totalTimeOffSolar;
+        public TimeSpan TotalTimeOffSolar => _totalTimeOffSolar;
 
         private ApplianceUsageSchedule()
         {
