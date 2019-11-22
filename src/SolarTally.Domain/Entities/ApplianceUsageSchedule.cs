@@ -39,18 +39,25 @@ namespace SolarTally.Domain.Entities
         {
             ReadOnlySiteSettings = readOnlySiteSettings;
             _usageIntervals = new List<UsageTimeInterval>();
-            _totalHoursOnSolar = 0;
-            _totalHoursOffSolar = 0;
+            RecalculateTotalTimes();
         }
 
         public void ClearUsageIntervals()
         {
             _usageIntervals.Clear();
-            _totalHoursOnSolar = 0;
-            _totalHoursOffSolar = 0;
+            RecalculateTotalTimes();
         }
 
         public void AddUsageInterval(
+            int startHr, int startMin, int endHr, int endMin,
+            UsageKind usageKind
+        )
+        {
+            _addUsageInterval(startHr, startMin, endHr, endMin, usageKind);
+            RecalculateTotalTimes();
+        }
+
+        private void _addUsageInterval(
             int startHr, int startMin, int endHr, int endMin,
             UsageKind usageKind
         )
@@ -111,6 +118,12 @@ namespace SolarTally.Domain.Entities
         }
 
         public void HandlePeakSolarIntervalUpdated()
+        {
+            _handlePeakSolarIntervalUpdated();
+            RecalculateTotalTimes();
+        }
+        
+        public void _handlePeakSolarIntervalUpdated()
         {
             var ti = ReadOnlySiteSettings.PeakSolarInterval;
             int startHr = ti.Start.Hours, startMin = ti.Start.Minutes;
@@ -182,35 +195,32 @@ namespace SolarTally.Domain.Entities
             }
         }
     
-        public void RecalculateTotalHours()
+        public void RecalculateTotalTimes()
         {
+            _totalTimeOnSolar = new TimeSpan(0,0,0);
+            _totalTimeOffSolar = new TimeSpan(0,0,0);
 
-        }
-
-        public decimal GetNumHoursOnSolar()
-        {
-            TimeSpan totalDiff = new TimeSpan(0,0,0);
             foreach(var ui in _usageIntervals)
             {
                 if (ui.UsageKind == UsageKind.UsingSolar)
                 {
-                    totalDiff += ui.TimeInterval.Difference;
+                    _totalTimeOnSolar += ui.TimeInterval.Difference;
+                }
+                else
+                {
+                    _totalTimeOffSolar += ui.TimeInterval.Difference;
                 }
             }
-            return (decimal) totalDiff.TotalHours;
+        }
+
+        public decimal GetNumHoursOnSolar()
+        {
+            return (decimal) _totalTimeOnSolar.TotalHours;
         }
 
         public decimal GetNumHoursOffSolar()
         {
-            TimeSpan totalDiff = new TimeSpan(0,0,0);
-            foreach(var ui in _usageIntervals)
-            {
-                if (ui.UsageKind != UsageKind.UsingSolar)
-                {
-                    totalDiff += ui.TimeInterval.Difference;
-                }
-            }
-            return (decimal) totalDiff.TotalHours;
+            return (decimal) _totalTimeOffSolar.TotalHours;
         }
     }
 }
