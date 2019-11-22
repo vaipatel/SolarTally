@@ -13,6 +13,12 @@ namespace SolarTally.Persistence.Configurations
             ausConfiguration.Ignore(b => b.DomainEvents);
 
             ausConfiguration.Ignore(aus => aus.ReadOnlySiteSettings);
+
+            ausConfiguration.Property(aus => aus.TotalTimeOnSolar)
+                .HasColumnType("time(0)");
+            
+            ausConfiguration.Property(aus => aus.TotalTimeOffSolar)
+                .HasColumnType("time(0)");
             
             ausConfiguration.OwnsMany(aus => aus.UsageIntervals,
             utiConfig => {
