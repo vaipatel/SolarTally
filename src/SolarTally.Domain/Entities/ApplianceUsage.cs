@@ -28,8 +28,6 @@ namespace SolarTally.Domain.Entities
         // Some constants to reduce magic numbers
         public const int DefaultQuantity = 1;
 
-        public const int DefaultNumHoursOffSolar = 1;
-
         public int ApplianceId { get; private set; }
         public Appliance Appliance { get; private set; }
 
@@ -70,22 +68,22 @@ namespace SolarTally.Domain.Entities
         /// TODO: Calculate this from Noda LocalTime or similar to make it
         /// easier for the user to input this info.
         /// </remark>
-        public int NumHours { get; private set; }
-        public int GetNumHours() => NumHoursOnSolar + NumHoursOffSolar;
+        public decimal NumHours { get; private set; }
+        public decimal GetNumHours() => NumHoursOnSolar + NumHoursOffSolar;
 
         /// <summary>
         /// Number of hrs of solar to run the appliance
         /// (must be < SiteNumSolarHours)
         /// </summary>
-        public int NumHoursOnSolar { get; private set; }
-        public int GetNumHoursOnSolar() => NumHoursOnSolar;
+        public decimal NumHoursOnSolar { get; private set; }
+        public decimal GetNumHoursOnSolar() => NumHoursOnSolar;
 
         /// <summary>
         /// Number of hrs to run the appliance on backup
         /// (NumHoursOnSolar + NumHoursOnBackup < 24)
         /// </summary>
-        public int NumHoursOffSolar { get; private set; }
-        public int GetNumHoursOffSolar() => NumHoursOffSolar;
+        public decimal NumHoursOffSolar { get; private set; }
+        public decimal GetNumHoursOffSolar() => NumHoursOffSolar;
 
         /// <summary>
         /// Whether this ApplianceUsage should be considered in the Consumption.

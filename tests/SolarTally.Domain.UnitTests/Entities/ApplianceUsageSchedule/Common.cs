@@ -7,7 +7,7 @@ namespace SolarTally.Domain.UnitTests.Entities
     {
         private TimeInterval _peakSolarInterval;
         public string Name => "A Site Name";
-        public int NumSolarHours => 8;
+        public decimal NumSolarHours => 8;
         public TimeInterval PeakSolarInterval => _peakSolarInterval;
 
         public MockReadOnlySiteSettings(

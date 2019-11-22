@@ -16,7 +16,7 @@ namespace SolarTally.Domain.Entities
 
         public Address MainAddress { get; set; }
 
-        public int NumSolarHours { get; private set; }
+        public decimal NumSolarHours { get; private set; }
         
         public TimeInterval PeakSolarInterval { get; private set; }
 
@@ -42,6 +42,8 @@ namespace SolarTally.Domain.Entities
                 // Restrict solar intervals to lie within peakSolarInterval
                 applianceUsage.HandleSolarIntervalUpdated();
             }
+            
+            NumSolarHours = (decimal) PeakSolarInterval.Difference.TotalHours;
         }
 
         private TimeInterval GetDefaultTimeInterval() => new TimeInterval(

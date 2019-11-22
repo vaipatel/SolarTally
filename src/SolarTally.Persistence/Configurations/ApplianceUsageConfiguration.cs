@@ -22,18 +22,15 @@ namespace SolarTally.Persistence.Configurations
                 .IsRequired();
 
             auConfiguration.Property(au => au.NumHoursOnSolar)
-                .HasColumnType("smallint")
-                .HasDefaultValue<int>(8)
+                .HasColumnType("decimal(4,2)")
                 .IsRequired();
             
             auConfiguration.Property(au => au.NumHoursOffSolar)
-                .HasColumnType("smallint")
-                .HasDefaultValue<int>(1)
+                .HasColumnType("decimal(4,2)")
                 .IsRequired();
             
             auConfiguration.Property(au => au.NumHours)
-                .HasColumnType("smallint")
-                .HasDefaultValue<int>(8)
+                .HasColumnType("decimal(4,2)")
                 .IsRequired();
 
             auConfiguration.Property(au => au.Enabled)
