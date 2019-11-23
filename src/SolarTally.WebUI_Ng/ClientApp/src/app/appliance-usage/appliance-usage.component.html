@@ -14,8 +14,15 @@
     <mat-card-content>
         <p>Power: {{au.powerConsumption}} W</p>
         <p>Quantity: {{au.quantity}}</p>
-        <p>Hours On Solar: {{au.numHoursOnSolar}} hrs</p>
-        <p>Hours Off Solar: {{au.numHoursOffSolar}} hrs</p>
+        <p>Hours On Solar: {{au.applianceUsageScheduleDto.hoursOnSolar}} hrs</p>
+        <p>Hours Off Solar: {{au.applianceUsageScheduleDto.hoursOffSolar}} hrs</p>
         <p>Description: {{au.applianceDto.description}}</p>
+        <ul>
+            <li *ngFor="let ui of au.applianceUsageScheduleDto.usageIntervals">
+                {{ui.timeInterval.start.hours}}:{{ui.timeInterval.start.minutes}} - 
+                {{ui.timeInterval.end.hours}}:{{ui.timeInterval.end.minutes}}  
+                {{ui.usageKind}}
+            </li>
+        </ul>
     </mat-card-content>
 </mat-card>
