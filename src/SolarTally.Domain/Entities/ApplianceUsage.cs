@@ -61,31 +61,13 @@ namespace SolarTally.Domain.Entities
         public decimal PowerConsumption { get; private set; }
         public decimal GetPowerConsumption() => PowerConsumption;
 
-        /// <summary>
-        /// Hrs to run the appliance.
-        /// </summary>
-        /// <remark>
-        /// TODO: Calculate this from Noda LocalTime or similar to make it
-        /// easier for the user to input this info.
-        /// </remark>
-        public decimal NumHours { get; private set; }
-        public decimal GetNumHours() => NumHoursOnSolar + NumHoursOffSolar;
+        public decimal GetNumHours() => ApplianceUsageSchedule.Hours;
 
-        /// <summary>
-        /// Number of hrs of solar to run the appliance
-        /// (must be < SiteNumSolarHours)
-        /// </summary>
-        public decimal NumHoursOnSolar { get; private set; }
         public decimal GetNumHoursOnSolar() =>
-            ApplianceUsageSchedule.GetNumHoursOnSolar();
-
-        /// <summary>
-        /// Number of hrs to run the appliance on backup
-        /// (NumHoursOnSolar + NumHoursOnBackup < 24)
-        /// </summary>
-        public decimal NumHoursOffSolar { get; private set; }
+            ApplianceUsageSchedule.HoursOnSolar;
+        
         public decimal GetNumHoursOffSolar() =>
-            ApplianceUsageSchedule.GetNumHoursOffSolar();
+            ApplianceUsageSchedule.HoursOffSolar;
 
         /// <summary>
         /// Whether this ApplianceUsage should be considered in the Consumption.
