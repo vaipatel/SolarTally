@@ -29,7 +29,6 @@ namespace SolarTally.Domain.Entities
         private TimeSpan _totalTimeOffSolar;
         public TimeSpan TotalTimeOffSolar => _totalTimeOffSolar;
 
-        private ApplianceUsageSchedule()
         /// <summary>
         /// Number of hrs of solar to run the appliance
         /// (must be < SiteNumSolarHours)
@@ -47,16 +46,22 @@ namespace SolarTally.Domain.Entities
         /// </summary>
         public decimal Hours { get; private set; }
 
+        private ApplianceUsageSchedule() : base()
         {
             // Needed for EF core. Fcuk.
         }
 
-        public ApplianceUsageSchedule(
+        protected override void _Construct(
             IReadOnlySiteSettings readOnlySiteSettings)
         {
             ReadOnlySiteSettings = readOnlySiteSettings;
-            _usageIntervals = new List<UsageTimeInterval>();
-            RecalculateTotalTimes();
+            this._usageIntervals = new List<UsageTimeInterval>();
+        }
+
+        public ApplianceUsageSchedule(
+            IReadOnlySiteSettings readOnlySiteSettings) :
+            base(readOnlySiteSettings)
+        {
         }
 
         protected override void _ClearUsageIntervals()

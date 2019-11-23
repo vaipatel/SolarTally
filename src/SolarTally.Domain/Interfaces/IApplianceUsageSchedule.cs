@@ -13,6 +13,19 @@ namespace SolarTally.Domain.Interfaces
     /// </remarks>
     public abstract class IApplianceUsageSchedule : BaseEntity<int>
     {
+        protected abstract void _Construct(
+            IReadOnlySiteSettings readOnlySiteSettings);
+        
+        public IApplianceUsageSchedule()
+        {}
+
+        public IApplianceUsageSchedule(
+            IReadOnlySiteSettings readOnlySiteSettings)
+        {
+            _Construct(readOnlySiteSettings);
+            RecalculateTotalTimes();
+        }
+
         protected abstract void _ClearUsageIntervals();
         public void ClearUsageIntervals()
         {
