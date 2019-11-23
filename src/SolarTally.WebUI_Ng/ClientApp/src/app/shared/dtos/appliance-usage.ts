@@ -1,5 +1,6 @@
 import { Appliance } from './appliance';
 import { ApplianceUsageTotal } from './appliance-usage-total';
+import { ApplianceUsageSchedule } from './appliance-usage-schedule';
 
 export class ApplianceUsage {
     id: number;
@@ -12,6 +13,7 @@ export class ApplianceUsage {
     enabled: boolean;
     consumptionId: number;
     applianceUsageTotal: ApplianceUsageTotal;
+    applianceUsageScheduleDto: ApplianceUsageSchedule;
 }
 
 export class ApplianceUsageLst {
