@@ -30,6 +30,23 @@ namespace SolarTally.Domain.Entities
         public TimeSpan TotalTimeOffSolar => _totalTimeOffSolar;
 
         private ApplianceUsageSchedule()
+        /// <summary>
+        /// Number of hrs of solar to run the appliance
+        /// (must be < SiteNumSolarHours)
+        /// </summary>
+        public decimal HoursOnSolar { get; private set; }
+
+        /// <summary>
+        /// Number of hrs to run the appliance on backup
+        /// (NumHoursOnSolar + NumHoursOnBackup < 24)
+        /// </summary>
+        public decimal HoursOffSolar { get; private set; }
+
+        /// <summary>
+        /// Hrs to run the appliance.
+        /// </summary>
+        public decimal Hours { get; private set; }
+
         {
             // Needed for EF core. Fcuk.
         }
@@ -195,16 +212,10 @@ namespace SolarTally.Domain.Entities
                     _totalTimeOffSolar += ui.TimeInterval.Difference;
                 }
             }
-        }
 
-        public decimal GetNumHoursOnSolar()
-        {
-            return (decimal) _totalTimeOnSolar.TotalHours;
-        }
-
-        public decimal GetNumHoursOffSolar()
-        {
-            return (decimal) _totalTimeOffSolar.TotalHours;
+            HoursOnSolar = (decimal) _totalTimeOnSolar.TotalHours;
+            HoursOffSolar = (decimal) _totalTimeOffSolar.TotalHours;
+            Hours = HoursOnSolar + HoursOffSolar;
         }
     }
 }
