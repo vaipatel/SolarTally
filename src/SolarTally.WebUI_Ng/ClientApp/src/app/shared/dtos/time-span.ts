@@ -1,14 +1,17 @@
-const MILLIS_PER_SECOND = 1000;
-const MILLIS_PER_MINUTE = MILLIS_PER_SECOND * 60;   //     60,000
-const MILLIS_PER_HOUR = MILLIS_PER_MINUTE * 60;     //  3,600,000
-const MILLIS_PER_DAY = MILLIS_PER_HOUR * 24;        // 86,400,000
-
 export class TimeSpanOverflowError extends Error {
     constructor(m: string) {
         super(m);
         Object.setPrototypeOf(this, TimeSpanOverflowError.prototype);
     }
 }
+
+// Copied below from https://stackoverflow.com/a/54226985. It didn't include an
+// impl for TimeSpanOverflowError so I made one above.
+
+const MILLIS_PER_SECOND = 1000;
+const MILLIS_PER_MINUTE = MILLIS_PER_SECOND * 60;   //     60,000
+const MILLIS_PER_HOUR = MILLIS_PER_MINUTE * 60;     //  3,600,000
+const MILLIS_PER_DAY = MILLIS_PER_HOUR * 24;        // 86,400,000
 
 export class TimeSpan {
     private _millis: number;
