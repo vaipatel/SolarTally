@@ -10,7 +10,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using SolarTally.Application.System.Commands.SeedSampleData;
 using SolarTally.Persistence;
 
 namespace SolarTally.WebUI_Ng
