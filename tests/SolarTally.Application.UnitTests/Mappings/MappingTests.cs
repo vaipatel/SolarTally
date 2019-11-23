@@ -85,7 +85,8 @@ namespace SolarTally.Application.UnitTests.Mappings
 
             Assert.NotNull(result);
             Assert.IsType<ApplianceUsageDto>(result);
-            Assert.Equal(au.NumHours, result.NumHours);
+            Assert.Equal(au.GetNumHours(), 
+                result.ApplianceUsageScheduleDto.Hours);
         }
     }
 }
