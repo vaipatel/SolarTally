@@ -53,11 +53,11 @@ namespace SolarTally.Domain.UnitTests.Entities
                 foundApplianceUsage.GetNumHoursOnSolar());
             // Default num hours off solar should be one designated in AU
             Assert.Equal(0,
-                foundApplianceUsage.NumHoursOffSolar);
+                foundApplianceUsage.GetNumHoursOffSolar());
             // Total num hours = num hours on solar + num hours off solar
             Assert.Equal(
-                foundApplianceUsage.NumHoursOnSolar +
-                foundApplianceUsage.NumHoursOffSolar,
+                foundApplianceUsage.GetNumHoursOnSolar() +
+                foundApplianceUsage.GetNumHoursOffSolar(),
                 foundApplianceUsage.GetNumHours());
         }
     }
