@@ -17,7 +17,7 @@ namespace SolarTally.Domain.Entities
         public int ApplianceUsageId { get; private set; }
         public ApplianceUsage ApplianceUsage { get; private set; }
 
-        private readonly List<UsageTimeInterval> _usageIntervals;
+        private List<UsageTimeInterval> _usageIntervals;
         public IReadOnlyCollection<UsageTimeInterval> UsageIntervals
             => _usageIntervals;
 
