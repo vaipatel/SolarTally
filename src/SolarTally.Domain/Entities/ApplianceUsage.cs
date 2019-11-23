@@ -23,7 +23,7 @@ namespace SolarTally.Domain.Entities
     /// 
     /// I'm making it an Entity for now. We shall see.
     /// </remarks>
-    public class ApplianceUsage : BaseEntity<int>, IApplianceUsageInfo
+    public class ApplianceUsage : IApplianceUsage, IApplianceUsageInfo
     {
         // Some constants to reduce magic numbers
         public const int DefaultQuantity = 1;
@@ -136,44 +136,39 @@ namespace SolarTally.Domain.Entities
             Appliance = appliance;
         }
 
-        public void SetQuantity(int quantity)
+        protected override void _SetQuantity(int quantity)
         {
             Guard.Against.LessThan(quantity, nameof(quantity), 0);
             Quantity = quantity;
-            this.Recalculate();
         }
 
-        public void SetPowerConsumption(decimal powerConsumption)
+        protected override void _SetPowerConsumption(decimal powerConsumption)
         {
             Guard.Against.LessThan(powerConsumption,
                 nameof(powerConsumption), 0);
             PowerConsumption = powerConsumption;
-            this.Recalculate();
         }
 
-        public void SetPowerConsumptionToDefault()
+        protected override void _SetPowerConsumptionToDefault()
         {
             this.SetPowerConsumption(Appliance.DefaultPowerConsumption);
-            this.Recalculate();
         }
 
-        public void HandleSolarIntervalUpdated()
-        {
-           ApplianceUsageSchedule.HandlePeakSolarIntervalUpdated();
-           this.Recalculate();
-        }
-
-        public void SetEnabled(bool enabled)
+        protected override void _SetEnabled(bool enabled)
         {
             Enabled = enabled;
-            this.Recalculate();
+        }
+
+        protected override void _HandleSolarIntervalUpdated()
+        {
+           ApplianceUsageSchedule.HandlePeakSolarIntervalUpdated();
         }
 
         /// <summary>
         /// Recalcs the ApplianceUsageTotal for this and then asks Consumption
         /// to recalc overall totals.
         /// </summary>
-        public void Recalculate()
+        public override void Recalculate()
         {
             ApplianceUsageTotal = new ApplianceUsageTotal(this);
             _consumptionCalculator.Recalculate();

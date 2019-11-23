@@ -12,7 +12,7 @@ namespace SolarTally.Domain.Entities
     /// <summary>
     /// Daily usage pattern (in time) of an appliance.
     /// </summary>
-    public class ApplianceUsageSchedule : BaseEntity<int>
+    public class ApplianceUsageSchedule : IApplianceUsageSchedule
     {
         public int ApplianceUsageId { get; private set; }
         public ApplianceUsage ApplianceUsage { get; private set; }
@@ -42,22 +42,12 @@ namespace SolarTally.Domain.Entities
             RecalculateTotalTimes();
         }
 
-        public void ClearUsageIntervals()
+        protected override void _ClearUsageIntervals()
         {
             _usageIntervals.Clear();
-            RecalculateTotalTimes();
         }
 
-        public void AddUsageInterval(
-            int startHr, int startMin, int endHr, int endMin,
-            UsageKind usageKind
-        )
-        {
-            _addUsageInterval(startHr, startMin, endHr, endMin, usageKind);
-            RecalculateTotalTimes();
-        }
-
-        private void _addUsageInterval(
+        protected override void _AddUsageInterval(
             int startHr, int startMin, int endHr, int endMin,
             UsageKind usageKind
         )
@@ -116,14 +106,8 @@ namespace SolarTally.Domain.Entities
             // If we're here then we're past all the intervals. So OK to Add.
             _usageIntervals.Add(newUTI);
         }
-
-        public void HandlePeakSolarIntervalUpdated()
-        {
-            _handlePeakSolarIntervalUpdated();
-            RecalculateTotalTimes();
-        }
         
-        public void _handlePeakSolarIntervalUpdated()
+        protected override void _HandlePeakSolarIntervalUpdated()
         {
             var ti = ReadOnlySiteSettings.PeakSolarInterval;
             int startHr = ti.Start.Hours, startMin = ti.Start.Minutes;
@@ -195,7 +179,7 @@ namespace SolarTally.Domain.Entities
             }
         }
     
-        public void RecalculateTotalTimes()
+        public override void RecalculateTotalTimes()
         {
             _totalTimeOnSolar = new TimeSpan(0,0,0);
             _totalTimeOffSolar = new TimeSpan(0,0,0);
