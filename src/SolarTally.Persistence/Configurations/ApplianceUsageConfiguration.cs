@@ -21,18 +21,6 @@ namespace SolarTally.Persistence.Configurations
                 .HasDefaultValue<decimal>(20.5)
                 .IsRequired();
 
-            auConfiguration.Property(au => au.NumHoursOnSolar)
-                .HasColumnType("decimal(4,2)")
-                .IsRequired();
-            
-            auConfiguration.Property(au => au.NumHoursOffSolar)
-                .HasColumnType("decimal(4,2)")
-                .IsRequired();
-            
-            auConfiguration.Property(au => au.NumHours)
-                .HasColumnType("decimal(4,2)")
-                .IsRequired();
-
             auConfiguration.Property(au => au.Enabled)
                 .HasColumnType("boolean")
                 .HasDefaultValue<bool>(true)

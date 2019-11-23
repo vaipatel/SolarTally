@@ -20,6 +20,19 @@ namespace SolarTally.Persistence.Configurations
             ausConfiguration.Property(aus => aus.TotalTimeOffSolar)
                 .HasColumnType("time(0)");
             
+            
+            ausConfiguration.Property(aus => aus.HoursOnSolar)
+                .HasColumnType("decimal(4,2)")
+                .IsRequired();
+            
+            ausConfiguration.Property(aus => aus.HoursOffSolar)
+                .HasColumnType("decimal(4,2)")
+                .IsRequired();
+            
+            ausConfiguration.Property(aus => aus.Hours)
+                .HasColumnType("decimal(4,2)")
+                .IsRequired();
+            
             ausConfiguration.OwnsMany(aus => aus.UsageIntervals,
             utiConfig => {
                 // Stole the bottom 3 lines from https://docs.microsoft.com/en-us/ef/core/modeling/owned-entities#collections-of-owned-types
