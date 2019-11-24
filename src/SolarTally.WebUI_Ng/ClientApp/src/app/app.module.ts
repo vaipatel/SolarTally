@@ -10,6 +10,7 @@ import { SitesComponent } from './sites/sites.component';
 import { SiteDetailComponent } from './site-detail/site-detail.component';
 import { ConsumptionComponent } from './consumption/consumption.component';
 import { ApplianceUsageComponent } from './appliance-usage/appliance-usage.component';
+import { UsageIntervalsEditorComponent } from './usage-intervals-editor/usage-intervals-editor.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -39,7 +40,8 @@ import { KiloPipe } from './shared/pipes/kilo.pipe';
     SiteDetailComponent,
     ConsumptionComponent,
     KiloPipe,
-    ApplianceUsageComponent
+    ApplianceUsageComponent,
+    UsageIntervalsEditorComponent
   ],
   imports: [
     BrowserModule,
