@@ -17,6 +17,8 @@
         <p>Hours On Solar: {{au.applianceUsageScheduleDto.hoursOnSolar}} hrs</p>
         <p>Hours Off Solar: {{au.applianceUsageScheduleDto.hoursOffSolar}} hrs</p>
         <p>Description: {{au.applianceDto.description}}</p>
+        <h3>Usage Schedule</h3>
+        <app-usage-intervals-editor schedule="au.applianceUsageScheduleDto"></app-usage-intervals-editor>
         <ul>
             <li *ngFor="let ui of au.applianceUsageScheduleDto.usageIntervals">
                 {{ui.timeInterval.start.hours}}:{{ui.timeInterval.start.minutes}} - 
