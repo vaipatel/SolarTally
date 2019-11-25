@@ -1,14 +1,16 @@
-<div [formGroup]="usageIntervalsForm">
+<!-- <div [formGroup]="auForm"> -->
+<div [formGroup]="usageIntervalsGroup">
     <div formArrayName="utis">
         <div *ngFor="let uti of utis.controls; let i=index" [formGroupName]="i">
-            <label>
-                Start:
-                <input type="time" formControlName="start">
-            </label>
-            <label>
-                End:
-                <input type="time" formControlName="end">
-            </label>
+            <mat-form-field>
+                <mat-label>Start</mat-label>                
+                <input matInput type="time" formControlName="start" >      
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>End</mat-label>
+                <input matInput type="time" formControlName="end">
+            </mat-form-field>
         </div>
     </div>
 </div>
+<!-- </div> -->
