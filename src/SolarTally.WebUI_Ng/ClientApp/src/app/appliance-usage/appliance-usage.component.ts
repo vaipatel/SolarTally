@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApplianceUsage } from '../shared/dtos/appliance-usage';
 
 @Component({
@@ -11,7 +12,10 @@ export class ApplianceUsageComponent implements OnInit {
   @Input() au: ApplianceUsage;
   @Output() remove: EventEmitter<any> = new EventEmitter();
 
-  constructor() { }
+  auForm: FormGroup = this.fb.group({});
+
+  constructor(public fb: FormBuilder) { 
+  }
 
   ngOnInit() {
   }

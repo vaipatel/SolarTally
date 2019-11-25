@@ -1,11 +1,14 @@
 <mat-card class="margin-bottom-10">
-    <div style="position: absolute; top: 0; right: 0;">
-        <button mat-icon-button>
-            <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button (click)="emitRemove()">
-            <mat-icon>close</mat-icon>
-        </button>
+    <div [formGroup]="auForm">
+        <div style="position: absolute; top: 0; right: 0;">
+            <button mat-icon-button>
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="emitRemove()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        </mat-card-content>
     </div>
     <mat-card-title>
         {{au.applianceDto.name}}
@@ -19,12 +22,4 @@
         <p>Description: {{au.applianceDto.description}}</p>
         <h3>Usage Schedule</h3>
         <app-usage-intervals-editor schedule="au.applianceUsageScheduleDto"></app-usage-intervals-editor>
-        <ul>
-            <li *ngFor="let ui of au.applianceUsageScheduleDto.usageIntervals">
-                {{ui.timeInterval.start.hours}}:{{ui.timeInterval.start.minutes}} - 
-                {{ui.timeInterval.end.hours}}:{{ui.timeInterval.end.minutes}}  
-                {{ui.usageKind}}
-            </li>
-        </ul>
-    </mat-card-content>
 </mat-card>
