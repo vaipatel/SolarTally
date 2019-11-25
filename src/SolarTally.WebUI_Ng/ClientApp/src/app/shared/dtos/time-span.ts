@@ -162,4 +162,14 @@ export class TimeSpan {
         const result = this._millis - ts.totalMilliseconds;
         return new TimeSpan(result);
     }
+
+    public static pad(m: number, padChar: string = "0", len: number = 2): string {
+        let m_str: string = m + "";
+        while(m_str.length < len) m_str = padChar + m_str;
+        return m_str;
+    }
+
+    public static toAString(ts: TimeSpan, sep: string = ":"): string {
+        return (TimeSpan.pad(ts.hours) + sep + TimeSpan.pad(ts.minutes));
+    }
 }
