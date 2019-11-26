@@ -4,3 +4,10 @@ export enum UsageKind {
     UsingBattery,
     UsingGenerator
 }
+
+export const USAGE_KINDS: string[] = [
+    "Solar",
+    "Mains",
+    "Battery",
+    "Generator"
+];
