@@ -116,6 +116,8 @@ namespace SolarTally.WebUI_Ng
                     UsageKind.UsingSolar);
                 au.ApplianceUsageSchedule.AddUsageInterval(17,0,19,0,
                     UsageKind.UsingBattery);
+                au.ApplianceUsageSchedule.AddUsageInterval(19,45,21,0,
+                    UsageKind.UsingGenerator);
                 au.Recalculate();
             }
             Consumptions[1].Recalculate();
@@ -128,7 +130,7 @@ namespace SolarTally.WebUI_Ng
                 au.ApplianceUsageSchedule.AddUsageInterval(8,0,13,0,
                     UsageKind.UsingSolar);
                 au.ApplianceUsageSchedule.AddUsageInterval(20,0,23,0,
-                    UsageKind.UsingMains);
+                    UsageKind.UsingGenerator);
                 au.Recalculate();
                 Consumptions[2].Recalculate();
             }
