@@ -3,6 +3,7 @@ import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApplianceUsageSchedule } from '../shared/dtos/appliance-usage-schedule';
 import { TimeSpan } from '../shared/dtos/time-span';
 import { UsageTimeInterval } from '../shared/dtos/usage-time-interval';
+import { UsageKind, USAGE_KINDS } from '../shared/enums/usage-kind.enum';
 
 @Component({
   selector: 'app-usage-intervals-editor',
@@ -15,6 +16,7 @@ export class UsageIntervalsEditorComponent implements OnInit {
   @Input() auForm: FormGroup;
 
   usageIntervalsGroup: FormGroup;
+  usageKinds: string[] = USAGE_KINDS;
   
   constructor(private fb: FormBuilder) {
   }
@@ -26,7 +28,7 @@ export class UsageIntervalsEditorComponent implements OnInit {
     this.usageIntervalsGroup.setParent(this.auForm);
 
     this.schedule.usageIntervals.forEach((ui: UsageTimeInterval) => {
-      this.addUti(ui.timeInterval.start, ui.timeInterval.end);
+      this.addUti(ui.timeInterval.start, ui.timeInterval.end, ui.usageKind);
     });
   }
 
@@ -43,11 +45,11 @@ export class UsageIntervalsEditorComponent implements OnInit {
     return this.usageIntervalsGroup.get('utis') as FormArray;
   }
 
-  addUti(s: TimeSpan, e: TimeSpan) {
-    // console.log(s.toString());
+  addUti(s: TimeSpan, e: TimeSpan, uk: UsageKind) {
     this.utis.push(this.fb.group({
       start: [TimeSpan.toAString(s), Validators.required],
-      end: [TimeSpan.toAString(e), Validators.required]
+      end: [TimeSpan.toAString(e), Validators.required],
+      usageKind: [uk, Validators.required]
     }));
   }
 
