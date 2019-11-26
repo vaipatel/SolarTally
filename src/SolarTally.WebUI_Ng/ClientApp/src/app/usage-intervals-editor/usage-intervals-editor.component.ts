@@ -32,15 +32,6 @@ export class UsageIntervalsEditorComponent implements OnInit {
     });
   }
 
-  // ngOnChanges(changes: SimpleChanges) {
-  //   for (let propName in changes) {
-  //     let chng = changes[propName];
-  //     let cur  = JSON.stringify(chng.currentValue);
-  //     let prev = JSON.stringify(chng.previousValue);
-  //     console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
-  //   }
-  // }
-
   get utis() {
     return this.usageIntervalsGroup.get('utis') as FormArray;
   }
