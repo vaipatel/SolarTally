@@ -44,4 +44,9 @@ export class UsageIntervalsEditorComponent implements OnInit {
     }));
   }
 
+  emitRemoveUti(id: number) {
+    this.utis.removeAt(id);
+    this.schedule.usageIntervals.splice(id);
+  }
+
 }
