@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ApplianceUsageSchedule } from '../shared/dtos/appliance-usage-schedule';
 import { TimeSpan } from '../shared/dtos/time-span';
@@ -14,6 +14,7 @@ export class UsageIntervalsEditorComponent implements OnInit {
 
   @Input() schedule: ApplianceUsageSchedule;
   @Input() auForm: FormGroup;
+  @Output() removeUti: EventEmitter<any> = new EventEmitter();
 
   usageIntervalsGroup: FormGroup;
   usageKinds: string[] = USAGE_KINDS;
@@ -46,7 +47,7 @@ export class UsageIntervalsEditorComponent implements OnInit {
 
   emitRemoveUti(id: number) {
     this.utis.removeAt(id);
-    this.schedule.usageIntervals.splice(id);
+    this.removeUti.emit();
   }
 
 }
