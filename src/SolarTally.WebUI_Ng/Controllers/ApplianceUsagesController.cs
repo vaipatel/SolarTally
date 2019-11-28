@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using SolarTally.Application.ApplianceUsages.Commands.AddApplianceUsage;
 using SolarTally.Application.ApplianceUsages.Queries.Dtos;
 using SolarTally.Application.ApplianceUsages.Queries.GetApplianceUsagesById;
+using SolarTally.Application.Consumptions.Queries.Dtos;
 using System.Threading.Tasks;
 
 namespace SolarTally.WebUI_Ng.Controllers
@@ -20,6 +21,13 @@ namespace SolarTally.WebUI_Ng.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<ApplianceUsageDto>> AddToConsumption(
             [FromBody] AddApplianceUsageCommand command)
+        {
+            return Ok(await Mediator.Send(command));
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<ConsumptionDto>> UpdateApplianceUsage(
+            [FromBody] UpdateApplianceUsageCommand command)
         {
             return Ok(await Mediator.Send(command));
         }
