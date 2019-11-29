@@ -10,7 +10,6 @@ import { ApplianceUsage } from '../shared/dtos/appliance-usage';
 export class ApplianceUsageComponent implements OnInit {
 
   @Input() au: ApplianceUsage;
-  @Input() consumptionId: number;
   @Output() remove: EventEmitter<any> = new EventEmitter();
 
   auForm: FormGroup = this.fb.group({});
