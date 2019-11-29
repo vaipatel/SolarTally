@@ -11,6 +11,7 @@ export class ApplianceUsageComponent implements OnInit {
 
   @Input() au: ApplianceUsage;
   @Output() remove: EventEmitter<any> = new EventEmitter();
+  @Output() update: EventEmitter<any> = new EventEmitter();
 
   auForm: FormGroup = this.fb.group({});
 
@@ -22,6 +23,10 @@ export class ApplianceUsageComponent implements OnInit {
 
   emitRemove() {
     this.remove.emit(this.au);
+  }
+
+  emitUpdate() {
+    this.update.emit(this.au);
   }
 
 }
