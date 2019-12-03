@@ -15,7 +15,7 @@ export class UsageIntervalsEditorComponent implements OnInit {
   // @Input() schedule: ApplianceUsageSchedule;
   @Input() schedule: ApplianceUsageScheduleStr;
   @Input() auForm: FormGroup;
-  @Output() removeUti: EventEmitter<any> = new EventEmitter();
+  // @Output() removeUti: EventEmitter<any> = new EventEmitter();
 
   usageIntervalsGroup: FormGroup;
   usageKinds: string[] = USAGE_KINDS;
@@ -65,9 +65,10 @@ export class UsageIntervalsEditorComponent implements OnInit {
     }));
   }
 
-  emitRemoveUti(id: number) {
+  removeUti(id: number) {
     this.utis.removeAt(id);
-    this.removeUti.emit();
+    this.schedule.usageIntervals.splice(id, 1);
+    // this.removeUti.emit();
   }
 
 }
