@@ -15,6 +15,7 @@ export class ApiService {
   private siteDetailUrl = "api/sites/getdetail/";
   private auByIdUrl = "api/applianceusages/getforconsumption/";
   private addAUByIdUrl = "api/applianceusages/addtoconsumption/";
+  private updateAUUrl = "api/applianceusages/updateapplianceusage";
 
   constructor(private http: HttpClient) { }
 
@@ -43,5 +44,9 @@ export class ApiService {
       numHoursOnSolar: 1,
       numHoursOffSolar: 1
     });
+  }
+
+  updateApplianceUsage(command: UpdateApplianceUsageCommandStr): Observable<Consumption> {
+    return this.http.post<Consumption>(this.updateAUUrl, command);
   }
 }
