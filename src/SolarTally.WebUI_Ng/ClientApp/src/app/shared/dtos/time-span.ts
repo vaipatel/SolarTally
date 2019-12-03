@@ -173,3 +173,18 @@ export class TimeSpan {
         return (TimeSpan.pad(ts.hours) + sep + TimeSpan.pad(ts.minutes));
     }
 }
+
+export class TimeSpanAbrv {
+    hours: number;
+    minutes: number;
+
+    constructor(ts?: string) {
+        if (ts == null) return;
+        let splitTS = ts.split(":");
+        if (splitTS.length != 3) {
+            throw new Error("The TimeSpanAbrv ctor param " + ts + " is incorrect.");
+        }
+        this.hours = +splitTS[0];
+        this.minutes = +splitTS[1];
+    }
+}
