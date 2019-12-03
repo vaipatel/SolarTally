@@ -22,11 +22,11 @@ export class ApplianceUsageComponent implements OnInit {
   }
 
   emitRemove() {
-    this.remove.emit(this.au);
+    // this.remove.emit();
   }
 
   emitUpdate() {
-    this.update.emit(this.au);
+    this.update.emit();
   }
 
 }
