@@ -13,3 +13,10 @@ export class TimeIntervalAbrv
     end: TimeSpanAbrv;
     difference: TimeSpanAbrv;
 }
+
+export class TimeIntervalStr
+{
+    start: string;
+    end: string;
+    difference: string;
+}
