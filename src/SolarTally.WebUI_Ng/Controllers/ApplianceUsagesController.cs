@@ -26,11 +26,22 @@ namespace SolarTally.WebUI_Ng.Controllers
             return Ok(await Mediator.Send(command));
         }
 
+        // [HttpPost]
+        // public async Task<ActionResult<ConsumptionDto>> UpdateApplianceUsage(
+        //     [FromBody] UpdateApplianceUsageCommand command)
+        // {
+        //     return Ok(await Mediator.Send(command));
+        // }
+
         [HttpPost]
-        public async Task<ActionResult<ConsumptionDto>> UpdateApplianceUsage(
-            [FromBody] UpdateApplianceUsageCommand command)
+        public ActionResult UpdateApplianceUsage(UpdateApplianceUsageCommand command)
         {
-            return Ok(await Mediator.Send(command));
+            if (!ModelState.IsValid) {
+                return BadRequest();
+            }
+            System.Console.WriteLine($"\nUsageIntervals.Count: {command.UsageIntervals.Count}\n");
+            return Ok(command);
+            // return Ok(await Mediator.Send(command));
         }
     }
 }
