@@ -31,7 +31,7 @@
     <mat-tab label="Appliances">
         <div class="padding-10">
             <h2>Appliances</h2>
-            <app-appliance-usage *ngFor="let auStr of auListStr" [au]="auStr" (remove)="removeApplianceUsage(auStr)">
+            <app-appliance-usage *ngFor="let auStr of auListStr" [au]="auStr" (remove)="removeApplianceUsage(auStr)" (update)="updateApplianceUsage(auStr)">
             </app-appliance-usage>
         </div>
     </mat-tab>
