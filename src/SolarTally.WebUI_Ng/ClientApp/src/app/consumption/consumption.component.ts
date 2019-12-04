@@ -73,7 +73,7 @@ export class ConsumptionComponent implements OnInit {
   //   });
   // }
 
-  removeApplianceUsage(au: ApplianceUsage) {
+  removeApplianceUsage(au: ApplianceUsageStr) {
     console.log("Will remove appliance usage " + au.id);
   }
 

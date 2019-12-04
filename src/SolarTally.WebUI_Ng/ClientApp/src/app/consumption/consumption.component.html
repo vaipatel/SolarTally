@@ -31,7 +31,7 @@
     <mat-tab label="Appliances">
         <div class="padding-10">
             <h2>Appliances</h2>
-            <app-appliance-usage *ngFor="let au of auList" [au]="au" (remove)="removeApplianceUsage(au)">
+            <app-appliance-usage *ngFor="let auStr of auListStr" [au]="auStr" (remove)="removeApplianceUsage(auStr)">
             </app-appliance-usage>
         </div>
     </mat-tab>
@@ -39,8 +39,8 @@
         <div class="padding-10">
             <h2>Schedule</h2>
             <ul>
-                <li *ngFor="let au of auList">
-                    Schedule for {{au.applianceDto.name}} with Id {{au.id}}
+                <li *ngFor="let auStr of auListStr">
+                    Schedule for {{auStr.applianceDto.name}} with Id {{auStr.id}}
                 </li>
             </ul>
         </div>
