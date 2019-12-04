@@ -26,4 +26,10 @@ namespace SolarTally.Domain.ValueObjects
             yield return UsageKind;
         }
     }
+
+    public class UsageTimeIntervalAbrv
+    {
+        public TimeIntervalAbrv TimeInterval { get; set; }
+        public UsageKind UsageKind { get; set; }
+    }
 }

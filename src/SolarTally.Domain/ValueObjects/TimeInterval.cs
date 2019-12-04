@@ -21,16 +21,22 @@ namespace SolarTally.Domain.ValueObjects
         var start = new TimeSpan(startHr, startMin, 0);
         var end = new TimeSpan(endHr, endMin, 0);
         Start = start;
-        End = end;
-        Difference = End - Start;
+            End = end;
+            Difference = End - Start;
+        }
+
+        protected override IEnumerable<object> GetAtomicValues()
+        {
+            // Using a yield return statement to return each element one at a time
+            yield return Start;
+            yield return End;
+            yield return Difference;
+        }
     }
 
-    protected override IEnumerable<object> GetAtomicValues()
+    public class TimeIntervalAbrv
     {
-        // Using a yield return statement to return each element one at a time
-        yield return Start;
-        yield return End;
-        yield return Difference;
+        public TimeSpan Start { get; set; }
+        public TimeSpan End { get; set; }
     }
-}
 }
