@@ -10,8 +10,10 @@ using SolarTally.Domain.Entities;
 using SolarTally.Application.ApplianceUsages.Queries.Dtos;
 using SolarTally.Application.Consumptions.Queries.Dtos;
 using AutoMapper;
+using SolarTally.Domain.ValueObjects;
+using SolarTally.Domain.Enumerations;
 
-namespace SolarTally.Application.ApplianceUsages.Commands.AddApplianceUsage
+namespace SolarTally.Application.ApplianceUsages.Commands.UpdateApplianceUsage
 {
     public class UpdateApplianceUsageCommand : IRequest<ConsumptionDto>
     {
@@ -20,7 +22,7 @@ namespace SolarTally.Application.ApplianceUsages.Commands.AddApplianceUsage
         // public int ApplianceId { get; set; }
         public int Quantity { get; set; }
         public decimal PowerConsumption { get; set; }
-        public ApplianceUsageScheduleDto ApplianceUsageScheduleDto { get; set; }
+        public IList<UsageTimeIntervalAbrv> UsageIntervals { get; set; }
         // public bool Enabled { get; set; }
     }
 
@@ -67,10 +69,12 @@ namespace SolarTally.Application.ApplianceUsages.Commands.AddApplianceUsage
 
             // Some logging
             Console.WriteLine($"\nApplianceUsageId is {au.Id}\n");
+            Console.WriteLine($"Num usage intervals: {command.UsageIntervals.Count}\n");
 
             au.ApplianceUsageSchedule.ClearUsageIntervals();
-            foreach(var ui in command.ApplianceUsageScheduleDto.UsageIntervals)
+            foreach(var ui in command.UsageIntervals)
             {
+                var ti = ui.TimeInterval;
                 var startTI = ui.TimeInterval.Start;
                 var startHr = startTI.Hours; var startMin = startTI.Minutes;
                 var endTI = ui.TimeInterval.End;
