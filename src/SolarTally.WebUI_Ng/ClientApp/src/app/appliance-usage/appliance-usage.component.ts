@@ -22,7 +22,7 @@ export class ApplianceUsageComponent implements OnInit {
   }
 
   emitRemove() {
-    // this.remove.emit();
+    this.remove.emit();
   }
 
   emitUpdate() {
