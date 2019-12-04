@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SolarTally.Application.ApplianceUsages.Commands.AddApplianceUsage;
+using SolarTally.Application.ApplianceUsages.Commands.UpdateApplianceUsage;
 using SolarTally.Application.ApplianceUsages.Queries.Dtos;
 using SolarTally.Application.ApplianceUsages.Queries.GetApplianceUsagesById;
 using SolarTally.Application.Consumptions.Queries.Dtos;
