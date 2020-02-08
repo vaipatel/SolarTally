@@ -18,9 +18,22 @@ namespace SolarTally.Persistence.Configurations
             siteConfiguration.OwnsOne(s => s.MainAddress);
 
             siteConfiguration.Property(s => s.NumSolarHours)
-                .HasColumnType("smallint")
-                .HasDefaultValue<int>(8)
+                .HasColumnType("decimal(4,2)")
                 .IsRequired();
+
+            siteConfiguration.OwnsOne(s => s.PeakSolarInterval, 
+                psiConfiguration => 
+                {
+                    psiConfiguration
+                        .Property(p => p.Start)
+                        .HasColumnType("time(0)");
+                    psiConfiguration
+                        .Property(p => p.End)
+                        .HasColumnType("time(0)");
+                    psiConfiguration
+                        .Property(p => p.Difference)
+                        .HasColumnType("time(0)");
+                });
 
             // Previous (summarized)
             // --------------------------------------------------------------

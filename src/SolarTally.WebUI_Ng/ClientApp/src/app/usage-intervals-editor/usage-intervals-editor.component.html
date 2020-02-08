@@ -1,0 +1,27 @@
+<!-- <div [formGroup]="auForm"> -->
+<div [formGroup]="usageIntervalsGroup">
+    <div formArrayName="utis">
+        <div *ngFor="let uti of utis.controls; let i=index" [formGroupName]="i">
+            <mat-form-field>
+                <mat-label>Start</mat-label>                
+                <input matInput type="time" formControlName="start" >      
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>End</mat-label>
+                <input matInput type="time" formControlName="end">
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Usage</mat-label>
+                <mat-select formControlName="usageKind" required>
+                    <mat-option *ngFor="let ukind of usageKinds; let j=index" [value]="j">
+                        {{ukind}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+            <button mat-icon-button (click)="removeUti(i)">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>
+<!-- </div> -->

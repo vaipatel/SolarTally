@@ -5,6 +5,7 @@
 
 trigger:
 - master
+- startup-power-and-schedule
 
 pool:
   vmImage: 'ubuntu-latest'

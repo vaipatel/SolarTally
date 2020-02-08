@@ -1,21 +1,28 @@
 <mat-card class="margin-bottom-10">
-    <div style="position: absolute; top: 0; right: 0;">
-        <button mat-icon-button>
-            <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button (click)="emitRemove()">
-            <mat-icon>close</mat-icon>
-        </button>
+    <div [formGroup]="auForm">
+        <div style="position: absolute; top: 0; right: 0;">
+            <button mat-icon-button>
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="emitUpdate()">
+                <mat-icon>check</mat-icon>
+            </button>
+            <button mat-icon-button (click)="emitRemove()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <mat-card-title>
+            {{au.applianceDto.name}}
+        </mat-card-title>
+        <mat-card-subtitle></mat-card-subtitle>
+        <mat-card-content>
+            <p>Power: {{au.powerConsumption}} W</p>
+            <p>Quantity: {{au.quantity}}</p>
+            <p>Hours On Solar: {{au.applianceUsageScheduleDto.hoursOnSolar}} hrs</p>
+            <p>Hours Off Solar: {{au.applianceUsageScheduleDto.hoursOffSolar}} hrs</p>
+            <p>Description: {{au.applianceDto.description}}</p>
+            <h3>Usage Schedule</h3>
+            <app-usage-intervals-editor [schedule]="au.applianceUsageScheduleDto" [auForm]="auForm"></app-usage-intervals-editor>
+        </mat-card-content>
     </div>
-    <mat-card-title>
-        {{au.applianceDto.name}}
-    </mat-card-title>
-    <mat-card-subtitle></mat-card-subtitle>
-    <mat-card-content>
-        <p>Power: {{au.powerConsumption}} W</p>
-        <p>Quantity: {{au.quantity}}</p>
-        <p>Hours On Solar: {{au.numHoursOnSolar}} hrs</p>
-        <p>Hours Off Solar: {{au.numHoursOffSolar}} hrs</p>
-        <p>Description: {{au.applianceDto.description}}</p>
-    </mat-card-content>
 </mat-card>

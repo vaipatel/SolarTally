@@ -16,23 +16,21 @@ namespace SolarTally.Application.ApplianceUsages.Queries.Dtos
 
         public decimal PowerConsumption { get; set; }
 
-        public int NumHoursOnSolar { get; set; }
-
-        public int NumHoursOffSolar { get; set; }
-
-        public int NumHours { get; set; }
-
         public bool Enabled { get; set; }
 
         public int ConsumptionId { get; set; }
 
         public ApplianceUsageTotal ApplianceUsageTotal { get; set; }
 
+        public ApplianceUsageScheduleDto ApplianceUsageScheduleDto { get; set; }
+
         public void Mapping(Profile profile)
         {
             profile.CreateMap<ApplianceUsage, ApplianceUsageDto>()
                 .ForMember(d => d.ApplianceDto, 
                     opt => opt.MapFrom(s => s.Appliance))
+                .ForMember(d => d.ApplianceUsageScheduleDto,
+                    opt => opt.MapFrom(s => s.ApplianceUsageSchedule));
                 ;
         }
     }

@@ -52,8 +52,9 @@ SolarTally.Application.ApplianceUsages.Queries.GetApplianceUsagesById
                 from au in _context.ApplianceUsages
                 where au.ConsumptionId == request.ConsumptionId
                 join appliance in _context.Appliances on au.Appliance.Id equals appliance.Id
+                join auSched in _context.ApplianceUsageSchedules on au.Id equals auSched.Id
                 orderby au.Id
-                select new { ApplianceUsage = au, Appliance = appliance };
+                select new { ApplianceUsage = au, Appliance = appliance, ApplianceUsageSchedule = auSched };
             
             var queryOut = await 
                 query.AsNoTracking().ToListAsync(cancellationToken);
@@ -63,6 +64,9 @@ SolarTally.Application.ApplianceUsages.Queries.GetApplianceUsagesById
             {
                 var auDto = _mapper.Map<ApplianceUsageDto>(o.ApplianceUsage);
                 auDto.ApplianceDto = _mapper.Map<ApplianceDto>(o.Appliance);
+                auDto.ApplianceUsageScheduleDto =
+                    _mapper.Map<ApplianceUsageScheduleDto>(
+                        o.ApplianceUsageSchedule);
                 auDtos.Add(auDto);
             }
             

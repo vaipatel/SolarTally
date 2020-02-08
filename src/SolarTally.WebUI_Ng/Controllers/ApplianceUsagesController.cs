@@ -2,8 +2,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SolarTally.Application.ApplianceUsages.Commands.AddApplianceUsage;
+using SolarTally.Application.ApplianceUsages.Commands.UpdateApplianceUsage;
 using SolarTally.Application.ApplianceUsages.Queries.Dtos;
 using SolarTally.Application.ApplianceUsages.Queries.GetApplianceUsagesById;
+using SolarTally.Application.Consumptions.Queries.Dtos;
 using System.Threading.Tasks;
 
 namespace SolarTally.WebUI_Ng.Controllers
@@ -22,6 +24,24 @@ namespace SolarTally.WebUI_Ng.Controllers
             [FromBody] AddApplianceUsageCommand command)
         {
             return Ok(await Mediator.Send(command));
+        }
+
+        // [HttpPost]
+        // public async Task<ActionResult<ConsumptionDto>> UpdateApplianceUsage(
+        //     [FromBody] UpdateApplianceUsageCommand command)
+        // {
+        //     return Ok(await Mediator.Send(command));
+        // }
+
+        [HttpPost]
+        public ActionResult UpdateApplianceUsage(UpdateApplianceUsageCommand command)
+        {
+            if (!ModelState.IsValid) {
+                return BadRequest();
+            }
+            System.Console.WriteLine($"\nUsageIntervals.Count: {command.UsageIntervals.Count}\n");
+            return Ok(command);
+            // return Ok(await Mediator.Send(command));
         }
     }
 }

@@ -1,0 +1,62 @@
+//@import "../../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
+// input[type="time"] {
+//     width: 7em;
+// }
+
+.mat-form-field {
+    width: 6em;
+    padding-right: 1.5em;
+}
+.mat-form-field:last-of-type {
+    padding-right: 0;
+}
+
+@media all and (min-width: 600px) {
+    .mat-form-field {
+        width: 10em;
+        padding-right: 1em;
+    }
+    .mat-form-field:last-of-type {
+        padding-right: 0;
+    }
+}
+
+@media all and (max-width: 400px) {
+    .mat-form-field {
+        padding-right: 1em;
+    }
+    .mat-form-field:last-of-type {
+        padding-right: 0;
+    }
+}
+
+@media all and (max-width: 374px) {
+    .mat-form-field {
+        // width: 6em;
+        padding-right: 0.5em;
+    }
+    .mat-form-field:last-of-type {
+        padding-right: 0;
+    }
+    .mat-button, .mat-icon-button {
+        width: 30px;
+        height: auto;
+    }
+}
+
+// The below is unable to stuff the x at the end, but need something for IPhone 5 or less.
+// @media all and (max-width: 321) {
+//     .mat-form-field {
+//         width: 4em;
+//         padding-right: 0.1em;
+//     }
+//     .mat-form-field:last-of-type {
+//         width: 4em;
+//         padding-right: 0;
+//     }
+//     .mat-button, .mat-icon-button {
+//         width: 30px;
+//         height: auto;
+//     }
+// }

@@ -46,7 +46,7 @@ namespace SolarTally.WebUI_Ng
             // see https://github.com/JasonGT/NorthwindTraders/blob/3f525af3b48a10ea0cb686d71a18d35be39f33e1/Src/WebUI/Startup.cs#L35-L37)
             services.AddApplication();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddNewtonsoftJson();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {

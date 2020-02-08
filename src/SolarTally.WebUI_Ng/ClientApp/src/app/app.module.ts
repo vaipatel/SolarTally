@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule }    from '@angular/common/http';
 import { DecimalPipe } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -9,6 +10,7 @@ import { SitesComponent } from './sites/sites.component';
 import { SiteDetailComponent } from './site-detail/site-detail.component';
 import { ConsumptionComponent } from './consumption/consumption.component';
 import { ApplianceUsageComponent } from './appliance-usage/appliance-usage.component';
+import { UsageIntervalsEditorComponent } from './usage-intervals-editor/usage-intervals-editor.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -22,6 +24,7 @@ import {
   MatInputModule,
   MatListModule,
   MatMenuModule,
+  MatSelectModule,
   MatTabsModule,
   MatTableModule,
   MatToolbarModule,
@@ -38,11 +41,14 @@ import { KiloPipe } from './shared/pipes/kilo.pipe';
     SiteDetailComponent,
     ConsumptionComponent,
     KiloPipe,
-    ApplianceUsageComponent
+    ApplianceUsageComponent,
+    UsageIntervalsEditorComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     //Material
@@ -54,6 +60,7 @@ import { KiloPipe } from './shared/pipes/kilo.pipe';
     MatInputModule,
     MatListModule,
     MatMenuModule,
+    MatSelectModule,
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,

@@ -15,6 +15,7 @@ namespace SolarTally.Domain.Entities
     {
         // Site Nav prop
         public Site Site { get; private set; }
+        public IReadOnlySiteSettings ReadOnlySiteSettings => Site;
 
         private readonly List<ApplianceUsage> _applianceUsages;
         public IReadOnlyCollection<ApplianceUsage> ApplianceUsages =>
@@ -39,15 +40,9 @@ namespace SolarTally.Domain.Entities
             Guard.Against.Null(appliance, nameof(appliance));
             var applianceUsage = new ApplianceUsage(this, appliance,
                 ApplianceUsage.DefaultQuantity,
-                appliance.DefaultPowerConsumption, Site.NumSolarHours,
-                ApplianceUsage.DefaultNumHoursOffSolar, true);
+                appliance.DefaultPowerConsumption, true);
             _applianceUsages.Add(applianceUsage);
             this.Recalculate();
-        }
-
-        public int GetSiteNumSolarHours()
-        {
-            return Site.NumSolarHours;
         }
 
         public void Recalculate()

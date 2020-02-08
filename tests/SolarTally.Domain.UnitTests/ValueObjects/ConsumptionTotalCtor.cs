@@ -4,6 +4,7 @@ using Xunit;
 using SolarTally.Domain.ValueObjects;
 using SolarTally.Domain.Entities;
 using SolarTally.Domain.UnitTests.Builders;
+using SolarTally.Domain.Enumerations;
 
 namespace SolarTally.Domain.UnitTests.ValueObjects
 {
@@ -12,29 +13,42 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
         [Theory]
         [MemberData(nameof(TestData))]
         public void ShouldCalcTheCorrectTotals(
-            List<CompactApplianceUsage> applianceUsages,
+            List<CompactApplianceUsage> inApplianceUsages,
+            decimal expMaxPowerConsumption,
             decimal expTotalPowerConsumption,
             decimal expTotalOnSolarEnergyConsumption,
             decimal expTotalOffSolarEnergyConsumption,
             decimal expTotalEnergyConsumption)
         {
             var site = new SiteBuilder().Build();
-            for (int i = 0; i < applianceUsages.Count; ++i)
+            for (int i = 0; i < inApplianceUsages.Count; ++i)
             {
                 // Add a new Applianceusage
                 var appliance = new ApplianceBuilder().Build();
                 site.Consumption.AddApplianceUsage(appliance);
                 // Modify it based on the passed test data
                 var applianceUsage = site.Consumption.ApplianceUsages.Last();
-                applianceUsage.SetQuantity(applianceUsages[i].Quantity);
+                // Rem the default usage interval
+                applianceUsage.ApplianceUsageSchedule.ClearUsageIntervals();
+                var inApplianceUsage = inApplianceUsages[i];
+                applianceUsage.SetQuantity(inApplianceUsage.Quantity);
                 applianceUsage.SetPowerConsumption(
-                    applianceUsages[i].PowerConsumption);
-                applianceUsage.SetNumHoursOnSolar(
-                    applianceUsages[i].NumHoursOnSolar);
-                applianceUsage.SetNumHoursOffSolar(
-                    applianceUsages[i].NumHoursOffSolar);
+                    inApplianceUsage.PowerConsumption);
+                foreach(var uti in inApplianceUsage.UsageIntervals)
+                {
+                    var ti = uti.TimeInterval;
+                    int startHr = ti.Start.Hours, startMin = ti.Start.Minutes;
+                    int endHr   = ti.End.Hours,   endMin   = ti.End.Minutes;
+                    applianceUsage.ApplianceUsageSchedule.AddUsageInterval(
+                        startHr, startMin, endHr, endMin, uti.UsageKind
+                    );
+                }
+                applianceUsage.Recalculate();
             }
+            site.Consumption.Recalculate();
 
+            Assert.Equal(expMaxPowerConsumption, 
+                site.Consumption.ConsumptionTotal.MaxPowerConsumption);
             Assert.Equal(expTotalPowerConsumption,
                 site.Consumption.ConsumptionTotal.TotalPowerConsumption);
             Assert.Equal(expTotalOnSolarEnergyConsumption,
@@ -53,32 +67,304 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
                 // All zeros
                 new object[] {
                     new List<CompactApplianceUsage>{
-                        new CompactApplianceUsage(0, 0, 0, 0),
-                        new CompactApplianceUsage(2, 0, 0, 0),
-                        new CompactApplianceUsage(0, 20.6m, 0, 0),
-                        new CompactApplianceUsage(0, 0, 3, 3),
-                        new CompactApplianceUsage(0, 20.6m, 3, 3),
-                        new CompactApplianceUsage(2, 0, 3, 3)
+                        new CompactApplianceUsage(0, 0, 0, 0,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(8,0,8,0)
+                                )
+                            }
+                        ),
+                        new CompactApplianceUsage(2, 0, 0, 0,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(8,0,8,0)
+                                )
+                            }
+                        ),
+                        new CompactApplianceUsage(0, 20.6m, 0, 0,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(8,0,8,0)
+                                )
+                            }
+                        ),
+                        new CompactApplianceUsage(0, 0, 3, 3,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(8,0,11,0)
+                                )
+                            }
+                        ),
+                        new CompactApplianceUsage(0, 20.6m, 3, 3,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(8,0,11,0)
+                                )
+                            }
+                        ),
+                        new CompactApplianceUsage(2, 0, 3, 3,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(8,0,11,0)
+                                )
+                            }
+                        )
                     },
-                    0, 0, 0, 0
+                    0, 0, 0, 0, 0
                 },
                 // Clones
                 new object[] {
                     new List<CompactApplianceUsage>{
-                        new CompactApplianceUsage(2, 20, 3, 2),
-                        new CompactApplianceUsage(2, 20, 3, 2),
-                        new CompactApplianceUsage(2, 20, 3, 2),
+                        new CompactApplianceUsage(2, 20, 3, 2,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(9,0,12,0)
+                                ),
+                                new UsageTimeInterval(
+                                    new TimeInterval(12,0,14,0),
+                                    UsageKind.UsingMains
+                                )
+                            }),
+                        new CompactApplianceUsage(2, 20, 3, 2,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(8,0,9,30)
+                                ),
+                                new UsageTimeInterval(
+                                    new TimeInterval(9,30,11,0)
+                                ),
+                                new UsageTimeInterval(
+                                    new TimeInterval(11,0,13,0),
+                                    UsageKind.UsingMains
+                                )
+                            }),
+                        new CompactApplianceUsage(2, 20, 3, 2,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(5,0,5,30),
+                                    UsageKind.UsingBattery
+                                ),
+                                new UsageTimeInterval(
+                                    new TimeInterval(6,0,7,0),
+                                    UsageKind.UsingBattery
+                                ),
+                                new UsageTimeInterval(
+                                    new TimeInterval(8,0,11,0)
+                                ),
+                                new UsageTimeInterval(
+                                    new TimeInterval(11,0,11,30),
+                                    UsageKind.UsingMains
+                                )
+                            })
                     },
-                    120, 360, 240, 600
+                    120, 120, 360, 240, 600
                 },
                 // Different ones
                 new object[] {
                     new List<CompactApplianceUsage>{
-                        new CompactApplianceUsage(1, 20, 3, 1),
-                        new CompactApplianceUsage(2, 20, 3, 2),
-                        new CompactApplianceUsage(3, 20.6m, 4, 5)
+                        new CompactApplianceUsage(1, 20, 3, 1,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(8,0,11,0)
+                                ),
+                                new UsageTimeInterval(
+                                    new TimeInterval(16,0,17,0),
+                                    UsageKind.UsingBattery
+                                )
+                            }),
+                        new CompactApplianceUsage(2, 20, 3, 2,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(8,0,8,30)
+                                ),
+                                new UsageTimeInterval(
+                                    new TimeInterval(9,0,9,30)
+                                ),
+                                new UsageTimeInterval(
+                                    new TimeInterval(10,0,12,0)
+                                ),
+                                new UsageTimeInterval(
+                                    new TimeInterval(16,0,18,0),
+                                    UsageKind.UsingBattery
+                                )
+                            }),
+                        new CompactApplianceUsage(3, 20.6m, 4, 5,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(10,0,11,0)
+                                ),
+                                new UsageTimeInterval(
+                                    new TimeInterval(12,0,15,0)
+                                ),
+                                new UsageTimeInterval(
+                                    new TimeInterval(16,0,21,0),
+                                    UsageKind.UsingBattery
+                                )
+                            })
                     },
-                    121.8, 427.2, 409, 836.2
+                    121.8, 121.8, 427.2, 409, 836.2
+                },
+                // Terraced
+                new object[] {
+                    new List<CompactApplianceUsage>() {
+                        new CompactApplianceUsage(2,500,2,2,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(8,0,10,0)
+                                ),
+                                new UsageTimeInterval(
+                                    new TimeInterval(14,0,16,0),
+                                    UsageKind.UsingMains
+                                )
+                            }
+                        ),
+                        new CompactApplianceUsage(2,500,2,2,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(10,0,12,0)
+                                ),
+                                new UsageTimeInterval(
+                                    new TimeInterval(14,0,16,0),
+                                    UsageKind.UsingMains
+                                )
+                            }
+                        ),
+                        new CompactApplianceUsage(2,500,2,2,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(12,0,14,0)
+                                ),
+                                new UsageTimeInterval(
+                                    new TimeInterval(14,0,16,0),
+                                    UsageKind.UsingMains
+                                )
+                            }
+                        )
+                    },
+                    1000,3000,6000,6000,12000
+                },
+                // Terraced reverse
+                new object[] {
+                    new List<CompactApplianceUsage>() {
+                        new CompactApplianceUsage(2,500,2,2,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(12,0,14,0)
+                                ),
+                                new UsageTimeInterval(
+                                    new TimeInterval(14,0,16,0),
+                                    UsageKind.UsingMains
+                                )
+                            }
+                        ),
+                        new CompactApplianceUsage(2,500,2,2,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(10,0,12,0)
+                                ),
+                                new UsageTimeInterval(
+                                    new TimeInterval(14,0,16,0),
+                                    UsageKind.UsingMains
+                                )
+                            }
+                        ),
+                        new CompactApplianceUsage(2,500,2,2,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(8,0,10,0)
+                                ),
+                                new UsageTimeInterval(
+                                    new TimeInterval(14,0,16,0),
+                                    UsageKind.UsingMains
+                                )
+                            }
+                        )
+                    },
+                    1000,3000,6000,6000,12000
+                },
+                // Non overlapping Empty and non-empty
+                new object[] {
+                    new List<CompactApplianceUsage>() {
+                        new CompactApplianceUsage(1,1000,0,0,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(8,0,8,0)
+                                ),
+                            }
+                        ),
+                        new CompactApplianceUsage(1,1500,2,0,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(9,0,11,0)
+                                )
+                            }
+                        ),
+                    },
+                    1500, 2500, 3000, 0, 3000
+                },
+                // Overlapping empty, non-empty (should avoid infinite recurse)
+                new object[] {
+                    new List<CompactApplianceUsage>() {
+                        new CompactApplianceUsage(1,1001,0,0,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(8,0,8,0)
+                                ),
+                            }
+                        ),
+                        new CompactApplianceUsage(1,1000,2,0,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(8,0,10,0)
+                                )
+                            }
+                        ),
+                        new CompactApplianceUsage(1,1501,0,0,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(9,0,9,0)
+                                )
+                            }
+                        ),
+                        new CompactApplianceUsage(1,1500,2,0,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(9,0,11,0)
+                                )
+                            }
+                        ),
+                    },
+                    2500, 5002, 5000, 0, 5000
+                },
+                // Combine([A,B],C) where C fully within A.
+                new object[] {
+                    new List<CompactApplianceUsage>() {
+                        new CompactApplianceUsage(1,1000,6,0,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(8,0,13,0)
+                                ),
+                                new UsageTimeInterval(
+                                    new TimeInterval(14,0,15,0)
+                                )
+                            }
+                        ),
+                        new CompactApplianceUsage(1,1500,1,0,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(9,0,10,0)
+                                )
+                            }
+                        ),
+                        new CompactApplianceUsage(1,1500,1,0,
+                            new List<UsageTimeInterval>() {
+                                new UsageTimeInterval(
+                                    new TimeInterval(11,0,12,0)
+                                )
+                            }
+                        ),
+                    },
+                    2500, 4000, 9000, 0, 9000
                 }
             };
         
@@ -89,13 +375,17 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
             public int NumHoursOnSolar { get; set; }
             public int NumHoursOffSolar { get; set; }
 
+            public List<UsageTimeInterval> UsageIntervals { get; set; }
+
             public CompactApplianceUsage(int quantity, decimal powerConsumption,
-                int numHoursOnSolar, int numHoursOffSolar)
+                int numHoursOnSolar, int numHoursOffSolar,
+                List<UsageTimeInterval> usageIntervals)
             {
                 Quantity = quantity;
                 PowerConsumption = powerConsumption;
                 NumHoursOnSolar = numHoursOnSolar;
                 NumHoursOffSolar = numHoursOffSolar;
+                UsageIntervals = usageIntervals;
             }
         }
     }

@@ -3,6 +3,7 @@ using Xunit;
 using SolarTally.Domain.ValueObjects;
 using SolarTally.Domain.Entities;
 using SolarTally.Domain.UnitTests.Builders;
+using SolarTally.Domain.Enumerations;
 
 namespace SolarTally.Domain.UnitTests.ValueObjects
 {
@@ -13,8 +14,7 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
         public void ShouldCalcTheCorrectTotals(
             int quantity,
             decimal powerConsumption,
-            int numHoursOnSolar,
-            int numHoursOffSolar,
+            AUSchedule aUSchedule,
             decimal expTotalPowerConsumption,
             decimal expTotalOnSolarEnergyConsumption,
             decimal expTotalOffSolarEnergyConsumption,
@@ -23,8 +23,17 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
             var builder = new ApplianceUsageBuilder();
             var applianceUsage = new ApplianceUsage(
                 builder.TestConsumptionCalculator, builder.TestAppliance,
-                quantity, powerConsumption, numHoursOnSolar, numHoursOffSolar,
-                builder.TestEnabled);
+                quantity, powerConsumption, builder.TestEnabled);
+            applianceUsage.ApplianceUsageSchedule.ClearUsageIntervals();
+            foreach(var u in aUSchedule.UsageIntervals)
+            {
+                var ti = u.TimeInterval;
+                int startHr = ti.Start.Hours, startMin = ti.Start.Minutes;
+                int endHr   = ti.End.Hours,   endMin   = ti.End.Minutes;
+                applianceUsage.ApplianceUsageSchedule.AddUsageInterval(
+                    startHr, startMin, endHr, endMin, u.UsageKind
+                );
+            }
             var applianceUsageTotal = new ApplianceUsageTotal(applianceUsage);
 
             Assert.Equal(expTotalPowerConsumption,
@@ -41,8 +50,7 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
         {
             public int Quantity { get; set; }
             public decimal PowerConsumption { get; set; }
-            public int NumHoursOnSolar { get; set; }
-            public int NumHoursOffSolar { get; set; }
+            public AUSchedule AUSchedule { get; set; }
             public decimal ExpTotalPowerConsumption { get; set; }
             public decimal ExpTotalOnSolarEnergyConsumption { get; set; }
             public decimal ExpTotalOffSolarEnergyConsumption { get; set; }
@@ -56,8 +64,13 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
                 new AUTestDataItem {
                     Quantity = 0,
                     PowerConsumption = 0,
-                    NumHoursOnSolar = 0,
-                    NumHoursOffSolar = 0,
+                    AUSchedule = new AUSchedule {
+                        UsageIntervals = new List<UsageTimeInterval> {
+                            new UsageTimeInterval(new TimeInterval(
+                                8,0,8,0
+                            ), UsageKind.UsingSolar)
+                        }
+                    },
                     ExpTotalPowerConsumption = 0,
                     ExpTotalOnSolarEnergyConsumption = 0,
                     ExpTotalOffSolarEnergyConsumption = 0,
@@ -67,8 +80,16 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
                 new AUTestDataItem {
                     Quantity = 0,
                     PowerConsumption = 20,
-                    NumHoursOnSolar = 7,
-                    NumHoursOffSolar = 3,
+                    AUSchedule = new AUSchedule {
+                        UsageIntervals = new List<UsageTimeInterval> {
+                            new UsageTimeInterval(new TimeInterval(
+                                8,0,15,0
+                            ), UsageKind.UsingSolar),
+                            new UsageTimeInterval(new TimeInterval(
+                                18,0,21,0
+                            ), UsageKind.UsingBattery),
+                        }
+                    },
                     ExpTotalPowerConsumption = 0,
                     ExpTotalOnSolarEnergyConsumption = 0,
                     ExpTotalOffSolarEnergyConsumption = 0,
@@ -78,8 +99,16 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
                 new AUTestDataItem {
                     Quantity = 1,
                     PowerConsumption = 0,
-                    NumHoursOnSolar = 7,
-                    NumHoursOffSolar = 3,
+                    AUSchedule = new AUSchedule {
+                        UsageIntervals = new List<UsageTimeInterval> {
+                            new UsageTimeInterval(new TimeInterval(
+                                8,0,15,0
+                            ), UsageKind.UsingSolar),
+                            new UsageTimeInterval(new TimeInterval(
+                                18,0,21,0
+                            ), UsageKind.UsingBattery),
+                        }
+                    },
                     ExpTotalPowerConsumption = 0,
                     ExpTotalOnSolarEnergyConsumption = 0,
                     ExpTotalOffSolarEnergyConsumption = 0,
@@ -89,8 +118,16 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
                 new AUTestDataItem {
                     Quantity = 1,
                     PowerConsumption = 20,
-                    NumHoursOnSolar = 0,
-                    NumHoursOffSolar = 3,
+                    AUSchedule = new AUSchedule {
+                        UsageIntervals = new List<UsageTimeInterval> {
+                            new UsageTimeInterval(new TimeInterval(
+                                8,0,8,0
+                            ), UsageKind.UsingSolar),
+                            new UsageTimeInterval(new TimeInterval(
+                                18,0,21,0
+                            ), UsageKind.UsingBattery),
+                        }
+                    },
                     ExpTotalPowerConsumption = 20,
                     ExpTotalOnSolarEnergyConsumption = 0,
                     ExpTotalOffSolarEnergyConsumption = 60,
@@ -100,8 +137,16 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
                 new AUTestDataItem {
                     Quantity = 1,
                     PowerConsumption = 20,
-                    NumHoursOnSolar = 3,
-                    NumHoursOffSolar = 0,
+                    AUSchedule = new AUSchedule {
+                        UsageIntervals = new List<UsageTimeInterval> {
+                            new UsageTimeInterval(new TimeInterval(
+                                8,0,11,0
+                            ), UsageKind.UsingSolar),
+                            new UsageTimeInterval(new TimeInterval(
+                                18,0,18,0
+                            ), UsageKind.UsingBattery),
+                        }
+                    },
                     ExpTotalPowerConsumption = 20,
                     ExpTotalOnSolarEnergyConsumption = 60,
                     ExpTotalOffSolarEnergyConsumption = 0,
@@ -111,8 +156,16 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
                 new AUTestDataItem {
                     Quantity = 1,
                     PowerConsumption = 20,
-                    NumHoursOnSolar = 1,
-                    NumHoursOffSolar = 1,
+                    AUSchedule = new AUSchedule {
+                        UsageIntervals = new List<UsageTimeInterval> {
+                            new UsageTimeInterval(new TimeInterval(
+                                8,0,9,0
+                            ), UsageKind.UsingSolar),
+                            new UsageTimeInterval(new TimeInterval(
+                                18,0,19,0
+                            ), UsageKind.UsingBattery),
+                        }
+                    },
                     ExpTotalPowerConsumption = 20,
                     ExpTotalOnSolarEnergyConsumption = 20,
                     ExpTotalOffSolarEnergyConsumption = 20,
@@ -122,8 +175,25 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
                 new AUTestDataItem {
                     Quantity = 2,
                     PowerConsumption = 20,
-                    NumHoursOnSolar = 2,
-                    NumHoursOffSolar = 2,
+                    AUSchedule = new AUSchedule {
+                        UsageIntervals = new List<UsageTimeInterval> {
+                            new UsageTimeInterval(new TimeInterval(
+                                8,0,9,0
+                            ), UsageKind.UsingSolar),
+                            new UsageTimeInterval(new TimeInterval(
+                                11,30,12,0
+                            ), UsageKind.UsingSolar),
+                            new UsageTimeInterval(new TimeInterval(
+                                13,30,14,0
+                            ), UsageKind.UsingSolar),
+                            new UsageTimeInterval(new TimeInterval(
+                                18,0,19,0
+                            ), UsageKind.UsingBattery),
+                            new UsageTimeInterval(new TimeInterval(
+                                19,0,20,0
+                            ), UsageKind.UsingMains),
+                        }
+                    },
                     ExpTotalPowerConsumption = 40,
                     ExpTotalOnSolarEnergyConsumption = 80,
                     ExpTotalOffSolarEnergyConsumption = 80,
@@ -133,8 +203,25 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
                 new AUTestDataItem {
                     Quantity = 2,
                     PowerConsumption = 20,
-                    NumHoursOnSolar = 4,
-                    NumHoursOffSolar = 3,
+                    AUSchedule = new AUSchedule {
+                        UsageIntervals = new List<UsageTimeInterval> {
+                            new UsageTimeInterval(new TimeInterval(
+                                8,0,10,0
+                            ), UsageKind.UsingSolar),
+                            new UsageTimeInterval(new TimeInterval(
+                                11,30,12,30
+                            ), UsageKind.UsingSolar),
+                            new UsageTimeInterval(new TimeInterval(
+                                13,30,14,30
+                            ), UsageKind.UsingSolar),
+                            new UsageTimeInterval(new TimeInterval(
+                                18,0,19,0
+                            ), UsageKind.UsingBattery),
+                            new UsageTimeInterval(new TimeInterval(
+                                19,0,21,0
+                            ), UsageKind.UsingMains),
+                        }
+                    },
                     ExpTotalPowerConsumption = 2 * 20,
                     ExpTotalOnSolarEnergyConsumption = 2 * 20 * 4,
                     ExpTotalOffSolarEnergyConsumption = 2 * 20 * 3,
@@ -142,7 +229,7 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
                 }
             };
         
-        public class AUTestData : TheoryData<int, decimal, int, int, 
+        public class AUTestData : TheoryData<int, decimal, AUSchedule, 
             decimal, decimal, decimal, decimal>
         {
             public AUTestData()
@@ -152,8 +239,7 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
                     Add(
                         au.Quantity,
                         au.PowerConsumption,
-                        au.NumHoursOnSolar,
-                        au.NumHoursOffSolar,
+                        au.AUSchedule,
                         au.ExpTotalPowerConsumption,
                         au.ExpTotalOnSolarEnergyConsumption,
                         au.ExpTotalOffSolarEnergyConsumption,
@@ -161,6 +247,11 @@ namespace SolarTally.Domain.UnitTests.ValueObjects
                     );
                 }
             }
+        }
+
+        public class AUSchedule
+        {
+            public List<UsageTimeInterval> UsageIntervals { get; set; }
         }
 
     }

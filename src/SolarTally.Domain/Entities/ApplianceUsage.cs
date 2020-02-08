@@ -1,4 +1,5 @@
 using SolarTally.Domain.Common;
+using SolarTally.Domain.Enumerations;
 using SolarTally.Domain.ValueObjects;
 using SolarTally.Domain.Interfaces;
 using Ardalis.GuardClauses;
@@ -22,15 +23,18 @@ namespace SolarTally.Domain.Entities
     /// 
     /// I'm making it an Entity for now. We shall see.
     /// </remarks>
-    public class ApplianceUsage : BaseEntity<int>, IApplianceUsageInfo
+    public class ApplianceUsage : IApplianceUsage, IApplianceUsageInfo
     {
         // Some constants to reduce magic numbers
         public const int DefaultQuantity = 1;
 
-        public const int DefaultNumHoursOffSolar = 1;
-
         public int ApplianceId { get; private set; }
         public Appliance Appliance { get; private set; }
+
+        public int ApplianceUsageScheduleId { get; private set; }
+        public ApplianceUsageSchedule ApplianceUsageSchedule
+        { get; private set; }
+
         private IConsumptionCalculator _consumptionCalculator { get; set; }
 
         /// <summary>
@@ -57,29 +61,13 @@ namespace SolarTally.Domain.Entities
         public decimal PowerConsumption { get; private set; }
         public decimal GetPowerConsumption() => PowerConsumption;
 
-        /// <summary>
-        /// Hrs to run the appliance.
-        /// </summary>
-        /// <remark>
-        /// TODO: Calculate this from Noda LocalTime or similar to make it
-        /// easier for the user to input this info.
-        /// </remark>
-        public int NumHours { get; private set; }
-        public int GetNumHours() => NumHoursOnSolar + NumHoursOffSolar;
+        public decimal GetNumHours() => ApplianceUsageSchedule.Hours;
 
-        /// <summary>
-        /// Number of hrs of solar to run the appliance
-        /// (must be < SiteNumSolarHours)
-        /// </summary>
-        public int NumHoursOnSolar { get; private set; }
-        public int GetNumHoursOnSolar() => NumHoursOnSolar;
-
-        /// <summary>
-        /// Number of hrs to run the appliance on backup
-        /// (NumHoursOnSolar + NumHoursOnBackup < 24)
-        /// </summary>
-        public int NumHoursOffSolar { get; private set; }
-        public int GetNumHoursOffSolar() => NumHoursOffSolar;
+        public decimal GetNumHoursOnSolar() =>
+            ApplianceUsageSchedule.HoursOnSolar;
+        
+        public decimal GetNumHoursOffSolar() =>
+            ApplianceUsageSchedule.HoursOffSolar;
 
         /// <summary>
         /// Whether this ApplianceUsage should be considered in the Consumption.
@@ -108,14 +96,16 @@ namespace SolarTally.Domain.Entities
         /// </remarks>
         public ApplianceUsage(IConsumptionCalculator consumptionCalculator,
             Appliance appliance, int quantity, decimal powerConsumption,
-            int numHoursOnSolar, int numHoursOffSolar, bool enabled)
+            bool enabled)
         {
             _consumptionCalculator = consumptionCalculator;
+            ApplianceUsageSchedule = 
+                new ApplianceUsageSchedule(
+                    consumptionCalculator.ReadOnlySiteSettings);
+            this.AddPeakSolarIntervalToSchedule();
             this.SetAppliance(appliance);
             this.SetQuantity(quantity);
             this.SetPowerConsumption(powerConsumption);
-            this.SetNumHoursOnSolar(numHoursOnSolar);
-            this.SetNumHoursOffSolar(numHoursOffSolar);
             this.SetEnabled(enabled);
             // Recalculate
             this.Recalculate();
@@ -128,64 +118,55 @@ namespace SolarTally.Domain.Entities
             Appliance = appliance;
         }
 
-        public void SetQuantity(int quantity)
+        protected override void _SetQuantity(int quantity)
         {
             Guard.Against.LessThan(quantity, nameof(quantity), 0);
             Quantity = quantity;
-            this.Recalculate();
         }
 
-        public void SetPowerConsumption(decimal powerConsumption)
+        protected override void _SetPowerConsumption(decimal powerConsumption)
         {
             Guard.Against.LessThan(powerConsumption,
                 nameof(powerConsumption), 0);
             PowerConsumption = powerConsumption;
-            this.Recalculate();
         }
 
-        public void SetPowerConsumptionToDefault()
+        protected override void _SetPowerConsumptionToDefault()
         {
             this.SetPowerConsumption(Appliance.DefaultPowerConsumption);
-            this.Recalculate();
         }
 
-        public void SetNumHoursOnSolar(int numHoursOnSolar)
-        {
-            Guard.Against.LessThan(numHoursOnSolar, nameof(numHoursOnSolar), 0);
-            // Check that less than site solar hours, and sum with off solar
-            // less than 24.
-            Guard.Against.InvalidApplianceUsageHoursOnSolar(numHoursOnSolar,
-                nameof(numHoursOnSolar),
-                this._consumptionCalculator.GetSiteNumSolarHours(),
-                NumHoursOffSolar);
-            NumHoursOnSolar = numHoursOnSolar;
-            this.Recalculate();
-        }
-
-        public void SetNumHoursOffSolar(int numHoursOffSolar)
-        {
-            Guard.Against.LessThan(numHoursOffSolar, nameof(numHoursOffSolar),
-            0);
-            Guard.Against.InvalidApplianceUsageHoursOffSolar(numHoursOffSolar,
-            nameof(numHoursOffSolar), NumHoursOnSolar);
-            NumHoursOffSolar = numHoursOffSolar;
-            this.Recalculate();
-        }
-
-        public void SetEnabled(bool enabled)
+        protected override void _SetEnabled(bool enabled)
         {
             Enabled = enabled;
-            this.Recalculate();
+        }
+
+        protected override void _HandleSolarIntervalUpdated()
+        {
+           ApplianceUsageSchedule.HandlePeakSolarIntervalUpdated();
         }
 
         /// <summary>
         /// Recalcs the ApplianceUsageTotal for this and then asks Consumption
         /// to recalc overall totals.
         /// </summary>
-        private void Recalculate()
+        public override void Recalculate()
         {
             ApplianceUsageTotal = new ApplianceUsageTotal(this);
             _consumptionCalculator.Recalculate();
+        }
+
+        private void AddPeakSolarIntervalToSchedule()
+        {
+            var ti = _consumptionCalculator
+                .ReadOnlySiteSettings
+                .PeakSolarInterval;
+            int peakStartHr = ti.Start.Hours, peakStartMin = ti.Start.Minutes;
+            int peakEndHr   = ti.End.Hours,   peakEndMin   = ti.End.Minutes;
+            
+            ApplianceUsageSchedule.AddUsageInterval(
+                peakStartHr, peakStartMin, peakEndHr, peakEndMin,
+                UsageKind.UsingSolar);
         }
     }
 }

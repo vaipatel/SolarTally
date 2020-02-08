@@ -28,16 +28,17 @@ namespace SolarTally.Domain.ValueObjects
         TotalOnSolarEnergyConsumption = TotalPowerConsumption * numHoursOnSolar;
         TotalOffSolarEnergyConsumption = TotalPowerConsumption *
             numHoursOffSolar;
-        // TODO: Probably just add TotalOnSolarEnergy + TotalOffSolarEnergy
-        TotalEnergyConsumption = TotalPowerConsumption * numHours;
+        TotalEnergyConsumption =
+            TotalOnSolarEnergyConsumption + TotalOffSolarEnergyConsumption;
     }
 
     protected override IEnumerable<object> GetAtomicValues()
     {
         // Using a yield return statement to return each element one at a time
         yield return TotalPowerConsumption;
-        yield return TotalEnergyConsumption;
+        yield return TotalOnSolarEnergyConsumption;
         yield return TotalOffSolarEnergyConsumption;
+        yield return TotalEnergyConsumption;
     }
 }
 }
