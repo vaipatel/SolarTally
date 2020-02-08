@@ -11,8 +11,7 @@ off-grid solar setups.
 
 ## UML Diagram for Domain objects
 
-This is obviously just the abstract structure, hiding most of the 
-function/attribute specifics.
+Here is an analysis level UML class diagram hiding most of the specifics.
 
 ![Abstract UML Class Diagram for SolarTally.Domain](./src/SolarTally.Domain/resources/SolarTally_Domain_UML_Abridged.svg)
 
