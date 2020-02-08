@@ -9,6 +9,13 @@ off-grid solar setups.
 * ASP .NET Core 3 with EF Core 3
 * Angular 8
 
+## UML Diagram for Domain objects
+
+This is obviously just the abstract structure, hiding most of the 
+function/attribute specifics.
+
+![Abstract UML Class Diagram for SolarTally.Domain](./src/SolarTally.Domain/resources/SolarTally_Domain_UML_Abridged.svg)
+
 ## Configuring Secrets for Development enviroment
 
 When working in the Development environment, I use the
