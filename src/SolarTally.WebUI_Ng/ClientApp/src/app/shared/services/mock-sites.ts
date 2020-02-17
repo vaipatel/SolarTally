@@ -11,7 +11,10 @@ export const SITES: Site[] = [
         consumptionTotal: {
             maxPowerConsumption: 100,
             totalPowerConsumption: 100, 
-            totalEnergyConsumption: 500
+            totalEnergyConsumption: 500,
+            // I have no idea if the numbers below are correct
+            totalOnSolarEnergyConsumption: 200,
+            totalOffSolarEnergyConsumption: 300
         }
     },
     { 
@@ -24,7 +27,10 @@ export const SITES: Site[] = [
         consumptionTotal: {
             maxPowerConsumption: 300,
             totalPowerConsumption: 320, 
-            totalEnergyConsumption: 1600
+            totalEnergyConsumption: 1600,
+            // I have no idea if the numbers below are correct
+            totalOnSolarEnergyConsumption: 600,
+            totalOffSolarEnergyConsumption: 1000
         }
     },
     { 
@@ -37,7 +43,10 @@ export const SITES: Site[] = [
         consumptionTotal: {
             maxPowerConsumption: 1000,
             totalPowerConsumption: 1040, 
-            totalEnergyConsumption: 4160
+            totalEnergyConsumption: 4160,
+            // I have no idea if the numbers below are correct
+            totalOnSolarEnergyConsumption: 2000,
+            totalOffSolarEnergyConsumption: 2160
         }
     }
 ]
