@@ -30,22 +30,22 @@ namespace SolarTally.WebUI_Ng
                 var logger = services.GetRequiredService<ILogger<Program>>();
                 logger.LogInformation("Trying to init database");
 
-                try
-                {
-                    var solarTallyDbContext = services
-                        .GetRequiredService<SolarTallyDbContext>();
-                    solarTallyDbContext.Database.Migrate();
-                    if (!solarTallyDbContext.Sites.Any())
-                    {
-                        var seeder = new CustomSeeder(solarTallyDbContext);
-                        seeder.SeedAll();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    logger.LogError(ex, @"An error occurred while initializing 
-                        the database.");
-                }
+                // try
+                // {
+                //     var solarTallyDbContext = services
+                //         .GetRequiredService<SolarTallyDbContext>();
+                //     solarTallyDbContext.Database.Migrate();
+                //     if (!solarTallyDbContext.Sites.Any())
+                //     {
+                //         var seeder = new CustomSeeder(solarTallyDbContext);
+                //         seeder.SeedAll();
+                //     }
+                // }
+                // catch (Exception ex)
+                // {
+                //     logger.LogError(ex, @"An error occurred while initializing 
+                //         the database.");
+                // }
             }
 
             host.Run();
