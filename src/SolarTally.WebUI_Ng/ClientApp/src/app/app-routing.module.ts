@@ -5,6 +5,7 @@ import { SiteDetailComponent } from './site-detail/site-detail.component';
 import { ConsumptionComponent } from './consumption/consumption.component';
 
 const routes: Routes = [
+  {path: '', redirectTo: '/sites', pathMatch: 'full'},
   {path: 'sites', component: SitesComponent},
   {path: 'site-detail', component: SiteDetailComponent},
   {path: 'consumption', component: ConsumptionComponent}
