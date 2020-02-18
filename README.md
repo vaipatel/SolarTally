@@ -63,6 +63,40 @@ strings, the `--startup-project` must be the path to the
 
 `dotnet ef database update --project SolarTally.Persistence.csproj  --startup-project ../SolarTally.WebUI_Ng/SolarTally.WebUI_Ng.csproj`
 
+## Deployment Notes (Unstable/Rapidly Evolving)
+
+For initial testing of deployment I decided to use Azure App Service to host the app and ElephantSQL for PostgreSQL hosting.
+
+Azure App Service is turning out to be way more painful than I thought. Here are some notes.
+
+### Continuous Deployment
+
+I decided to use Azure Pipelines (Preview) for deploying from Github, because Kudu wouldn't even get past the build stage. But this was before I resolved the 500 errors from the api endpoints, so maybe I should disconnect pipelines and retry with Kudu.
+
+### 500 due to Connection String troubles
+
+This was painful. I was just getting the 500 error for my api. I checked that a simple WeatherForecasts endpoint was working so the issue couldn't be that the app wasn't running at all. Had to most likely be the database.
+
+Here is what I had done when setting up the app: I set the connection string in Azure to reflect the connection details of the ElephantSQL instance, set the type to `PostgreSQL` (this turned out to be the problem!) and then setup the `PostgresUsername` and `PostgresPassword` in the Key Vault in Azure.
+
+Log Streaming wasn't too helpful. Then I tried going into the `scm`, bringing up a powershell and `dotnet SolarTally.WebUI_Ng.dll`. That told me that the `Migrate()` in the custom seed call wasn't sitting well with the platform. So I disabled it. That error went away - now running `dotnet` on the dll would say app was running at localhost:5000.
+
+Of course the api was still 500ing in the browser.
+
+I read that some people altered the web.config, removing `V2` from `modules="AspNetCoreModuleV2"` and the `hosting="inprocess"` attribute. Tried that to no avail.
+
+To get some more insight I enabled `Application Insights` in the app service, and then turned on `Collection Level`, `Snapshot Debugger` and `SQL Commands` under the `Instrument your application` > `.NET Core` tab. I headed over to the freshly baked `Application Insights` resource for my app and noticed this exception in the logs for the 500 errors:
+
+`Npgsql.NpgsqlException (0x80004005): Exception while connecting ---> System.Net.Internals.SocketExceptionFactory+ExtendedSocketException (10013): An attempt was made to access a socket in a way forbidden by its access permissions. 127.0.0.1:5432`.
+
+Which made me realize that the connection string params were never actually being replaced by the ElephantSQL details. Nice.
+
+What to do? Switch the connection string type from `PostgreSQL` to `Custom`. Because, of course. Anyway that worked.
+
+### Still can't load the SPA
+
+I still can't load the Angular SPA. I don't know what's wrong. I can see the `Client/dist` folder in the `wwwroot`..
+
 ## Architectural Concerns
 
 ### Monolithic Architecture
