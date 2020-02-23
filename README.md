@@ -93,9 +93,11 @@ Which made me realize that the connection string params were never actually bein
 
 What to do? Switch the connection string type from `PostgreSQL` to `Custom`. Because, of course. Anyway that worked.
 
-### Still can't load the SPA
+### Loading the SPA
 
-I still can't load the Angular SPA. I don't know what's wrong. I can see the `Client/dist` folder in the `wwwroot`..
+Another issue was that I was unable to load the Angular SPA. I wasn't really sure what was wrong. I could see the `Client/dist` folder in the `wwwroot`.
+
+Finally what worked was changing the `dist/solar-tally` to simply `dist` in the `outputPath` build option in the  angular.json.
 
 ## Architectural Concerns
 
