@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+/// Vai: Uncomment the below for storing db creds in Azure Key Vault.
 // using Microsoft.Extensions.Configuration.AzureKeyVault;
 // using Microsoft.Azure.KeyVault;
 // using Microsoft.Azure.Services.AppAuthentication;
@@ -55,6 +56,9 @@ namespace SolarTally.WebUI_Ng
             WebHost.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((context, config) =>
                 {
+                    /// Vai: If we want to keep the db username/pwd out of the
+                    /// connection string in production, we can keep it in 
+                    /// Azure Key Vault like below.
                     // if (context.HostingEnvironment.IsProduction())
                     // {
                     //     var builtConfig = config.Build();
