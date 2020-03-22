@@ -11,9 +11,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Configuration.AzureKeyVault;
-using Microsoft.Azure.KeyVault;
-using Microsoft.Azure.Services.AppAuthentication;
+// using Microsoft.Extensions.Configuration.AzureKeyVault;
+// using Microsoft.Azure.KeyVault;
+// using Microsoft.Azure.Services.AppAuthentication;
 using SolarTally.Persistence;
 
 namespace SolarTally.WebUI_Ng
@@ -55,20 +55,20 @@ namespace SolarTally.WebUI_Ng
             WebHost.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((context, config) =>
                 {
-                    if (context.HostingEnvironment.IsProduction())
-                    {
-                        var builtConfig = config.Build();
+                    // if (context.HostingEnvironment.IsProduction())
+                    // {
+                    //     var builtConfig = config.Build();
 
-                        var azureServiceTokenProvider = new AzureServiceTokenProvider();
-                        var keyVaultClient = new KeyVaultClient(
-                            new KeyVaultClient.AuthenticationCallback(
-                                azureServiceTokenProvider.KeyVaultTokenCallback));
+                    //     var azureServiceTokenProvider = new AzureServiceTokenProvider();
+                    //     var keyVaultClient = new KeyVaultClient(
+                    //         new KeyVaultClient.AuthenticationCallback(
+                    //             azureServiceTokenProvider.KeyVaultTokenCallback));
 
-                        config.AddAzureKeyVault(
-                            $"https://{builtConfig["KeyVaultName"]}.vault.azure.net/",
-                            keyVaultClient,
-                            new DefaultKeyVaultSecretManager());
-                    }
+                    //     config.AddAzureKeyVault(
+                    //         $"https://{builtConfig["KeyVaultName"]}.vault.azure.net/",
+                    //         keyVaultClient,
+                    //         new DefaultKeyVaultSecretManager());
+                    // }
                 })
                 .UseStartup<Startup>();
     }
