@@ -5,6 +5,25 @@ SolarTally aims to be a full-stack web app to help solar energy companies
 generate off-grid solar setup quotes for customers from load consumption
 profiles.
 
+- [Key technologies](#key-technologies)
+- [UML Diagram for Domain objects](#uml-diagram-for-domain-objects)
+- [Configuring Secrets for Development enviroment](#configuring-secrets-for-development-enviroment)
+- [Migrations](#migrations)
+  - [Removing migrations](#removing-migrations)
+  - [Initiating migrations](#initiating-migrations)
+  - [Applying migrations](#applying-migrations)
+- [Deployment Notes (Unstable/Rapidly Evolving)](#deployment-notes-unstablerapidly-evolving)
+  - [Continuous Deployment](#continuous-deployment)
+  - [500 due to Connection String troubles](#500-due-to-connection-string-troubles)
+  - [Loading the SPA](#loading-the-spa)
+- [Architectural Concerns](#architectural-concerns)
+  - [Monolithic Architecture](#monolithic-architecture)
+  - [Domain-Driven Design or DDD](#domain-driven-design-or-ddd)
+- [Resources](#resources)
+    - [Julie Lerman](#julie-lerman)
+    - [Jason Taylor](#jason-taylor)
+    - [Steve Smith](#steve-smith)
+
 ## Key technologies
 
 * ASP .NET Core 3 with EF Core 3
