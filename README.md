@@ -24,6 +24,16 @@ profiles.
     - [Jason Taylor](#jason-taylor)
     - [Steve Smith](#steve-smith)
 
+## Key Features
+
+I've implemented most of these on the back-end but not the front-end.
+
+* Allows multiple load consumption time periods for each appliance
+* Allows minute-level resolution for consumption time period
+* Allows specification of startup power
+* Considers startup power when calculating max power consumption (not done, but
+easy to finish)
+
 ## Key technologies
 
 * ASP .NET Core 3 with EF Core 3
