@@ -5,6 +5,7 @@ SolarTally is a full-stack web app that aims to help solar energy companies
 generate off-grid solar setup quotes for customers from load consumption
 profiles.
 
+- [Key Features](#key-features)
 - [Key technologies](#key-technologies)
 - [UML Diagram for Domain objects](#uml-diagram-for-domain-objects)
 - [Configuring Secrets for Development enviroment](#configuring-secrets-for-development-enviroment)
