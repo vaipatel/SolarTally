@@ -7,23 +7,25 @@ profiles.
 
 - [Key Features](#key-features)
 - [Key technologies](#key-technologies)
-- [UML Diagram for Domain objects](#uml-diagram-for-domain-objects)
-- [Configuring Secrets for Development enviroment](#configuring-secrets-for-development-enviroment)
-- [Migrations](#migrations)
-  - [Removing migrations](#removing-migrations)
-  - [Initiating migrations](#initiating-migrations)
-  - [Applying migrations](#applying-migrations)
+- [Development Setup](#development-setup)
+  - [Configuring Secrets for Development enviroment](#configuring-secrets-for-development-enviroment)
+  - [Migrations](#migrations)
+    - [Removing migrations](#removing-migrations)
+    - [Initiating migrations](#initiating-migrations)
+    - [Applying migrations](#applying-migrations)
 - [Deployment Notes (Unstable/Rapidly Evolving)](#deployment-notes-unstablerapidly-evolving)
   - [Continuous Deployment](#continuous-deployment)
   - [500 due to Connection String troubles](#500-due-to-connection-string-troubles)
   - [Loading the SPA](#loading-the-spa)
+- [Requirements Specification](#requirements-specification)
+  - [UML Diagram for Domain objects](#uml-diagram-for-domain-objects)
 - [Architectural Concerns](#architectural-concerns)
   - [Monolithic Architecture](#monolithic-architecture)
   - [Domain-Driven Design or DDD](#domain-driven-design-or-ddd)
-- [Resources](#resources)
-    - [Julie Lerman](#julie-lerman)
-    - [Jason Taylor](#jason-taylor)
-    - [Steve Smith](#steve-smith)
+  - [Resources](#resources)
+      - [Julie Lerman](#julie-lerman)
+      - [Jason Taylor](#jason-taylor)
+      - [Steve Smith](#steve-smith)
 
 ## Key Features
 
@@ -40,13 +42,9 @@ easy to finish)
 * ASP .NET Core 3 with EF Core 3
 * Angular 8
 
-## UML Diagram for Domain objects
+## Development Setup
 
-Here is an analysis level UML class diagram hiding most of the specifics.
-
-![Abstract UML Class Diagram for SolarTally.Domain](./src/SolarTally.Domain/resources/SolarTally_Domain_UML_Abridged.svg)
-
-## Configuring Secrets for Development enviroment
+### Configuring Secrets for Development enviroment
 
 When working in the Development environment, I use the
 [Secret Manager tool](https://docs.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-3.0&tabs=linux#secret-manager)
@@ -75,22 +73,22 @@ In order to configure the secrets on your machine, you should:
 
 Now the secrets can be accessed from both the WebUI_Ng and Persistence projects.
 
-## Migrations
+### Migrations
 
 Migrations stuff is done using the `dotnet ef` command
 in the `SolarTally.Persistence` project folder. In order to access connection
 strings, the `--startup-project` must be the path to the 
 `SolarTally.WebUI_Ng.csproj`.
 
-### Removing migrations
+#### Removing migrations
 
 `dotnet ef migrations remove --project SolarTally.Persistence.csproj  --startup-project ../SolarTally.WebUI_Ng/SolarTally.WebUI_Ng.csproj`
 
-### Initiating migrations
+#### Initiating migrations
 
 `dotnet ef migrations add InitialCreate --project SolarTally.Persistence.csproj --startup-project ../SolarTally.WebUI_Ng/SolarTally.WebUI_Ng.csproj`
 
-### Applying migrations
+#### Applying migrations
 
 `dotnet ef database update --project SolarTally.Persistence.csproj  --startup-project ../SolarTally.WebUI_Ng/SolarTally.WebUI_Ng.csproj`
 
@@ -130,6 +128,14 @@ Another issue was that I was unable to load the Angular SPA. I wasn't really sur
 
 Finally what worked was changing the `dist/solar-tally` to simply `dist` in the `outputPath` build option in the  angular.json.
 
+## Requirements Specification
+
+### UML Diagram for Domain objects
+
+Here is an analysis level UML class diagram hiding most of the specifics.
+
+![Abstract UML Class Diagram for SolarTally.Domain](./src/SolarTally.Domain/resources/SolarTally_Domain_UML_Abridged.svg)
+
 ## Architectural Concerns
 
 ### Monolithic Architecture
@@ -164,17 +170,17 @@ Domain or Application referencing, say, EF Core, because that is an ORM that
 deals with Persistence. Anyway, maybe that's too ignorant of the vastly more
 common cases.
 
-## Resources
+### Resources
 
 Here were some resources I referenced when making the app.
 
-#### Julie Lerman
+##### Julie Lerman
 
 * YouTube
   * [Mapping DDD Domain Models with EF Core 2.1 @ Update Conference Prague 2018
   ](https://youtu.be/Z62cbp61Bb8)
 
-#### Jason Taylor
+##### Jason Taylor
 
 * Github
   * [NorthwindTraders](https://github.com/JasonGT/NorthwindTraders)
@@ -183,7 +189,7 @@ Here were some resources I referenced when making the app.
   * [Clean Architecture with ASP.NET Core 2.2](https://youtu.be/Zygw4UAxCdg)
 
 
-#### Steve Smith
+##### Steve Smith
 
 * Github
   * [eShopOnWeb](https://github.com/dotnet-architecture/eShopOnWeb)
