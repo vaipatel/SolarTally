@@ -26,6 +26,7 @@ namespace SolarTally.WebUI_Ng
         public static void Main(string[] args)
         {
             var host = CreateWebHostBuilder(args).Build();
+            
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
@@ -33,22 +34,29 @@ namespace SolarTally.WebUI_Ng
                 var logger = services.GetRequiredService<ILogger<Program>>();
                 logger.LogInformation("Trying to init database");
 
-                // try
-                // {
-                //     var solarTallyDbContext = services
-                //         .GetRequiredService<SolarTallyDbContext>();
-                //     solarTallyDbContext.Database.Migrate();
-                //     if (!solarTallyDbContext.Sites.Any())
-                //     {
-                //         var seeder = new CustomSeeder(solarTallyDbContext);
-                //         seeder.SeedAll();
-                //     }
-                // }
-                // catch (Exception ex)
-                // {
-                //     logger.LogError(ex, @"An error occurred while initializing 
-                //         the database.");
-                // }
+                if (IsEnvDev)
+                {
+                    try
+                    {
+                        var solarTallyDbContext = services
+                            .GetRequiredService<SolarTallyDbContext>();
+                        solarTallyDbContext.Database.Migrate();
+                        if (!solarTallyDbContext.Sites.Any())
+                        {
+                            logger.LogInformation("Will seed database!");
+                            var seeder = new CustomSeeder(solarTallyDbContext);
+                            seeder.SeedAll();
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.LogError(ex, @"An error occurred while 
+                            initializing the database.");
+                    }
+                } else
+                {
+                    logger.LogInformation("Skipping db seed for non-dev env.");
+                }
             }
 
             host.Run();
