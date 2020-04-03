@@ -21,6 +21,8 @@ namespace SolarTally.WebUI_Ng
 {
     public class Program
     {
+        private static bool IsEnvDev = false;
+
         public static void Main(string[] args)
         {
             var host = CreateWebHostBuilder(args).Build();
@@ -56,6 +58,9 @@ namespace SolarTally.WebUI_Ng
             WebHost.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((context, config) =>
                 {
+                    /// Vai: I will store whether the env is Dev or not here.
+                    IsEnvDev = context.HostingEnvironment.IsDevelopment();
+
                     /// Vai: If we want to keep the db username/pwd out of the
                     /// connection string in production, we can keep it in 
                     /// Azure Key Vault like below.
